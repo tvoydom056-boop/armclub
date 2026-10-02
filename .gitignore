@@ -1,0 +1,41 @@
+# зависимости и сборка
+node_modules
+dist
+.vite
+*.tsbuildinfo
+coverage
+
+# локальные настройки и окружение
+*.local
+.env
+.env.*
+!.env.example
+
+# редакторы, ОС, инструменты
+.vscode/*
+!.vscode/extensions.json
+.idea
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+npm-debug.log*
+
+# временные скрипты и черновики
+tmp/
+
+# исходники для арта: тяжёлые и дублируют public/art
+*.mp4
+*.zip
+sprite/*
+!sprite/*.md
+!sprite/README.txt
+!sprite/_meta/
+sprite/_meta/*
+!sprite/_meta/*.json
+
+# скриншоты проверок и кадры из чужого видео
+docs/art-reference/arms-checks/
+docs/art-reference/arms-side-pin-checks/
+docs/art-reference/video_frames/
