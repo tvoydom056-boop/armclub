@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "scale": 2,
+  "scene_canvas": [
+    1280,
+    720
+  ],
+  "assets": [
+    {
+      "file": "clasp/hook_me.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/hook_opp.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/neutral_me.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/neutral_opp.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/press_me.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/press_opp.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/toproll_me.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "clasp/toproll_opp.png",
+      "canvas": [
+        800,
+        800
+      ],
+      "transparent": true
+    },
+    {
+      "file": "me/forearm.png",
+      "canvas": [
+        420,
+        1400
+      ],
+      "transparent": true
+    },
+    {
+      "file": "me/free_grip.png",
+      "canvas": [
+        560,
+        520
+      ],
+      "transparent": true
+    },
+    {
+      "file": "me/free_idle.png",
+      "canvas": [
+        560,
+        520
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/arm_free.png",
+      "canvas": [
+        560,
+        620
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/forearm.png",
+      "canvas": [
+        400,
+        520
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_calm.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_lose.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_strain.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_telegraph.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_tired.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/head_win.png",
+      "canvas": [
+        600,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "opponents/boris/torso.png",
+      "canvas": [
+        1100,
+        700
+      ],
+      "transparent": true
+    },
+    {
+      "file": "scene/bg.png",
+      "canvas": [
+        2560,
+        1440
+      ],
+      "transparent": false
+    },
+    {
+      "file": "scene/pad_me.png",
+      "canvas": [
+        700,
+        320
+      ],
+      "transparent": true
+    },
+    {
+      "file": "scene/pad_opp.png",
+      "canvas": [
+        640,
+        300
+      ],
+      "transparent": true
+    },
+    {
+      "file": "scene/table.png",
+      "canvas": [
+        2560,
+        760
+      ],
+      "transparent": true
+    }
+  ],
+  "head_anchor": [
+    300,
+    700
+  ],
+  "clasp": {
+    "canvas": [
+      800,
+      800
+    ],
+    "center": [
+      400,
+      400
+    ],
+    "opponent_wrist_anchor": [
+      0,
+      620
+    ],
+    "player_wrist_anchor": [
+      620,
+      800
+    ],
+    "draw_order": [
+      "opponent_hand",
+      "player_forearm",
+      "player_hand"
+    ],
+    "note": "Both variants use the same registration transform. Final wrist overlap should be checked in the game renderer."
+  },
+  "forearms": {
+    "opponent": {
+      "elbow": [
+        0,
+        260
+      ],
+      "wrist": [
+        400,
+        260
+      ]
+    },
+    "player": {
+      "wrist": [
+        210,
+        0
+      ],
+      "elbow": [
+        210,
+        1400
+      ]
+    }
+  },
+  "visual_direction": "Approved clean-shaven bald face, slim athletic build and thin neck, green hoodie with hood down. User corrections override older bulky body/neck description in art brief.",
+  "generator": "built-in image_gen",
+  "integration_status": "Assets generated and file-validated. Not connected or tested in game."
+}

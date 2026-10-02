@@ -1,0 +1,37 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "name": "armsMotion",
+      "paths": [
+        "C:/Users/DPiunov/.codex/generated_images/01a0fe46-ffc5-7681-8dc7-6339e13de040/exec-0c296065-74d8-4968-80ed-c20cc8875e3c.png"
+      ],
+      "prompt": "Create an ANIMATION SPRITE SHEET for this pair of arm-wrestling arms. Exactly 9 frames, an exact 3-column by 3-row grid with NO gutters, NO borders, NO labels. Total canvas 1920x1080, each cell 640x360 (16:9). EVERY cell represents the SAME full game view 1280x720, scaled by 0.5. Draw ONLY the TWO WORKING ARMS and their connected clasp: opponent upper arm and forearm from the left green rolled sleeve, and player's foreground forearm with one red wristband and one white stripe. No torso, head, table, pads, free arms or UI. Both hands remain continuously attached to forearms; normal fingers, no extra hands, no long pointed elbows or ribbon-like forearms.\nComposition in each CELL's local 640x360 coordinates: opponent sleeve fixed near (212,198), opponent rounded elbow near (235,260) throughout, player's arm exits the bottom edge around x490. All hands fully visible above y275. Natural arm bends and plausible perspective; redraw anatomy for each pose rather than stretching it. The clasp travels SIDEWAYS from left to right across the sheet's sequence. The last frame is right-side pin, NOT downwards and NOT pointing towards the camera.\nFrame order row-major, clasp centers local to each cell:\n1 (155,220) left pin, clasp laid toward left side, hand tilted left;\n2 (195,209) mostly left;\n3 (235,193) halfway left;\n4 (275,181) slightly left;\n5 (315,177) upright NEUTRAL;\n6 (355,181) slightly right;\n7 (395,193) halfway right;\n8 (435,209) mostly right;\n9 (475,220) right pin, clasp laid sideways toward the right side, hand tilted right.\nThe opponent's upper arm and forearm can bend naturally and elbow can shift modestly (at most 35 cell pixels) to keep anatomy normal. Keep green sleeve attachment stationary and all forearms thick/rounded, no impossible acute bends. Player's wristband wraps the wrist naturally. SAME subject, palette, outline, camera, dimensions in all 9 cells. Huge transparent margins above arms and in cell corners are intentional. Cells must not overlap; cut player's forearm ONLY at each cell bottom edge. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-b86626f7-888f-48d3-a16d-f1d860faa87f.png"
+    },
+    {
+      "name": "torsoForMotion",
+      "paths": [
+        "C:/Users/DPiunov/Desktop/game/sprite/opponents/boris/torso.png"
+      ],
+      "prompt": "Edit only the bare WORKING upper arm on the viewer's LEFT of this torso. Remove the left bare skin/biceps below the rolled green sleeve, making that area fully transparent. KEEP the green rolled sleeve intact as an opening where a complete arm animation will attach. Keep exactly unchanged the rest of the torso, right bare arm, hoodie, neck, strings, cut lines, scale, position and 1100x700 canvas. Do not fill the removed left arm with clothing and do not shorten the hoodie. The torso should have a clean left green sleeve opening with alpha immediately below it. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-a3f69c75-3667-4ded-a644-808578b2d5b0.png"
+    },
+    {
+      "name": "pinRed",
+      "paths": [
+        "C:/Users/DPiunov/Desktop/game/sprite/scene/pad_opp.png"
+      ],
+      "prompt": "Draw one standalone RED side pin cushion for an arm-wrestling table, matching this existing red elbow pad. This is a new side pin cushion, longer in the table's front-to-back direction, NOT the wide horizontal elbow pad. Perspective slightly from above and front, long axis nearly VERTICAL in the image. Compact tall rectangle with rounded corners, padded red vinyl top, burgundy front/side wall, sparse seam stitches, thick dark brown outlines and cream highlights. Only the cushion, no hand, table, text, shadows or hardware. Canvas square 512x512; cushion centered, occupies about 260px width and 390px height, generous genuine transparent margin. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-7129064a-ea5a-477b-b99e-cd7dd95f178c.png"
+    },
+    {
+      "name": "pinBlue",
+      "paths": [
+        "C:/Users/DPiunov/Desktop/game/sprite/scene/pad_opp.png"
+      ],
+      "prompt": "Draw one standalone BLUE side pin cushion for an arm-wrestling table, matching the style and perspective of the reference's red elbow pad. This is a new side pin cushion, longer in the table's front-to-back direction, NOT a wide horizontal elbow pad. Perspective slightly from above and front, long axis nearly VERTICAL in the image. Compact tall rectangle with rounded corners, saturated blue vinyl top, deep navy blue front/side wall, sparse seam stitches, thick dark brown outlines and cream highlights. Only the cushion, no hand, table, text, shadows or hardware. Canvas square 512x512; cushion centered, occupies about 260px width and 390px height, generous genuine transparent margin. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-4461a032-f1e6-4198-aa5b-6b904fd410c0.png"
+    }
+  ]
+}

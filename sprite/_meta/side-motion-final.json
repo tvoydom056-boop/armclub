@@ -1,0 +1,42 @@
+﻿{
+  "tool": "built-in image_gen",
+  "poseReferences": "docs/art-reference/video_frames/POSE_GUIDE.md",
+  "sourceDirectory": "C:/Users/DPiunov/.codex/generated_images/01a0fe46-ffc5-7681-8dc7-6339e13de040",
+  "assets": [
+    {
+      "file": "opponents/boris/arms_motion.png",
+      "source": "exec-1583ffd2-f8cb-4ce6-ac7b-d6da722452ea.png",
+      "prompt": "Use case: precise-object-edit. Image1 is EDIT TARGET nine-frame 3x3 sprite sheet, 1672x941, transparent. Only modify PLAYER forearms in BOTTOM ROW THREE CELLS. Preserve the opponent's green sleeve, bare upperarm, whole forearm and shared clasp EXACTLY, unchanged. Preserve top six cells exactly. Problem: each bottom-row player's forearm is clipped at the RIGHT boundary and spills into next sprite cell. Fix: REDRAW only player's forearm below each red-white wristband to slope DOWN and slightly LEFT, so it exits each cell strictly THROUGH ITS BOTTOM EDGE inside local x450-500, never through right cell edge. In final bottom-right cell grip local x470 y165; player forearm and one red wristband extend DOWN-LEFT towards local x450 y314, with muscle bulk contained to x550 max. In bottom middle and bottom left do same: slight down-left turn from wrist down to bottom. Keep natural continuous anatomy (no visible wrist joints), one red wristband with one white stripe per cell. Each cell width approx557,height314; ALL art of EACH cell must fit strictly within local x40..550; bottom forearm ends at local y310, no art touching/crossing right cell boundary. Keep same scale, same grip and shoulder locations, golden skin, comic brown contours, alpha transparency. Remove the old spill remnants from bottom-row left 0..40 pixels of cells 8 and9. Do not add hands, extra fingers, extra wristbands, background, grid lines. Bottom player arms should come toward viewer and leave BOTTOM, not SIDE. Genuine transparent background.",
+      "previous": "Edit ONLY the three BOTTOM ROW cells of this transparent 3x3 sprite sheet. Preserve EXACT 1672x941 canvas, grid, ALL SIX frames in the TOP and MIDDLE rows, and transparent background.\nThe bottom row must progressively show SIDEWAYS movement to the RIGHT, not hands being driven towards the bottom of the screen.\nIn the bottom-right FINAL PIN cell, keep the rolled green sleeve at local x125,y150. Draw a natural upper arm from that sleeve down/right to a ROUND elbow near x260,y240, then a muscular but anatomically normal forearm running almost HORIZONTALLY to the RIGHT to the clasp centered near x470,y225. The two locked hands are tilted RIGHT by 65 degrees and resting on their SIDE, not upright. The player's forearm approaches the clasp from the bottom-right edge, with one red wristband with one white stripe, continuously joined to the hand. All fingers inside the cell, only player's forearm cropped at cell bottom/right. No giant elongated forearm, no pointed elbow, no looped wrist.\nBottom-left is the halfway-right pose: clasp near x380,y145, elbow near x240,y260, hands tilted right 25 degrees. Bottom-middle is mostly-right: clasp near x430,y185, elbow near x250,y250, hands tilted right 45 degrees.\nKeep consistent drawing scale, hand size, skin color, thick dark brown #3B1D14 outline, flat ochre skin shading and small cream highlights. Redraw plausible anatomy for each pose, no stretching. No table, pads, torso, head, text, borders or gutters. Genuine alpha. The two arms and clasp must be one continuous painted sprite in each cell."
+    },
+    {
+      "file": "opponents/boris/head_press.png",
+      "source": "exec-00da4b9b-147a-44d7-a4c3-d8cbf758575d.png",
+      "prompt": "Use case: precise-object-edit. Asset: head_press.png for Boris arm-wrestling game. Image 1 is EDIT TARGET game head_strain, preserve Boris identity (bald CLEAN SHAVEN muscular middle aged man, no beard), golden ochre skin palette, thick dark brown outlines, flat comic cel shading. Image 2 is POSE ONLY reference press_64s: opponent bows his head FORWARD and DOWN OVER THE GRIP, eyes looking down-right, neck compressed forward, crown more visible, intense effort. Change head pose of image1 to match forward/downward press posture. Keep head alone plus its neck, same framing and size relative canvas as image1; bottom cut of neck must stay at image bottom centered x325/600. No hands, arms, body, clothing, beard, photo textures. Genuine transparent PNG background. Skin and brown linework identical to first image. Do not copy real man's face or beard, just downward head angle."
+    },
+    {
+      "file": "opponents/boris/torso_motion.png",
+      "references": [
+        "C:/Users/DPiunov/Desktop/game/sprite/opponents/boris/torso.png"
+      ],
+      "prompt": "Edit only the bare WORKING upper arm on the viewer's LEFT of this torso. Remove the left bare skin/biceps below the rolled green sleeve, making that area fully transparent. KEEP the green rolled sleeve intact as an opening where a complete arm animation will attach. Keep exactly unchanged the rest of the torso, right bare arm, hoodie, neck, strings, cut lines, scale, position and 1100x700 canvas. Do not fill the removed left arm with clothing and do not shorten the hoodie. The torso should have a clean left green sleeve opening with alpha immediately below it. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-a3f69c75-3667-4ded-a644-808578b2d5b0.png"
+    },
+    {
+      "file": "scene/pin_opp.png",
+      "references": [
+        "C:/Users/DPiunov/Desktop/game/sprite/scene/pad_opp.png"
+      ],
+      "prompt": "Draw one standalone RED side pin cushion for an arm-wrestling table, matching this existing red elbow pad. This is a new side pin cushion, longer in the table's front-to-back direction, NOT the wide horizontal elbow pad. Perspective slightly from above and front, long axis nearly VERTICAL in the image. Compact tall rectangle with rounded corners, padded red vinyl top, burgundy front/side wall, sparse seam stitches, thick dark brown outlines and cream highlights. Only the cushion, no hand, table, text, shadows or hardware. Canvas square 512x512; cushion centered, occupies about 260px width and 390px height, generous genuine transparent margin. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-7129064a-ea5a-477b-b99e-cd7dd95f178c.png"
+    },
+    {
+      "file": "scene/pin_me.png",
+      "references": [
+        "C:/Users/DPiunov/Desktop/game/sprite/scene/pad_opp.png"
+      ],
+      "prompt": "Draw one standalone BLUE side pin cushion for an arm-wrestling table, matching the style and perspective of the reference's red elbow pad. This is a new side pin cushion, longer in the table's front-to-back direction, NOT a wide horizontal elbow pad. Perspective slightly from above and front, long axis nearly VERTICAL in the image. Compact tall rectangle with rounded corners, saturated blue vinyl top, deep navy blue front/side wall, sparse seam stitches, thick dark brown outlines and cream highlights. Only the cushion, no hand, table, text, shadows or hardware. Canvas square 512x512; cushion centered, occupies about 260px width and 390px height, generous genuine transparent margin. Match the reference's hand-drawn 2D comic poster style: thick dark brown #3B1D14 outlines, thinner sparse anatomy lines, warm golden ochre skin, flat fills, two crisp shadow tones and small cream highlights, top/front light. No gradients, 3D, realistic pores, text, watermark, checkerboard or cast shadow. True alpha transparency.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a0fe46-ffc5-7681-8dc7-6339e13de040\\exec-4461a032-f1e6-4198-aa5b-6b904fd410c0.png"
+    }
+  ]
+}
