@@ -83,7 +83,13 @@ export const useGame = create<GameStore>()(
       partialize: (s): SaveData => ({ coins: s.coins, levels: s.levels, wins: s.wins, losses: s.losses }),
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<SaveData>;
-        return { ...current, ...p, levels: { ...emptyLevels(), ...(p.levels ?? {}) } };
+        // Йос занимает прежнее место Вити: победы продолжают открывать третьего бойца.
+        const wins = { ...(p.wins ?? {}) };
+        if (wins.vitya !== undefined) {
+          wins.yos = (wins.yos ?? 0) + wins.vitya;
+          delete wins.vitya;
+        }
+        return { ...current, ...p, wins, levels: { ...emptyLevels(), ...(p.levels ?? {}) } };
       },
     },
   ),

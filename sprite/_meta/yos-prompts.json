@@ -1,0 +1,65 @@
+{
+  "tool": "built-in image_gen",
+  "approvedConcept": "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png",
+  "status": "complete; 11 transparent PNGs saved; final sources and validation in sprite/_meta/yos/; torso used torso-prompt.json",
+  "jobs": [
+    {
+      "name": "head_calm",
+      "size": [
+        600,
+        700
+      ],
+      "refs": [
+        "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png"
+      ],
+      "prompt": "Use case: identity-preserve. Asset: head_calm.png of Йос for the game. The input is the user-approved FIRST concept and is the identity/style source. Match the approved Йос concept EXACTLY: recognizable youthful clean-shaven face, thick tousled dark-brown hair, thick brows, slim youthful neck; moderately exaggerated athletic muscular shirtless physique, golden ochre skin, dark chest/forearm hair as deliberate comic strokes. Thick dark brown #3B1D14 outer contour, economical thinner interior lines, hard-edged warm amber and deep brown shadow shapes, small cream highlights, top/front light. Preserve the hand drawn comic appearance. No photographic pores, 3D, painterly blur, plastic shine, text, watermark, clothing, accessories, table, UI, background, checkerboard or external cast shadows. Genuine transparent PNG. Extract/recreate ONLY the complete head, ears, hair and neck from that concept, remove all torso, shoulders, chest and fists. Preserve exact facial likeness and original slight three-quarter angle, amused closed-mouth half smile and gaze toward viewer. Portrait canvas 600x700, head with hair fully inside x55..545 y30..585, neck comes down to a flat bottom cut at y690, attachment centered x325. Maintain safe margin around hair and ears. Entire neck remains bare. This will be the master head for all expressions, so keep crisp consistent silhouette and no tilt changes."
+    },
+    {
+      "name": "torso_motion",
+      "size": [
+        1572,
+        1001
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/boris/torso_motion.png",
+        "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png"
+      ],
+      "prompt": "Use case: style-transfer. Asset: torso_motion.png. Image 1 is ONLY a geometry and framing template, image 2 is the user-approved Йос identity, muscular body, chest hair and rendering. Make the template into Йос's shirtless muscular hairy torso. Match the approved Йос concept EXACTLY: recognizable youthful clean-shaven face, thick tousled dark-brown hair, thick brows, slim youthful neck; moderately exaggerated athletic muscular shirtless physique, golden ochre skin, dark chest/forearm hair as deliberate comic strokes. Thick dark brown #3B1D14 outer contour, economical thinner interior lines, hard-edged warm amber and deep brown shadow shapes, small cream highlights, top/front light. Preserve the hand drawn comic appearance. No photographic pores, 3D, painterly blur, plastic shine, text, watermark, clothing, accessories, table, UI, background, checkerboard or external cast shadows. Genuine transparent PNG. Output ONLY torso, neck base and shoulder attachment regions, no head, hair on head, hands or complete forearms. Preserve image1 canvas aspect 1572x1001 and general forward leaning frontal pose. Replace ALL green hoodie, strings and sleeve fabric with bare golden skin and natural anatomy. Broad chest, well-defined pectorals, abdominal upper muscles, clearly visible comic chest hair matching image2. At viewer LEFT keep rounded bare deltoid attachment but omit the working biceps/forearm, which will be animated separately: transparent below the left shoulder edge. At viewer RIGHT retain the muscular upper arm descending diagonally toward the right lower corner and cut cleanly at elbow, without hand or forearm. Neck attachment center near image x752 y215, neck stump flat and bare at top. Torso bottom cut at lower canvas near waist, with no pants necessary. Sparse hair on the right upper arm. Do not copy Boris's stocky body or any green fabric."
+    },
+    {
+      "name": "arm_free",
+      "size": [
+        560,
+        620
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/boris/arm_free.png",
+        "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset arm_free.png for Йос. Image1 is the edit target and geometry template, image2 is approved Йос body/style. Match the approved Йос concept EXACTLY: recognizable youthful clean-shaven face, thick tousled dark-brown hair, thick brows, slim youthful neck; moderately exaggerated athletic muscular shirtless physique, golden ochre skin, dark chest/forearm hair as deliberate comic strokes. Thick dark brown #3B1D14 outer contour, economical thinner interior lines, hard-edged warm amber and deep brown shadow shapes, small cream highlights, top/front light. Preserve the hand drawn comic appearance. No photographic pores, 3D, painterly blur, plastic shine, text, watermark, clothing, accessories, table, UI, background, checkerboard or external cast shadows. Genuine transparent PNG. Keep the same diagonal arm pose, framing and hand/peg geometry as image1. REPLACE the entire green sleeve in the upper left with a muscular bare upper arm with light comic body hair; keep continuous natural shoulder/biceps/elbow/forearm anatomy. Match the approved Йос musculature, golden skin and brown graphic forearm hair, without making the hand gigantic. Forearm runs upper left to lower right, exactly one normal hand gripping the small gray vertical support handle at bottom right. Include only this one complete free arm and its gray handle; no torso or head. Canvas ratio 560x620, the upper arm cut at top left permitted; fingers and metal peg entirely inside safe margins. At local y330 elbow attachment approx x235, hand approx x480 y490, to fit existing free arm geometry. Five anatomical fingers, hidden fingers remain hidden. No red wristband on Йос's own arm."
+    },
+    {
+      "name": "arms_motion",
+      "size": [
+        1670,
+        941
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/boris/arms_motion.png",
+        "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset arms_motion.png for Йос, a transparent animation atlas. Image1 is the EDIT TARGET 3x3 atlas: preserve EXACT nine-cell layout, arm positions, clasp positions, anatomy, overlaps, consistent hand size and player's arm. Image2 is the approved Йос and is the source of bare muscular physique, rendering and arm hair. Match the approved Йос concept EXACTLY: recognizable youthful clean-shaven face, thick tousled dark-brown hair, thick brows, slim youthful neck; moderately exaggerated athletic muscular shirtless physique, golden ochre skin, dark chest/forearm hair as deliberate comic strokes. Thick dark brown #3B1D14 outer contour, economical thinner interior lines, hard-edged warm amber and deep brown shadow shapes, small cream highlights, top/front light. Preserve the hand drawn comic appearance. No photographic pores, 3D, painterly blur, plastic shine, text, watermark, clothing, accessories, table, UI, background, checkerboard or external cast shadows. Genuine transparent PNG. In EVERY one of the nine cells replace the opponent's green rolled sleeve by a BARE rounded muscular deltoid/upper-arm shoulder cap and natural shoulder cut, and add dark comic arm hair to ONLY the opponent's skin arm. Make opponent muscular to match Йос, while keeping the elbow, shoulder and clasp anchors in the SAME locations as image1. Do not add clothes. Preserve the player's foreground arm with exactly ONE red wristband with ONE white stripe and no other bracelets. Each cell contains only TWO physically connected working arms and ONE compact clasp of TWO hands; no heads, torso, free arms, clothing, text or visible grid. The clasp sequence remains left pin to upright neutral to right pin, row-major, no reordered or duplicated cells. Canvas 1670x941, three equal columns and three equal rows with NO gutters. All opponent fingers and elbow entirely inside their own cell. Player's arm exits ONLY each cell's BOTTOM edge and never crosses the right/left edge or into another cell. Match original atlas pose geometry very closely; do not introduce new composition or gigantic fists. Maintain genuine alpha around all nine isolated arm pairs. Do NOT change the player's anatomy or generate extra fingers."
+    },
+    {
+      "name": "cuff",
+      "size": [
+        151,
+        151
+      ],
+      "refs": [
+        "C:/Users/DPiunov/.codex/generated_images/01a1017a-2caa-7541-a37c-8486484b75e2/exec-bcb4120d-2998-46c4-83ba-df691a044018.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset cuff.png, bare shoulder joint overlap patch for shirtless Йос animation, named cuff for loader compatibility but it contains NO clothing. Match the approved Йос concept EXACTLY: recognizable youthful clean-shaven face, thick tousled dark-brown hair, thick brows, slim youthful neck; moderately exaggerated athletic muscular shirtless physique, golden ochre skin, dark chest/forearm hair as deliberate comic strokes. Thick dark brown #3B1D14 outer contour, economical thinner interior lines, hard-edged warm amber and deep brown shadow shapes, small cream highlights, top/front light. Preserve the hand drawn comic appearance. No photographic pores, 3D, painterly blur, plastic shine, text, watermark, clothing, accessories, table, UI, background, checkerboard or external cast shadows. Genuine transparent PNG. Draw one isolated rounded muscular bare golden deltoid cap with a modest curved brown muscle contour, a few cream highlights and flat amber/brown shadow planes. View near frontal with outer round shoulder facing viewer's left and arm attachment facing diagonally down-right. Natural rounded skin shoulder, NOT a severed hand or sphere, no fingers, no bones, no blood, no green sleeve or wristband. Square transparent canvas, only the bare shoulder muscle cap centered, occupying 80% canvas with transparent corners; use the approved concept's bare left shoulder as reference. It will visually bridge the torso and animated working upper arm. Subtle short dark hair strokes only, no long hair. No head or complete arm. Target logical output 151x151."
+    }
+  ]
+}

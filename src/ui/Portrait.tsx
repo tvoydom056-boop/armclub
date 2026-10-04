@@ -1,4 +1,5 @@
 import type { OpponentLook } from '../core/opponents';
+import { ART_OPPONENTS } from '../game/art';
 
 const hex = (n: number) => '#' + n.toString(16).padStart(6, '0');
 const darker = (n: number, k: number) => {
@@ -7,8 +8,11 @@ const darker = (n: number, k: number) => {
 };
 const INK = '#3b1d14';
 
-/** Упрощённый портрет соперника для карточек (в сцене лицо рисуется кодом с мимикой). */
-export function Portrait({ look }: { look: OpponentLook }) {
+/** Готовое лицо для бойцов со спрайтами, рисованный портрет для остальных. */
+export function Portrait({ look, id }: { look: OpponentLook; id?: string }) {
+  if (id && ART_OPPONENTS.includes(id)) {
+    return <img className="portrait" src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />;
+  }
   const w = 120 * look.build;
   const hair = hex(look.hair);
   const stroke = { stroke: INK, strokeWidth: 7, strokeLinejoin: 'round' as const };

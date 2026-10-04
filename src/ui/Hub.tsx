@@ -96,7 +96,7 @@ function OpponentCard({ opp, wins, unlocked, ready }: { opp: OpponentDef; wins: 
     <article className={`opp card ${opp.boss ? 'boss' : ''} ${unlocked ? '' : 'locked'}`}>
       {opp.boss && <div className="ribbon">БОСС</div>}
       <div className="opp-pic">
-        <Portrait look={opp.look} />
+        <Portrait look={opp.look} id={opp.id} />
         {!unlocked && <div className="lock">🔒</div>}
       </div>
       <div className="opp-info">
