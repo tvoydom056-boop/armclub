@@ -5,7 +5,7 @@ import type { Technique } from '../core/techniques';
 const BASE = `${import.meta.env.BASE_URL}art/`;
 
 /** Бойцы, для которых уже есть нарисованные спрайты. */
-export const ART_OPPONENTS: readonly string[] = ['boris'];
+export const ART_OPPONENTS: readonly string[] = ['boris', 'yos'];
 
 export type HeadKey = 'calm' | 'strain' | 'telegraph' | 'tired' | 'lose' | 'win' | 'press';
 export const HEAD_KEYS: readonly HeadKey[] = ['calm', 'strain', 'telegraph', 'tired', 'lose', 'win', 'press'];
@@ -13,7 +13,7 @@ export type ClaspPose = 'neutral' | Technique;
 
 const SCENE = ['bg', 'table', 'pad_opp', 'pad_me', 'pin_opp', 'pin_me'] as const;
 const ME = ['free_idle', 'free_grip'] as const;
-const OPP = ['torso_motion', 'arm_free'] as const;
+const OPP = ['torso_motion', 'arm_free', 'cuff'] as const;
 
 export const sceneKey = (n: (typeof SCENE)[number]) => `art:scene/${n}`;
 export const meKey = (n: (typeof ME)[number]) => `art:me/${n}`;
