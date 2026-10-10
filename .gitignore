@@ -39,3 +39,5 @@ sprite/_meta/*
 docs/art-reference/arms-checks/
 docs/art-reference/arms-side-pin-checks/
 docs/art-reference/video_frames/
+output/
+*.MOV
