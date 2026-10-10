@@ -69,13 +69,13 @@ export function upgradeCost(def: UpgradeDef, level: number): number {
 }
 
 /** Базовый штраф, когда твою технику контрят. */
-export const BASE_DISADVANTAGE = 0.35;
+const BASE_DISADVANTAGE = 0.35;
 /** Ниже этого штрафа запястье не опускает. */
 const WRIST_FLOOR = 0.12;
 /** Шаг подобран так, что 10-й уровень доводит штраф ровно до пола — ни один уровень не пропадает зря. */
 const WRIST_STEP = (BASE_DISADVANTAGE - WRIST_FLOOR) / 10;
 /** Выше этой позиции пресс получает бонус, ниже — штраф. */
-export const BASE_PRESS_GATE = 0.15;
+const BASE_PRESS_GATE = 0.15;
 
 export interface PlayerStats {
   power: Record<Technique, number>;

@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { rewardFor, type EndReason } from '../core/match';
-import { OPPONENTS, opponentById } from '../core/opponents';
+import { OPPONENTS, opponentById, type OpponentDef } from '../core/opponents';
 import { emptyLevels, upgradeById, upgradeCost, type Levels, type UpgradeId } from '../core/upgrades';
 
-export type Screen = 'hub' | 'match';
-export type Tab = 'fights' | 'shop';
+type Screen = 'hub' | 'match';
+type Tab = 'fights' | 'shop';
 
-export interface MatchResult {
+interface MatchResult {
   oppId: string;
   won: boolean;
   reason: EndReason;
@@ -26,8 +26,11 @@ interface SaveData {
 interface GameStore extends SaveData {
   screen: Screen;
   tab: Tab;
+  /** Версия состава соперников (ROSTERS): 1 — вся карьера, 2 — Боря, Лева, Дэнч, Виталик. Не сохраняется. */
+  version: 1 | 2;
   oppId: string | null;
   result: MatchResult | null;
+  setVersion: (version: 1 | 2) => void;
   startMatch: (oppId: string) => void;
   finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number }) => void;
   buy: (id: UpgradeId) => boolean;
@@ -44,8 +47,11 @@ export const useGame = create<GameStore>()(
       ...freshSave(),
       screen: 'hub',
       tab: 'fights',
+      version: 1,
       oppId: null,
       result: null,
+
+      setVersion: (version) => set({ version }),
 
       startMatch: (oppId) => set({ screen: 'match', oppId, result: null }),
 
@@ -95,8 +101,8 @@ export const useGame = create<GameStore>()(
   ),
 );
 
-/** Соперник доступен, если побеждён предыдущий. */
-export function isUnlocked(oppId: string, wins: Record<string, number>): boolean {
-  const i = OPPONENTS.findIndex((o) => o.id === oppId);
-  return i <= 0 || (wins[OPPONENTS[i - 1].id] ?? 0) > 0;
+/** Соперник доступен, если побеждён предыдущий в составе. */
+export function isUnlocked(oppId: string, wins: Record<string, number>, roster: readonly OpponentDef[] = OPPONENTS): boolean {
+  const i = roster.findIndex((o) => o.id === oppId);
+  return i <= 0 || (wins[roster[i - 1].id] ?? 0) > 0;
 }

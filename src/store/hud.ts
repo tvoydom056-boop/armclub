@@ -3,7 +3,7 @@ import type { MatchPhase } from '../core/match';
 import type { Technique } from '../core/techniques';
 
 /** Снимок матча для React-интерфейса. Обновляется сценой ~12 раз в секунду. */
-export interface HudState {
+interface HudState {
   ready: boolean;
   active: boolean;
   phase: MatchPhase;

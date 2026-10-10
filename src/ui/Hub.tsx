@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { OPPONENTS, type OpponentDef } from '../core/opponents';
+import { ROSTERS, type OpponentDef } from '../core/opponents';
 import { BEATS, TECHNIQUES, TECH_INFO } from '../core/techniques';
 import { CATEGORY_INFO, UPGRADES, upgradeCost, type UpgradeCategory, type UpgradeDef } from '../core/upgrades';
 import { isUnlocked, useGame } from '../store/game';
@@ -15,7 +15,7 @@ import './hub.css';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
 const CATS: UpgradeCategory[] = ['hook', 'toproll', 'press', 'body'];
-const prerequisite = (id: string) => OPPONENTS[Math.max(0, OPPONENTS.findIndex((o) => o.id === id) - 1)];
+const prerequisite = (roster: readonly OpponentDef[], id: string) => roster[Math.max(0, roster.findIndex((o) => o.id === id) - 1)];
 /** Общий подвал «Яма»: фон хаба и боя у соперников без своего фона. */
 const SHARED_BG = `${import.meta.env.BASE_URL}art/scene/bg.png`;
 
@@ -23,6 +23,8 @@ export function Hub() {
   const tab = useGame((s) => s.tab);
   const coins = useGame((s) => s.coins);
   const setTab = useGame((s) => s.setTab);
+  const version = useGame((s) => s.version);
+  const setVersion = useGame((s) => s.setVersion);
   const levels = useGame((s) => s.levels);
   const canBuyAny = UPGRADES.some((u) => levels[u.id] < u.maxLevel && coins >= upgradeCost(u, levels[u.id]));
   return (
@@ -31,6 +33,9 @@ export function Hub() {
         <div className="logo">
           <span className="logo-mark"><UpgradeArt id="biceps" /></span>
           <div><span className="logo-title">АРМ-КЛУБ</span><span className="logo-caption">СИЛА РЕШАЕТ. ТЕХНИКА ПОБЕЖДАЕТ.</span></div>
+        </div>
+        <div className="version-switch" role="group" aria-label="Версия состава">
+          {([1, 2] as const).map((v) => <button key={v} className={`version-btn ${version === v ? 'on' : ''}`} aria-pressed={version === v} onClick={() => setVersion(v)}>Версия {v}</button>)}
         </div>
         <nav className="tabs" aria-label="Разделы клуба">
           <button className={`tab ${tab === 'fights' ? 'on' : ''}`} aria-current={tab === 'fights' ? 'page' : undefined} onClick={() => setTab('fights')}><ClubIcon name="fight" /> Бои</button>
@@ -48,9 +53,11 @@ function Fights() {
   const wins = useGame((s) => s.wins);
   const ready = useHud((s) => s.ready);
   const setTab = useGame((s) => s.setTab);
-  const defeated = OPPONENTS.filter((o) => (wins[o.id] ?? 0) > 0).length;
+  const version = useGame((s) => s.version);
+  const roster = ROSTERS[version];
+  const defeated = roster.filter((o) => (wins[o.id] ?? 0) > 0).length;
   // Из закрытых раскрыт только ближайший — остальные инкогнито.
-  const nextId = OPPONENTS.find((o) => !isUnlocked(o.id, wins))?.id;
+  const nextId = roster.find((o) => !isUnlocked(o.id, wins, roster))?.id;
   return (
     <div className="fights">
       <aside className="fight-sidebar">
@@ -67,8 +74,8 @@ function Fights() {
         <button className="sidebar-training" onClick={() => setTab('shop')}><ClubIcon name="body" /><span><b>Не хватает силы?</b><small>Загляни на тренировку</small></span><ClubIcon name="arrow" /></button>
       </aside>
       <section className="fight-roster" aria-labelledby="roster-title">
-        <div className="section-heading"><div><div className="eyebrow">ПОДВАЛЬНАЯ ЛИГА</div><h2 id="roster-title">Выбери соперника</h2></div><span className="roster-progress"><ClubIcon name="check" /> Побеждено <b>{defeated} / {OPPONENTS.length}</b></span></div>
-        <div className="opps">{OPPONENTS.map((o, i) => <OpponentCard key={o.id} opp={o} index={i} wins={wins[o.id] ?? 0} unlocked={isUnlocked(o.id, wins)} unknown={!isUnlocked(o.id, wins) && o.id !== nextId} ready={ready} />)}</div>
+        <div className="section-heading"><div><div className="eyebrow">ПОДВАЛЬНАЯ ЛИГА</div><h2 id="roster-title">Выбери соперника</h2></div><span className="roster-progress"><ClubIcon name="check" /> Побеждено <b>{defeated} / {roster.length}</b></span></div>
+        <div className="opps">{roster.map((o, i) => <OpponentCard key={o.id} opp={o} index={i} wins={wins[o.id] ?? 0} unlocked={isUnlocked(o.id, wins, roster)} unknown={!isUnlocked(o.id, wins, roster) && o.id !== nextId} ready={ready} />)}</div>
       </section>
     </div>
   );
@@ -76,6 +83,7 @@ function Fights() {
 
 function OpponentCard({ opp, index, wins, unlocked, unknown, ready }: { opp: OpponentDef; index: number; wins: number; unlocked: boolean; unknown: boolean; ready: boolean }) {
   const favorite = TECHNIQUES.reduce((a, b) => opp.weights[a] >= opp.weights[b] ? a : b);
+  const version = useGame((s) => s.version);
   return (
     <article className={`opp card opp-${opp.id} ${opp.boss ? 'boss' : ''} ${unlocked ? '' : 'locked'} ${unknown ? 'unknown' : ''}`}>
       {/* на карточке тот же фон, на котором идёт бой */}
@@ -87,7 +95,7 @@ function OpponentCard({ opp, index, wins, unlocked, unknown, ready }: { opp: Opp
       </div>
       {unknown
         ? <div className="opp-info"><h4>???</h4><div className="nick">«???»</div><p>Сначала пройди предыдущих соперников.</p></div>
-        : <div className="opp-info"><h4>{opp.name}</h4><div className="nick">«{opp.nick}»</div><p>{unlocked ? opp.desc : `Сначала победи: ${prerequisite(opp.id).name}.`}</p></div>}
+        : <div className="opp-info"><h4>{opp.name}</h4><div className="nick">«{opp.nick}»</div><p>{unlocked ? opp.desc : `Сначала победи: ${prerequisite(ROSTERS[version], opp.id).name}.`}</p></div>}
       <div className="opp-foot">
         <div className="reward"><small>НАГРАДА</small><span><span className="coin" />{unknown ? '???' : opp.reward}</span></div>
         {wins > 0 && <span className="wins" title="Число побед"><ClubIcon name="check" /> ×{wins}</span>}

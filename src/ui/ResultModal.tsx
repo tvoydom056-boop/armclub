@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { sfx } from '../audio/sfx';
-import { OPPONENTS, opponentById } from '../core/opponents';
+import { ROSTERS, opponentById } from '../core/opponents';
 import { isUnlocked, useGame } from '../store/game';
 import { beginMatch, leaveMatch } from './matchControl';
 
@@ -13,6 +13,7 @@ const REASON: Record<string, string> = {
 export function ResultModal() {
   const result = useGame((s) => s.result);
   const wins = useGame((s) => s.wins);
+  const version = useGame((s) => s.version);
   const won = result?.won;
   useEffect(() => {
     if (won) sfx.ui.coins();
@@ -20,9 +21,10 @@ export function ResultModal() {
   if (!result) return null;
 
   const opp = opponentById(result.oppId);
-  const idx = OPPONENTS.findIndex((o) => o.id === opp.id);
-  const next = OPPONENTS[idx + 1];
-  const nextOpen = result.won && next && isUnlocked(next.id, wins);
+  const roster = ROSTERS[version];
+  const idx = roster.findIndex((o) => o.id === opp.id);
+  const next = roster[idx + 1];
+  const nextOpen = result.won && next && isUnlocked(next.id, wins, roster);
   const allDone = result.won && opp.boss;
 
   return (

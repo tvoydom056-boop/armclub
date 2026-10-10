@@ -151,4 +151,97 @@ export const OPPONENTS: readonly OpponentDef[] = [
   },
 ];
 
-export const opponentById = (id: string): OpponentDef => OPPONENTS.find((o) => o.id === id) ?? OPPONENTS[0];
+/** Бойцы только второй версии состава: в карьеру первой не входят. */
+const LEVA: OpponentDef = {
+  id: 'leva',
+  name: 'Лева',
+  nick: 'Борода-тяжеловес',
+  desc: 'Тяжеловес в жёлтой майке. Говорит мало, давит много — пресс у него как гидравлика.',
+  power: 2.6,
+  weights: { hook: 0.3, toproll: 0.1, press: 0.6 },
+  reactiveness: 0.15,
+  telegraph: 0.95,
+  decision: [5, 7.5],
+  surgeEvery: [9, 13],
+  drain: 1,
+  reward: 40,
+  voice: 82,
+  look: { skin: 0xd09a6a, skinShade: 0xb07a4c, hair: 0x2a1d16, shirt: 0xf2c230, shirtShade: 0xc99a1c,
+    hairStyle: 'messy', facial: 'beard', glasses: false, build: 1.3, belly: 0.3, accent: 0x1c1c1f },
+};
+const DENCH: OpponentDef = {
+  id: 'dench',
+  name: 'Дэнч',
+  nick: 'Чёрная майка',
+  desc: 'Майка без рукавов, чтобы руки дышали. Крутит топролл, пока у тебя не разожмутся пальцы.',
+  power: 2.9,
+  weights: { hook: 0.2, toproll: 0.6, press: 0.2 },
+  reactiveness: 0.3,
+  telegraph: 0.9,
+  decision: [4.5, 6.5],
+  surgeEvery: [8, 12],
+  drain: 1,
+  reward: 50,
+  voice: 105,
+  look: { skin: 0xf0b48a, skinShade: 0xd99468, hair: 0x2e2018, shirt: 0x1c1c1f, shirtShade: 0x101012,
+    hairStyle: 'messy', facial: 'none', glasses: false, build: 1.15, belly: 0, accent: 0xb63c42 },
+};
+const VITALIK: OpponentDef = {
+  id: 'vitalik',
+  name: 'Виталик',
+  nick: 'Борода из качалки',
+  desc: 'Живёт в качалке, борода растёт быстрее рекордов. Его крюк не разогнуть.',
+  power: 3.1,
+  weights: { hook: 0.55, toproll: 0.2, press: 0.25 },
+  reactiveness: 0.4,
+  telegraph: 0.85,
+  decision: [4, 6],
+  surgeEvery: [7, 11],
+  drain: 1,
+  reward: 60,
+  voice: 92,
+  look: { skin: 0xf0b48a, skinShade: 0xd99468, hair: 0x2a1d16, shirt: 0x1c1c1f, shirtShade: 0x101012,
+    hairStyle: 'messy', facial: 'beard', glasses: false, build: 1.2, belly: 0, accent: 0x3b82c4 },
+};
+const ILYA: OpponentDef = {
+  id: 'ilya',
+  name: 'Илья',
+  nick: 'Молодой атлет',
+  desc: 'Свежий, быстрый и без слабых мест. Читает твою технику и сразу отвечает.',
+  power: 3.25,
+  weights: { hook: 0.3, toproll: 0.35, press: 0.35 },
+  reactiveness: 0.5,
+  telegraph: 0.8,
+  decision: [3.5, 5.5],
+  surgeEvery: [7, 10],
+  drain: 1,
+  reward: 70,
+  voice: 118,
+  look: { skin: 0xf0b48a, skinShade: 0xd99468, hair: 0x8a6a45, shirt: 0x1c1c1f, shirtShade: 0x101012,
+    hairStyle: 'messy', facial: 'none', glasses: false, build: 1.1, belly: 0, accent: 0x9aa3ad },
+};
+const ERMES: OpponentDef = {
+  id: 'ermes',
+  name: 'Ермес',
+  nick: 'Бритые виски',
+  desc: 'Щетина, чёрная футболка и тяжёлые предплечья. Меняет хват, пока ты думаешь.',
+  power: 3.4,
+  weights: { hook: 0.4, toproll: 0.4, press: 0.2 },
+  reactiveness: 0.55,
+  telegraph: 0.75,
+  decision: [3.5, 5],
+  surgeEvery: [6, 9],
+  drain: 1,
+  reward: 80,
+  voice: 96,
+  look: { skin: 0xf0b48a, skinShade: 0xd99468, hair: 0x2a1d16, shirt: 0x1c1c1f, shirtShade: 0x101012,
+    hairStyle: 'messy', facial: 'beard', glasses: false, build: 1.2, belly: 0, accent: 0x9aa3ad },
+};
+
+/** Состав боёв по версии игры; порядок — порядок открытия. */
+export const ROSTERS: Readonly<Record<1 | 2, readonly OpponentDef[]>> = {
+  1: OPPONENTS,
+  2: [OPPONENTS[0], LEVA, DENCH, VITALIK, ILYA, ERMES],
+};
+
+export const opponentById = (id: string): OpponentDef => [...OPPONENTS, LEVA, DENCH, VITALIK, ILYA, ERMES].find((o) => o.id === id) ?? OPPONENTS[0];

@@ -40,6 +40,13 @@
 .club-hub .tab .club-icon { width: 1.2em; height: 1.2em; }
 .club-hub .tab:hover { color: #fff0d6; border-color: #b2765f; }
 .club-hub .dot { width: .6em; height: .6em; background: var(--gold); border: .13em solid #24181a; animation: none; top: .28em; right: .28em; }
+.club-hub .version-switch { display: flex; gap: .3em; padding: .3em; background: #171317; border: .13em solid #493139; border-radius: .5em; }
+.club-hub .version-btn {
+  padding: .45em 1em; font-size: 1em; background: transparent; color: #b6a093;
+  border: .12em solid transparent; border-radius: .35em; box-shadow: none; transform: none;
+}
+.club-hub .version-btn:hover { color: #fff0d6; }
+.club-hub .version-btn.on { background: #a8373e; color: #fff0d6; border-color: #d86a58; }
 .club-hub .hub-right { gap: 1em; }
 .club-hub .sound { gap: .5em; }
 .sound-btn .club-icon { width: 1.1em; height: 1.1em; }
@@ -101,8 +108,6 @@
 .club-hub .fighter-tech .club-icon { width: 1.15em; height: 1.15em; }
 .club-hub .fighter-bust { position: absolute; inset: 0; overflow: hidden; }
 .club-hub .fighter-head { position: absolute; width: 6.2em; left: 50%; bottom: -.6em; transform: translateX(-50%); pointer-events: none; }
-.club-hub .fighter-bust-yos .fighter-head { width: 6.5em; bottom: -.85em; }
-.club-hub .fighter-bust-venya .fighter-head { width: 7em; bottom: -.45em; }
 .club-hub .opp-pic > svg.portrait { position: absolute; height: 105%; width: 100%; bottom: -.2em; }
 .club-hub .opp.locked .opp-pic .portrait,
 .club-hub .opp.locked .fighter-bust { filter: grayscale(1) brightness(.28) sepia(.2); opacity: .7; }

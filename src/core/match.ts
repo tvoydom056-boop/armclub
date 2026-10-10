@@ -48,7 +48,7 @@ export interface MatchConfig {
   opp: OpponentDef;
 }
 
-export interface OppState {
+interface OppState {
   tech: Technique;
   /** Техника, на которую он вот-вот переключится (видно по лицу). */
   next: Technique | null;
@@ -93,12 +93,12 @@ export type MatchEvent =
   | { type: 'oppRest' }
   | { type: 'end'; result: 'won' | 'lost'; reason: EndReason };
 
-export interface MatchInput {
+interface MatchInput {
   clicks: number;
   tech?: Technique | null;
 }
 
-export const staminaFactor = (stamina: number) => 0.35 + 0.65 * Math.min(1, stamina / 0.35);
+const staminaFactor = (stamina: number) => 0.35 + 0.65 * Math.min(1, stamina / 0.35);
 
 function weightedPick(weights: Record<Technique, number>, rng: Rng): Technique {
   const total = TECHNIQUES.reduce((sum, t) => sum + weights[t], 0);

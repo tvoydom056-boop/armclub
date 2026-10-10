@@ -2,7 +2,7 @@ export type Technique = 'hook' | 'toproll' | 'press';
 
 export const TECHNIQUES: readonly Technique[] = ['hook', 'toproll', 'press'];
 
-export interface TechniqueInfo {
+interface TechniqueInfo {
   name: string;
   /** Одна строка: чем техника хороша. */
   hint: string;
