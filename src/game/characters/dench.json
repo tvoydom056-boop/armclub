@@ -1,0 +1,44 @@
+{
+  "bg": "bg_iron_foundry",
+  "torso": {
+    "scale": 0.3289,
+    "shoulder": {
+      "x": 215,
+      "y": 625
+    },
+    "neck": {
+      "x": 718,
+      "y": 218
+    },
+    "freeShoulder": {
+      "x": 1060,
+      "y": 295
+    }
+  },
+  "head": {
+    "scale": 0.335,
+    "neck": {
+      "x": 300,
+      "y": 650
+    },
+    "fade": {
+      "from": 580,
+      "to": 640
+    }
+  },
+  "arms": {
+    "scale": 0.85,
+    "drop": 0,
+    "sag": {
+      "angle": 0,
+      "drop": 0
+    }
+  },
+  "freeArm": {
+    "scale": 0.75
+  },
+  "bust": {
+    "width": 6.5,
+    "bottom": -0.85
+  }
+}

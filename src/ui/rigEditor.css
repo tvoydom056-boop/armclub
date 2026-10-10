@@ -1,0 +1,34 @@
+/* Редактор рига (?rig=<id>, только dev) */
+.rig-panel {
+  position: fixed; top: 0; right: 0; z-index: 1000; width: 300px; max-height: 100vh; overflow: auto;
+  padding: 10px 12px; box-sizing: border-box;
+  background: rgba(18, 14, 28, .92); color: #f4ead8; font: 12px/1.35 system-ui, sans-serif;
+}
+.rig-panel h3 { margin: 0 0 6px; font-size: 15px; }
+.rig-panel h4 { margin: 8px 0 4px; font-size: 12px; color: #ffcf6a; }
+.rig-panel section { border-top: 1px solid rgba(255, 255, 255, .12); padding-top: 4px; }
+.rig-panel button { margin: 2px 4px 2px 0; padding: 3px 8px; font: inherit; cursor: pointer; color: #1b1424; background: #e8dcc6; border: 0; border-radius: 4px; }
+.rig-panel input, .rig-panel select { color: #1b1424; background: #fff; }
+.rig-panel .rig-save { background: #3fb950; color: #fff; border: 0; border-radius: 4px; }
+.rig-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 4px 0; }
+.rig-row input[type="range"] { flex: 1; }
+.rig-num { display: inline-flex; align-items: center; gap: 4px; margin: 2px 8px 2px 0; }
+.rig-num input { width: 70px; font: inherit; }
+.rig-pt { display: flex; align-items: center; flex-wrap: wrap; }
+.rig-pt > span { width: 70px; }
+.rig-status { min-height: 1.3em; color: #9ee6a0; }
+.rig-hint { color: #b9ad98; }
+
+.rig-handle {
+  position: fixed; z-index: 999; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); cursor: grab; touch-action: none;
+}
+.rig-handle:active { cursor: grabbing; }
+.rig-handle span {
+  position: absolute; left: 22px; top: -2px; white-space: nowrap; pointer-events: none;
+  font: 600 11px system-ui, sans-serif; color: #fff; text-shadow: 0 1px 2px #000;
+}
+.rig-handle-torso { background: #e5534b; }
+.rig-handle-neck { background: #3fb950; }
+.rig-handle-free { background: #539bf5; }
+.rig-ghost { position: fixed; z-index: 998; opacity: .35; pointer-events: none; }

@@ -6,8 +6,8 @@ import { LAYOUT, lerp, type Pt } from './layout';
 
 type G = Phaser.GameObjects.Graphics;
 
-export const PLAYER_SKIN = 0xf2a273;
-export const PLAYER_SHADE = 0xd4845a;
+const PLAYER_SKIN = 0xf2a273;
+const PLAYER_SHADE = 0xd4845a;
 const BAND = 0xe8344a;
 
 /** Точки подключения предплечий к замку (локальные координаты замка). */
@@ -120,7 +120,7 @@ function half(wa: number, wb: number, bulge: number, bulgeAt: number, t: number)
   return (wa + (wb - wa) * t) / 2 + bulge * Math.exp(-((t - bulgeAt) ** 2) / (2 * 0.2 * 0.2));
 }
 
-export interface PlayerArmOpts {
+interface PlayerArmOpts {
   base: Pt;
   wrist: Pt;
   wristWidth: number;
@@ -197,7 +197,7 @@ export function drawPlayerArms(g: G, o: PlayerArmOpts): void {
   polyline(g, [along(base, wrist, stripeT, half(wa, wb, bulge, bAt, stripeT) - 4), along(base, wrist, stripeT, -half(wa, wb, bulge, bAt, stripeT) + 4)], 7, 0xffffff, 0.9);
 }
 
-export interface OppArmOpts {
+interface OppArmOpts {
   look: OpponentLook;
   shoulder: Pt;
   shoulder2: Pt;

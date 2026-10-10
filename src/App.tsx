@@ -1,4 +1,4 @@
-import { useEffect, useRef, type PointerEvent } from 'react';
+import { lazy, Suspense, useEffect, useRef, type PointerEvent } from 'react';
 import { initAudio } from './audio/engine';
 import { sfx } from './audio/sfx';
 import { bus } from './game/bus';
@@ -9,6 +9,10 @@ import { useSettings } from './store/settings';
 import { Hub } from './ui/Hub';
 import { MatchHud } from './ui/MatchHud';
 import { ResultModal } from './ui/ResultModal';
+
+/** Редактор рига персонажа: только в dev, по адресу ?rig=<id>. */
+const rigId = import.meta.env.DEV ? new URLSearchParams(location.search).get('rig') : null;
+const RigEditor = import.meta.env.DEV ? lazy(() => import('./ui/RigEditor')) : null;
 
 export default function App() {
   const screen = useGame((s) => s.screen);
@@ -43,9 +47,10 @@ export default function App() {
   return (
     <div className="stage" onPointerDownCapture={tick}>
       <div ref={phaserRoot} className="phaser-root" />
-      {screen === 'match' && <MatchHud />}
+      {screen === 'match' && !rigId && <MatchHud />}
       {screen === 'hub' && <Hub />}
       {screen === 'match' && result && <ResultModal />}
+      {rigId && RigEditor && <Suspense fallback={null}><RigEditor id={rigId} root={phaserRoot} /></Suspense>}
     </div>
   );
 }

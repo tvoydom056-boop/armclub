@@ -1,0 +1,36 @@
+{
+  "bg": "bg_london",
+  "torso": {
+    "scale": 0.3849,
+    "shoulder": {
+      "x": 308.7,
+      "y": 431.6
+    },
+    "neck": {
+      "x": 770,
+      "y": 150
+    },
+    "freeShoulder": {
+      "x": 1100,
+      "y": 280
+    }
+  },
+  "head": {
+    "scale": 0.39,
+    "neck": {
+      "x": 345,
+      "y": 614
+    }
+  },
+  "arms": {
+    "scale": 0.95,
+    "drop": 40,
+    "sag": {
+      "angle": 0.14,
+      "drop": 32
+    }
+  },
+  "freeArm": {
+    "scale": 0.62
+  }
+}

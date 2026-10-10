@@ -1,0 +1,36 @@
+{
+  "bg": "bg_neva",
+  "torso": {
+    "scale": 0.3849,
+    "shoulder": {
+      "x": 308.7,
+      "y": 431.6
+    },
+    "neck": {
+      "x": 820.5,
+      "y": 190
+    },
+    "freeShoulder": {
+      "x": 1100.7,
+      "y": 270
+    }
+  },
+  "head": {
+    "scale": 0.44,
+    "neck": {
+      "x": 362,
+      "y": 573
+    }
+  },
+  "arms": {
+    "scale": 0.95,
+    "drop": 60,
+    "sag": {
+      "angle": 0,
+      "drop": 0
+    }
+  },
+  "freeArm": {
+    "scale": 0.62
+  }
+}

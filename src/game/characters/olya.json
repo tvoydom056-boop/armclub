@@ -1,0 +1,36 @@
+{
+  "bg": "bg_police",
+  "torso": {
+    "scale": 0.3849,
+    "shoulder": {
+      "x": 308.7,
+      "y": 431.6
+    },
+    "neck": {
+      "x": 790,
+      "y": 40
+    },
+    "freeShoulder": {
+      "x": 1100,
+      "y": 260
+    }
+  },
+  "head": {
+    "scale": 0.42,
+    "neck": {
+      "x": 405,
+      "y": 480
+    }
+  },
+  "arms": {
+    "scale": 0.95,
+    "drop": 60,
+    "sag": {
+      "angle": 0,
+      "drop": 0
+    }
+  },
+  "freeArm": {
+    "scale": 0.62
+  }
+}

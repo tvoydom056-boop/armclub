@@ -1,8 +1,22 @@
 import type { EndReason } from '../core/match';
 import type { Technique } from '../core/techniques';
 import type { PlayerStats } from '../core/upgrades';
+import type { HeadKey } from './art';
+import type { ArtPoints } from './artStage';
+import type { CharacterArt } from './characters';
 
-export interface BusEvents {
+/** Редактор рига: какого персонажа и в какой позе держать замороженным. */
+export interface RigPreview {
+  id: string;
+  p: number;
+  head: HeadKey;
+  tech: 'neutral' | Technique;
+}
+
+interface BusEvents {
+  'rig:preview': RigPreview;
+  'rig:set': CharacterArt;
+  'rig:points': ArtPoints;
   'game:ready': { ok: true };
   'match:start': { oppId: string; stats: PlayerStats };
   'match:end': { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; clicks: number };

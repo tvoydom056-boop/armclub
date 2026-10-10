@@ -1,5 +1,5 @@
 import type { OpponentLook } from '../core/opponents';
-import { ART_OPPONENTS } from '../game/art';
+import { characterArt } from '../game/characters';
 
 const hex = (n: number) => '#' + n.toString(16).padStart(6, '0');
 const darker = (n: number, k: number) => {
@@ -10,10 +10,13 @@ const INK = '#3b1d14';
 
 /** Готовое лицо для бойцов со спрайтами, рисованный портрет для остальных. */
 export function Portrait({ look, id, bust = false }: { look: OpponentLook; id?: string; bust?: boolean }) {
-  if (id && ART_OPPONENTS.includes(id)) {
+  const art = id ? characterArt(id) : undefined;
+  if (id && art) {
+    // размер и посадка головы на карточке — из манифеста персонажа (bust), иначе по умолчанию из hub.css
+    const fit = art.bust && { width: `${art.bust.width}em`, bottom: `${art.bust.bottom}em` };
     if (bust) return (
-      <div className={`fighter-bust fighter-bust-${id}`} aria-hidden="true">
-        <img className="fighter-head" src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />
+      <div className="fighter-bust" aria-hidden="true">
+        <img className="fighter-head" style={fit} src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />
       </div>
     );
     return <img className="portrait" src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />;

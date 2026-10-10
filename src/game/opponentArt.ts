@@ -20,7 +20,7 @@ export interface Face {
 
 export const calmFace = (): Face => ({ brow: 0, eye: 0.9, mouth: 0.05, grit: 0, smirk: 0.2, sweat: 0, flush: 0, veins: 0 });
 
-export interface DrawOpts {
+interface DrawOpts {
   head: Pt;
   tilt: number;
   shake: Pt;

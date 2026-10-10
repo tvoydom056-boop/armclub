@@ -129,7 +129,7 @@ export class JoinedArms {
   private slip: Pt = { x: 0, y: 0 };
 
   /** size — общий размер связки рук для конкретного соперника; захват остаётся на месте. */
-  constructor(scene: Phaser.Scene, id: string, private size = 1) {
+  constructor(scene: Phaser.Scene, id: string, public size = 1) {
     const key = longArmsKey(scene, joinedArmsKey(id));
     this.image = scene.add.image(0, 0, key, 'motion_4').setOrigin(0).setScale(ARM_SCALE);
     this.object = scene.add.container(0, 0, [this.image]).setDepth(31);

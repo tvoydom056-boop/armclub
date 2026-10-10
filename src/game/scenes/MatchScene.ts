@@ -27,7 +27,7 @@ import {
 import { hasOppArt, type HeadKey } from '../art';
 import { ArtStage } from '../artStage';
 import { joinedArmsCenter } from '../armMotion';
-import { bus } from '../bus';
+import { bus, type RigPreview } from '../bus';
 import { OUTLINE, arrowPts, clamp01, poly, polyline } from '../draw';
 import { H, LAYOUT, W, claspPoint, claspRotation, claspScale, lerp, type Pt } from '../layout';
 import { calmFace, drawHead, drawTorso, faceTarget, type Face, type FaceCtx } from '../opponentArt';
@@ -70,6 +70,8 @@ export class MatchScene extends Phaser.Scene {
   /** Нарисованная сцена; есть только для бойцов со спрайтами, остальные рисуются кодом. */
   private art: ArtStage | null = null;
   private artFor = '';
+  /** Редактор рига (?rig=<id> в dev): бой стоит, позу и мимику задаёт редактор. */
+  private preview: RigPreview | null = null;
   private gOpp!: G;
   private gShadow!: G;
   private gOppArm!: G;
@@ -134,6 +136,12 @@ export class MatchScene extends Phaser.Scene {
       bus.on('input:click', ({ n }) => {
         this.pendingClicks += n;
       }),
+      bus.on('rig:preview', (pv) => {
+        if (!this.preview) this.children.list.filter((c) => c instanceof Phaser.GameObjects.Text).forEach((c) => c.destroy());
+        this.preview = pv;
+        this.useArt(pv.id);
+      }),
+      bus.on('rig:set', (rig) => this.art?.setRig(rig)),
     );
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.unsubs.forEach((u) => u()));
 
@@ -211,6 +219,16 @@ export class MatchScene extends Phaser.Scene {
     const dt = Math.min(0.05, deltaMs / 1000);
     if (!this.cfg || !this.state) return;
     this.clock += dt;
+
+    const pv = this.preview;
+    if (pv && this.art) {
+      const tech = pv.tech === 'neutral' ? 'hook' : pv.tech;
+      const still = { x: 0, y: 0 };
+      this.art.update({ dt, p: pv.p, ourTech: tech, oppTech: tech, fighting: pv.tech !== 'neutral', head: pv.head, breathe: 0, lower: 0, ourEffort: 0, shakeOur: still, shakeOpp: still });
+      this.gShadow.clear();
+      bus.emit('rig:points', this.art.points);
+      return;
+    }
 
     if (this.hitStop > 0) {
       this.hitStop -= dt;
