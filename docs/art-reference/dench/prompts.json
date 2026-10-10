@@ -1,0 +1,137 @@
+{
+  "character": "Дэнч",
+  "characterId": "dench",
+  "mode": "built-in image_gen",
+  "transparentBackground": true,
+  "approvedReferences": [
+    "output/character-concepts/dench-tests-v1/head_calm.png",
+    "output/character-concepts/dench-tests-v1/head_strain.png"
+  ],
+  "costume": "Plain black sleeveless sports tank top; explicitly selected by the user after generator rejected shirtless torso.",
+  "rawDirectory": "output/character-concepts/dench-full-v1",
+  "exportDirectory": "public/art/opponents/dench",
+  "records": [
+    {
+      "file": "head_telegraph.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one production transparent PNG head-expression sprite for the adult male armwrestler DENCH, in our existing comic sports game.\nInput image is the approved Dench head_calm.png EDIT TARGET, the ONLY face identity reference.\nChange ONLY the specified expression. Keep EXACT same face identity, short dark-brown hair, hairline, both ears, head silhouette, broad rounded chin, short thick neck, neck bottom edge, camera angle, scale, position, margins and canvas aspect ratio. Keep warm ochre skin, thick clean dark-brown outline, angular flat cel shadows and sparse hatching. No beard or moustache.\nThe fixed nearly frontal head and short neck are the entire sprite. No shoulders, chest, torso, arms, clothing, text, border, collage, other views or shadows. True transparent alpha background, including all margins. Full scalp and both ears remain within the canvas.\nEXPRESSION: Preparing a technique change: eyes look distinctly DOWN toward the wrestling grip, brows lowered thoughtfully, mouth firmly CLOSED with subtly pursed lips. Focused and calculating. No sweat. Preserve upright angle and neck.",
+      "inputRoles": [
+        "Approved Dench head: edit target / identity"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-e068a550-a078-4801-a186-84419c0cf30f.png"
+    },
+    {
+      "file": "head_tired.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one production transparent PNG head-expression sprite for the adult male armwrestler DENCH, in our existing comic sports game.\nInput image is the approved Dench head_calm.png EDIT TARGET, the ONLY face identity reference.\nChange ONLY the specified expression. Keep EXACT same face identity, short dark-brown hair, hairline, both ears, head silhouette, broad rounded chin, short thick neck, neck bottom edge, camera angle, scale, position, margins and canvas aspect ratio. Keep warm ochre skin, thick clean dark-brown outline, angular flat cel shadows and sparse hatching. No beard or moustache.\nThe fixed nearly frontal head and short neck are the entire sprite. No shoulders, chest, torso, arms, clothing, text, border, collage, other views or shadows. True transparent alpha background, including all margins. Full scalp and both ears remain within the canvas.\nEXPRESSION: Exhaustion after sustained armwrestling: half-closed heavy eyelids, slightly raised inner brows, open mouth taking a breath, relaxed cheeks, two small stylized sweat droplets at a temple. The same strong adult man, tired rather than angry.",
+      "inputRoles": [
+        "Approved Dench head: edit target / identity"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-5d4da06f-a6c6-4471-afee-2d18e4688582.png"
+    },
+    {
+      "file": "head_win.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one production transparent PNG head-expression sprite for the adult male armwrestler DENCH, in our existing comic sports game.\nInput image is the approved Dench head_calm.png EDIT TARGET, the ONLY face identity reference.\nChange ONLY the specified expression. Keep EXACT same face identity, short dark-brown hair, hairline, both ears, head silhouette, broad rounded chin, short thick neck, neck bottom edge, camera angle, scale, position, margins and canvas aspect ratio. Keep warm ochre skin, thick clean dark-brown outline, angular flat cel shadows and sparse hatching. No beard or moustache.\nThe fixed nearly frontal head and short neck are the entire sprite. No shoulders, chest, torso, arms, clothing, text, border, collage, other views or shadows. True transparent alpha background, including all margins. Full scalp and both ears remain within the canvas.\nEXPRESSION: Just won the match: broad confident delighted smile showing a natural row of teeth, brows relaxed and slightly lifted, eyes happily narrowed while still facing player. Proud satisfied adult athlete, not a sinister villain. No sweat.",
+      "inputRoles": [
+        "Approved Dench head: edit target / identity"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-b1300f26-4089-42c3-ade7-8aec2b3b439d.png"
+    },
+    {
+      "file": "head_lose.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one production transparent PNG head-expression sprite for the adult male armwrestler DENCH, in our existing comic sports game.\nInput image is the approved Dench head_calm.png EDIT TARGET, the ONLY face identity reference.\nChange ONLY the specified expression. Keep EXACT same face identity, short dark-brown hair, hairline, both ears, head silhouette, broad rounded chin, short thick neck, neck bottom edge, camera angle, scale, position, margins and canvas aspect ratio. Keep warm ochre skin, thick clean dark-brown outline, angular flat cel shadows and sparse hatching. No beard or moustache.\nThe fixed nearly frontal head and short neck are the entire sprite. No shoulders, chest, torso, arms, clothing, text, border, collage, other views or shadows. True transparent alpha background, including all margins. Full scalp and both ears remain within the canvas.\nEXPRESSION: Just lost the match: eyelids completely CLOSED, eyebrows lifted at inner ends with disappointment, mouth drawn into a small frustrated downward grimace, jaw tight. Sports disappointment without injury or tears. No sweat.",
+      "inputRoles": [
+        "Approved Dench head: edit target / identity"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-af297626-abbc-4d1a-86e1-6746894348f5.png"
+    },
+    {
+      "file": "head_press.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one production transparent PNG head-expression sprite for the adult male armwrestler DENCH, in our existing comic sports game.\nInput image is the approved Dench head_calm.png EDIT TARGET, the ONLY face identity reference.\nChange ONLY the specified expression. Keep EXACT same face identity, short dark-brown hair, hairline, both ears, head silhouette, broad rounded chin, short thick neck, neck bottom edge, camera angle, scale, position, margins and canvas aspect ratio. Keep warm ochre skin, thick clean dark-brown outline, angular flat cel shadows and sparse hatching. No beard or moustache.\nThe fixed nearly frontal head and short neck are the entire sprite. No shoulders, chest, torso, arms, clothing, text, border, collage, other views or shadows. True transparent alpha background, including all margins. Full scalp and both ears remain within the canvas.\nEXPRESSION: Finishing with a powerful press: intensely drawn-together low brows, gaze locked DOWN and forward to the hands, mouth OPEN in a short determined exhalation showing upper teeth, tense cheeks and jaw, slight warm flush at temples, one small sweat bead. Different from the approved clenched-teeth strain expression. Keep original head angle; body motion is handled by the game.",
+      "inputRoles": [
+        "Approved Dench head: edit target / identity"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-fc3e5198-e17c-4cf6-8c12-c02cc42fdb05.png"
+    },
+    {
+      "file": "arm_free.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: ONE transparent free-arm sprite for DENCH in an armwrestling comic sports game.\nImage 1 is the arm EDIT TARGET, exact pose, silhouette, canvas and registration template. Image 2 is approved DENCH HEAD, skin palette and rendering reference.\nModify ONLY the adult male arm: make it Dench's massively thick muscular arm, tan/ochre skin matching approved head, defined round biceps and powerful heavy forearm. Reduce the template's dense hair hatching to sparse short arm-hair strokes and a few restrained vein contours. Preserve original diagonal upper-arm attachment at (60,45) in the 560:620 logical canvas, elbow bend, wrist angle and clenched hand around ONE vertical dark steel cylindrical handle centered near (501,493). Preserve all five fingers, nail shapes and handle geometry. Keep width changes modest so registration and silhouette fit.\nThe arm is ONE connected isolated body part, from clean shoulder cut to fingers, gripping exactly the original handle. No clothing, wristband, extra hands, second arm, head, neck, torso, table or background. Bold dark brown outline, matching warm flat cel-shaded muscles, two angular shadow tones, small highlights, no gradients or realistic texture.\nMaintain original transparent margin and exact 560:620 canvas ratio. Genuine transparent alpha background, no painted checkerboard, shadow, text, UI, labels or collage.",
+      "inputRoles": [
+        "Existing Yos sprite: edit target and geometry",
+        "Approved Dench head: color/style"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/arm_free.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-d98aab92-e11e-4ce0-aea4-612afdb8c807.png"
+    },
+    {
+      "file": "cuff.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: one tiny transparent shoulder-joint overlay cuff.png for adult athlete DENCH in a comic armwrestling game.\nImage 1 is the EDIT TARGET and exact joint geometry reference. Image 2 is Dench's approved head, color/rendering reference.\nKeep the same rounded masculine deltoid patch silhouette, center (87,91) on the logical 151x151 canvas, outline and angle. Adapt the skin to Dench's warm ochre/tan head palette; show powerful rounded muscle in clean angular flat cel shading. Reduce dense hair marks to a few sparse short strokes. This is a bare shoulder muscle connection patch, NOT a garment or wristband.\nONLY one small shoulder-joint patch, no head, neck, chest, arm, hand, table, text, border, backdrop or shadows. True alpha background and transparent margins. Thick dark brown outline, hard cel shadows and small cream highlight. Square canvas. Match registration exactly.",
+      "inputRoles": [
+        "Existing Yos sprite: edit target and geometry",
+        "Approved Dench head: color/style"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/cuff.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-0cf78e05-71e8-4870-8d72-a94f73886f71.png"
+    },
+    {
+      "file": "torso_motion.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: ONE transparent torso_motion.png sprite for adult professional armwrestler DENCH in our comic sports game.\nImage 1 is the torso EDIT TARGET and exact layer registration template. Image 2 is the approved Dench HEAD, identity and warm skin/rendering reference ONLY.\nChange the torso into Dench's massive heavyweight build and DRESS HIM IN A PLAIN BLACK SLEEVELESS SPORTS TRAINING TOP. Solid black/charcoal sports fabric fully covers chest and abdomen. Simple high round crew-neck opening, broad shoulder straps; no logos, lettering or decoration. The upper neck and short bare shoulder roots retain the approved head's warm tan/ochre skin. Chest and trapezius are broad and thick under the shirt; powerful rounded deltoid attachments. No chest hair visible through shirt.\nPreserve EXACT image 1's slight three-quarter front view, 1572:1001 landscape canvas, torso-only separation, position and registration. Neck insertion centered near (752,200), working shoulder root near (470,500), free-arm attachment near (1060,295), clean lower waist crop near y955. Clean flat top neck cut accepts a separate head.\nNO head, face, hands, forearms or full upper arms. Viewer-left shoulder attachment socket keeps transparent space for a separately drawn arm, viewer-right torso edge has no long hanging arm stump or duplicate arm. Keep the full shirt silhouette inside the canvas with clear alpha margins.\nMatch approved head and game: thick dark-brown #3b1d14 outline, warm flat tan skin, crisp angular cel shadows, small cream highlights; black garment has deep brown-black shadows and subtle charcoal highlight shapes. No gradients, photo texture or 3D.\nOne isolated fully clothed torso sprite on TRUE TRANSPARENT ALPHA background. No backdrop, table, shadow, UI, text, logos, grid, other views, collage or extra objects.",
+      "inputRoles": [
+        "Existing Yos sprite: edit target and geometry",
+        "Approved Dench head: color/style"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/torso_motion.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-b537c97b-f60b-4fb8-8056-0b7cbf372d94.png"
+    },
+    {
+      "file": "arms_motion.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: ONE production transparent 3x3 nine-pose armwrestling atlas arms_motion.png for DENCH.\nImage 1 is the EDIT TARGET and exact pose/cell geometry. Image 2 is approved DENCH HEAD, palette/style reference ONLY.\nPreserve the exact 1670:941 landscape canvas ratio, EXACTLY THREE equal columns and THREE equal rows, same nine individual poses and transparent gutters. Copy each existing pose registration, elbow positions, wrist/grip angles, shoulder locations, size and clean bottom crop of player's arm. Center cell (index 4) is neutral; row-major sequence travels from left pin to right pin.\nChange ONLY the OPPONENT male arm and hand on the LEFT of EACH cell into DENCH's extremely powerful thick muscular arm: more rounded large biceps and thick forearm, warm tan/ochre skin to match the approved head, sparse short arm-hair strokes instead of dense hatching, a few subtle vein contours, dark brown clean outline and angular flat cel shadows. Keep existing proportions/silhouette changes small enough to maintain original anchors.\nPLAYER arm on RIGHT of EACH cell stays EXACTLY unchanged: bare tan skin, red wristband with ONE WHITE STRIPE, enters through the cell's bottom edge. One interlocked hand grip in each cell, preserve the original anatomically correct fingers and thumbs. Both arms are connected continuously to their hands, no seams, extra digits or disconnected pieces. Preserve all nine unique grip directions and arm bends; never duplicate the neutral pose.\nEvery cell must remain inside its own identical grid area with no bleeding into neighbours; player's forearm cleanly cut at bottom only. True transparent alpha background and transparent gutters. No faces, torsos, sleeves, tables, pads, text, frame lines, gridlines, labels, logos, shadows or extra views. Exactly ONE atlas, 9 connected arm pairs.",
+      "inputRoles": [
+        "Existing Yos sprite: edit target and geometry",
+        "Approved Dench head: color/style"
+      ],
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/arms_motion.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/dench-tests-v1/head_calm.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12785-c25b-73d0-9f67-ebda5188bae4\\exec-a3982a60-3f20-49da-84e9-94f6d8907f72.png"
+    }
+  ],
+  "reused": [
+    {
+      "file": "head_calm.png",
+      "source": "output/character-concepts/dench-tests-v1/head_calm.png"
+    },
+    {
+      "file": "head_strain.png",
+      "source": "output/character-concepts/dench-tests-v1/head_strain.png"
+    }
+  ],
+  "rejectedAttempt": {
+    "file": "torso_motion.png",
+    "reason": "image_gen output moderation rejection (sexual category); final clothed alternative approved by user.",
+    "prompt": "Use case: precise-object-edit.\nAsset type: ONE transparent torso layer for a 2D armwrestling sports game.\nImage 1 is the torso EDIT TARGET and exact game registration template. Image 2 is approved DENCH HEAD, skin color and rendering reference only.\nEdit the existing adult male athlete torso into DENCH's heavier, broader physique. Keep the original torso-only separation, front three-quarter camera, landscape 1572:1001 canvas ratio, position of neck insertion near (752,200), working shoulder attachment near (470,500), free-arm shoulder root near (1060,295), and lower waist crop near y955. Preserve empty transparent space around the torso and at the arm attachment areas.\nDench is an adult male professional athlete with an exceptionally broad thick chest, massive trapezius, thick neck, rounded deltoid roots and heavy solid abdomen. Use the warm tan skin and comic cel shading of the approved head. Pectoral masses are broad, anatomically masculine and powerful; soften the template's excessively carved abdominal six-pack into natural strong heavyweight anatomy. Chest hair is a few restrained short brown strokes, much sparser than the template. Keep existing dark sports waistband at lower edge.\nDo NOT add any head, face, hands, forearms or full upper arms. The viewer-left arm attaches separately in the existing open shoulder socket. The viewer-right free arm attaches separately; clean torso edge with no duplicate hanging arm stump.\nRendering: clean thick dark-brown #3b1d14 outline, flat warm ochre fills, crisp angular cel shadow shapes, small cream highlights, no photographic textures, no gradients. Keep all silhouette inside canvas apart from deliberate clean waist cut.\nOne isolated torso layer, true alpha background. No clothing added to chest, no background, table, UI, text, logos, grid, collage, multiple bodies or extra objects."
+  }
+}

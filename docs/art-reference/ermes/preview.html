@@ -1,0 +1,23 @@
+﻿<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ермес — позы борьбы</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:24px;background:#241917;color:#f5e6c8;font:16px system-ui}h1{margin:0 0 12px}.stage{max-width:1280px;border:2px solid #845641;border-radius:12px;overflow:hidden;background:#513631}.stage img{display:block;width:100%;aspect-ratio:16/9}.controls{display:flex;align-items:center;flex-wrap:wrap;gap:16px;max-width:1280px;margin:18px 0}input{width:min(650px,100%);accent-color:#eeb15c}button,a{color:#ffd986}button{padding:10px 14px;border:1px solid #845641;background:#513631;border-radius:8px;font:inherit;cursor:pointer}.states{display:flex;flex-wrap:wrap;gap:8px}.states button[aria-pressed="true"]{background:#854239}p{color:#ddc4a4}.compare{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:10px;max-width:1280px}.compare img{width:100%;background:#513631;border-radius:8px}.compare label{font-size:13px}@media(max-width:700px){body{padding:12px}.compare{grid-template-columns:repeat(3,1fr)}}
+</style>
+<h1>Ермес — позы борьбы</h1>
+<p>Девять положений от левого пина через нейтраль к правому. <a href="gallery.html">Все спрайты</a> · <a href="../../../output/ermes-sprites.zip" download>Скачать ZIP</a></p>
+<div class="stage"><img id="scene" src="pose-4.png" alt="Ермес — нейтральная поза борьбы"></div>
+<div class="controls"><label for="pose">Положение рук</label><input id="pose" type="range" min="0" max="8" step="1" value="4"><output id="state">Нейтраль</output><button id="play" type="button">Показать движение</button></div>
+<div class="states" id="states"></div>
+<p>Выражения лица</p><div class="compare" id="faces"></div>
+<script>
+const labels=['Левый пин','Близко к левому пину','Усилие влево','Наклон влево','Нейтраль','Наклон вправо','Усилие вправо','Близко к правому пину','Правый пин'];
+const slider=document.querySelector('#pose'),state=document.querySelector('#state'),scene=document.querySelector('#scene'),states=document.querySelector('#states');
+states.innerHTML=labels.map((label,i)=>'<button type="button" data-pose="'+i+'" aria-pressed="'+(i===4)+'">'+(i+1)+'</button>').join('');
+function show(i){slider.value=i;state.value=labels[i];scene.src='pose-'+i+'.png';scene.alt='Ермес — '+labels[i];document.querySelectorAll('[data-pose]').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.pose)===i));}
+slider.addEventListener('input',()=>show(Number(slider.value)));states.addEventListener('click',e=>{const b=e.target.closest('[data-pose]');if(b)show(Number(b.dataset.pose));});
+let timer=null,direction=1;document.querySelector('#play').addEventListener('click',e=>{if(timer){clearInterval(timer);timer=null;e.target.textContent='Показать движение';return;}e.target.textContent='Остановить';timer=setInterval(()=>{let i=Number(slider.value);if(i===8)direction=-1;if(i===0)direction=1;show(i+direction);},350);});
+for(let i=0;i<9;i++){const img=new Image();img.src='pose-'+i+'.png';}
+const faces=[['calm','Спокойствие'],['strain','Усилие'],['telegraph','Смена хвата'],['tired','Усталость'],['lose','Поражение'],['win','Победа'],['press','Пресс']];
+document.querySelector('#faces').innerHTML=faces.map(([key,label])=>'<label><img src="../../../public/art/opponents/ermes/head_'+key+'.png" alt="'+label+'">'+label+'</label>').join('');
+</script></html>
+

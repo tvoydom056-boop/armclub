@@ -1,0 +1,66 @@
+{
+  "characterId": "leva",
+  "name": "Лева",
+  "status": "Complete sprite package; gameplay registration and rig tuning are separate.",
+  "assetDirectory": "public/art/opponents/leva",
+  "approvedConcept": "public/art/opponents/leva/concept.png",
+  "tool": "built-in image_gen",
+  "expressions": [
+    "calm",
+    "strain",
+    "telegraph",
+    "tired",
+    "lose",
+    "win",
+    "press"
+  ],
+  "sizes": {
+    "head": [
+      600,
+      700
+    ],
+    "torso_motion": [
+      1572,
+      1001
+    ],
+    "arm_free": [
+      560,
+      620
+    ],
+    "cuff": [
+      151,
+      151
+    ],
+    "arms_motion": [
+      1670,
+      941
+    ]
+  },
+  "arms": {
+    "grid": [
+      3,
+      3
+    ],
+    "neutralFrame": 4,
+    "geometryTemplate": "public/art/opponents/yos/arms_motion.png",
+    "anchors": "src/game/armMotion.ts ARM_POSES"
+  },
+  "rigStartingPoint": "YOS_RIG; tune neck and shoulder seams visually when registering Leva.",
+  "sharedAssets": [
+    "public/art/scene/table.png",
+    "public/art/me/free_idle.png",
+    "public/art/me/free_grip.png"
+  ],
+  "background": "No new background requested; preview reuses the existing gym background.",
+  "preview": "docs/art-reference/leva/preview.html",
+  "overview": "docs/art-reference/leva/overview.png",
+  "exportScript": "docs/art-reference/leva/export-sprites.ps1",
+  "validation": "docs/art-reference/leva/asset-validation.json",
+  "browserVerification": "Unavailable: browser runtime reported no connected browsers. PNG dimensions, alpha, head uniqueness, bounding-box registration and nine populated arm cells validated locally.",
+  "gameIntegrationSteps": [
+    "Add leva to ART_OPPONENTS in src/game/art.ts when enabling gameplay.",
+    "Add an OpponentDef in src/core/opponents.ts with separately chosen balance and career position.",
+    "Add LEVA_RIG based on the matching Yos templates and verify all head/arm poses in the game.",
+    "Select a background and verify the sleeve/neck joints before enabling the career card."
+  ]
+}

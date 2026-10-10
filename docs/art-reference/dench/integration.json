@@ -1,0 +1,73 @@
+{
+  "characterId": "dench",
+  "name": "Дэнч",
+  "status": "Complete sprite package; gameplay registration and rig tuning are separate.",
+  "assetDirectory": "public/art/opponents/dench",
+  "tool": "built-in image_gen",
+  "approvedIdentity": "output/character-concepts/dench-tests-v1/head_calm.png",
+  "costume": "User-approved black sleeveless sports tank top, bare arms.",
+  "expressions": [
+    "calm",
+    "strain",
+    "telegraph",
+    "tired",
+    "lose",
+    "win",
+    "press"
+  ],
+  "sizes": {
+    "head": [
+      600,
+      700
+    ],
+    "torso_motion": [
+      1572,
+      1001
+    ],
+    "arm_free": [
+      560,
+      620
+    ],
+    "cuff": [
+      151,
+      151
+    ],
+    "arms_motion": [
+      1670,
+      941
+    ]
+  },
+  "headRegistration": {
+    "exportVisibleBounds": [
+      78,
+      24,
+      520,
+      661
+    ],
+    "maxBoundingBoxDriftPx": 0,
+    "method": "Normalize visible source bounds to approved head footprint during PNG export. Original generated images kept."
+  },
+  "arms": {
+    "grid": [
+      3,
+      3
+    ],
+    "neutralFrame": 4,
+    "geometryTemplate": "public/art/opponents/yos/arms_motion.png",
+    "anchorReference": "src/game/armMotion.ts ARM_POSES"
+  },
+  "background": "Existing shared bar background; no new location requested.",
+  "preview": "docs/art-reference/dench/preview.html",
+  "overview": "docs/art-reference/dench/overview.png",
+  "archive": "output/dench-sprites.zip",
+  "prompts": "docs/art-reference/dench/prompts.json",
+  "exportScript": "docs/art-reference/dench/export-sprites.ps1",
+  "validation": "docs/art-reference/dench/asset-validation.json",
+  "browserVerification": "Browser runtime reported no available browser; local PNG validation and overview inspection completed.",
+  "integrationNotes": [
+    "Register dench in ART_OPPONENTS and add an OpponentDef when enabling gameplay.",
+    "Start with YOS_RIG geometry. Use head origin (300/600,660/700), tune the neck and shoulder overlap against Dench's sprites.",
+    "Balance, career position and gameplay registration have not been chosen as part of sprite drawing.",
+    "Standalone preview uses the drawn atlas directly; the application extends the player's forearm below the source cell through JoinedArms."
+  ]
+}

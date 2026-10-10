@@ -1,0 +1,109 @@
+{
+  "tool": "built-in image_gen",
+  "approvedConcept": "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png",
+  "assets": [
+    {
+      "file": "head_calm.png",
+      "prompt": "Production PNG game sprite for Armwrestling Club. Match the APPROVED Leva in reference image 2 exactly: short dark hair, dense full dark beard and moustache, heavy broad facial structure, warm olive/tan skin, very massive heavyweight physique, bright golden YELLOW short-sleeved crew-neck sports jersey with simple black stripe motifs and the small black armwrestling emblem. Bold dark-brown #3b1d14 outlines, angular cel shadows in two tones, warm cream highlights, sparse dark hair strokes. NO photography, gradients, 3D, anime, text, watermark, cast shadow, background or painted checkerboard. Genuine transparent alpha.\nImage 1 is the EDIT TARGET: existing Yos HEAD determines portrait canvas ratio 600:700, scale, head location and neck anchor. Image 2 is APPROVED LEVA identity and rendering reference. Replace Yos with Leva, HEAD AND SHORT THICK NECK ONLY. Near-front slight three-quarter view toward viewer, calm serious confident expression, closed mouth, eyes toward player and slightly down. Preserve recognizable broad nose, dark heavy brows, full lips, thick beard, short dense slightly textured dark hair from approved reference. Full scalp and both ears with transparent margins, neck flat cut near logical y663, head fills 75-82% width, centered at logical x325. Strong thick neck but no shoulders, torso, shirt or arms. One single head, no sheet. This will be the MASTER for six expression edits, so fixed stable outer silhouette and generous margins are essential.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/head_calm.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+    },
+    {
+      "file": "arms_motion.png",
+      "prompt": "Production PNG game sprite for Armwrestling Club. Match the APPROVED Leva in reference image 2 exactly: short dark hair, dense full dark beard and moustache, heavy broad facial structure, warm olive/tan skin, very massive heavyweight physique, bright golden YELLOW short-sleeved crew-neck sports jersey with simple black stripe motifs and the small black armwrestling emblem. Bold dark-brown #3b1d14 outlines, angular cel shadows in two tones, warm cream highlights, sparse dark hair strokes. NO photography, gradients, 3D, anime, text, watermark, cast shadow, background or painted checkerboard. Genuine transparent alpha.\nImage 1 is the EDIT TARGET: existing Yos NINE-POSE 3x3 joined-arm ATLAS. Image 2 is appearance of Leva's hairy massive arms and yellow sleeves ONLY. CRITICAL GEOMETRY-PRESERVING EDIT: exact 1670:941 canvas ratio, exactly 3 columns by 3 rows with no gutters inserted, original cell boundaries, all nine content placements and every elbow, wrist, clasp/finger position unchanged. Add Leva's short YELLOW sports jersey sleeve cap over ONLY the opponent's upper-left shoulder in every cell, with simple black stripe motif, matching approved jersey. Make opponent skin slightly warmer olive/tan and arm hair short dense dark strokes consistent with approved body, preserving original thick arm silhouette, muscles and all finger anatomy. Do not add bulk that crosses cell borders. PLAYER'S lower-right forearm and hand MUST REMAIN UNCHANGED original human tan skin and red-and-white wristband. Both joined hands always connected, exactly two arms/two hands per cell. Preserve every original pose, center cell neutral upright, upper row toward left pin, lower row toward right pin. Transparent empty margins/gaps preserved, no gridlines, separators, numbers or labels, head, torso, table or second athlete. Never generate new grid geometry or rearrange poses. Bottom player forearm remains cut exactly at each cell bottom. One single 3x3 atlas.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/arms_motion.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-e0402682-c46d-4c0e-8a94-90e3b02e12df.png"
+    },
+    {
+      "file": "head_strain.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: Sustained extreme muscular effort: eyebrows firmly pulled down and inward, eyes narrowed, lips parted just enough to expose tightly CLENCHED teeth, jaw tight, small temple sweat beads inside the original face contour. Fierce exertion rather than smiling.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-6a0aeb76-f30c-4a02-b63e-1cf818169c0d.png"
+    },
+    {
+      "file": "head_telegraph.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: About to change grip: calculating focused gaze distinctly DOWN toward the hands, brows lowered and slightly pinched, lips firmly pressed CLOSED, jaw tense. No visible teeth, no sweat, distinct from strain. Head position/angle must not move.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-35b3f7e4-b1bc-4b01-ba8c-95e532fa5faf.png"
+    },
+    {
+      "file": "head_tired.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: Exhausted and catching breath: heavy half-closed eyelids, inner brows raised, mouth slightly OPEN with dark interior while exhaling, a couple of tiny sweat beads inside temple contour. Fatigued rather than angry; same beard and silhouette.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-adeb2430-edf5-4ef9-b593-12ade8f794b1.png"
+    },
+    {
+      "file": "head_lose.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: Reaction to defeat: eyes squeezed completely CLOSED, brows pinched in restrained frustration, mouth pulled into a disappointed grimace, slight downturned lip corners. No injury, blood, bruises, tears or moving the head.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-d0e2999c-1226-43ee-b353-412184a1316d.png"
+    },
+    {
+      "file": "head_win.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: Satisfied victory: broad natural triumphant smile with upper teeth visible, cheeks raised, eyes slightly narrowed with confident happy amusement, eyebrows relaxed. Same lips, moustache and beard silhouette; no moving or tilting head.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-09697276-a39b-4f65-a82c-b528498d943d.png"
+    },
+    {
+      "file": "head_press.png",
+      "prompt": "Use case: identity-preserve. EDIT Image 1, the SINGLE MASTER HEAD_CALM of LEVA. This is a seven-frame facial expression set for an existing 2D game. Preserve EXACT original canvas aspect ratio 600:700, head size, head location, angle, scalp shape, ears, ALL outer hair and beard silhouette, neck cut, neck length, lighting, warm tan/olive palette, bold dark-brown comic outlines, identity, nose position and transparent margins. Change ONLY eyebrows, eyelids, pupil gaze and mouth WITHIN the existing face for the expression below. No zoom, crop, re-centering, face turn, rotation, moving the head, adding shoulders, shirt, torso, arms, objects, background, text or label. Keep short dark hair and dense full beard/moustache identical; same broad nose, lip shape, thick neck and adult heavyweight identity. Genuinely transparent alpha. Exactly ONE separate head-and-short-neck PNG sprite; NOT a sheet. All seven heads must align perfectly when overlaid.\nEXPRESSION: Forceful press attack: strong focused exertion with low firm brows, eyes aimed DOWN slightly, jaw set and lips pressed into a determined CLOSED mouth line. Cheek tension. NO visible teeth so this differs from strain. No neck tilt or lowering; that is animated in code.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-0fd9457e-6772-4c1d-b534-152c91e9bf1f.png"
+    },
+    {
+      "file": "arm_free.png",
+      "prompt": "One transparent PNG production sprite for Armwrestling Club. Match approved Leva: yellow short-sleeved jersey with simple black stripes, very thick muscular hairy warm tan/olive arms, dark-brown thick outlines, angular two-tone cel-shading, cream highlights, sparse short dark hair strokes. Real alpha transparency, no checkerboard, backdrop, text, watermarks, extra limbs, head or torso.\nImage 1 is EDIT TARGET, existing Yos full FREE ARM holding a dark vertical steel peg. Image 2 is approved Leva identity, arm mass and clothing. Preserve EXACT 560:620 canvas ratio, full diagonal arm pose, shoulder at logical x60 y45, elbow bend, wrist/finger geometry and peg center at logical x501 y493. Convert the existing shoulder cap to Leva's short golden yellow sports sleeve with simple black diagonal stripe motif, leaving remainder of same very massive arm bare and hairy. Shoulder sleeve cut at top is intentional for joining the torso. Keep all original limb proportions and silhouette; no big new extension or extra arm. Preserve original peg, five anatomical fingers gripping it, every attachment point and generous transparent corners. Same warm skin as approved concept. One isolated complete arm and peg, no other body parts, table, shadow or props.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/arm_free.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-77c334c6-5bc4-42b5-b055-b126a1a1853e.png"
+    },
+    {
+      "file": "cuff.png",
+      "prompt": "One transparent PNG production sprite for Armwrestling Club. Match approved Leva: yellow short-sleeved jersey with simple black stripes, very thick muscular hairy warm tan/olive arms, dark-brown thick outlines, angular two-tone cel-shading, cream highlights, sparse short dark hair strokes. Real alpha transparency, no checkerboard, backdrop, text, watermarks, extra limbs, head or torso.\nImage 1 is EDIT TARGET, the existing tiny GREEN sleeve seam-cover overlay. Image 2 is approved Leva's yellow shirt and skin. Preserve exact square canvas ratio 151:151, same position, footprint, orientation and center anchor x87 y91. Change ONLY green sleeve fabric to bright golden yellow sports jersey with mustard/dark ochre hard-edged folds and one small black stripe motif. Keep tiny bare tan upper-arm wedge at bottom/right, matching Leva's skin. This is a small shoulder-joint overlay to hide seam between torso and animated arm; not a full arm, not a shirt, no hand, neck or body. Genuine transparent margins. One single isolated cuff.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/boris/cuff.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-e992c012-c93a-4242-bd02-ebf55ac3c51c.png"
+    },
+    {
+      "file": "torso_motion.png",
+      "prompt": "Use case: precise-object-edit. Image 1 is EDIT TARGET: the newly generated yellow headless Leva torso. Image 2 supplies exact skin palette from his HEAD and Image 3 is the approved full character. Correct ONLY the region ABOVE the round ribbed crew-neck collar: it is mistakenly yellow as if fabric. That entire raised neck from the clean top neck cut down to the round collar must be EXPOSED BARE HUMAN SKIN, warm olive/tan ochre with skin's angular shadows matching Image 2. This is a NORMAL short-sleeve round-neck yellow T-shirt, NOT a turtleneck; no yellow fabric on the neck. Keep the existing neck silhouette and top cut in exactly the same coordinates, do not add a head. Leave EVERYTHING ELSE EXACTLY UNCHANGED: shirt shape, black stripes, armwrestling emblem, yellow colors, shadows, shoulder sockets and transparency, scale, canvas 1572:1001, crop, all attachment anchors. No face, head, hands, full arms, text, background, cast shadow, checkerboard or added objects. Genuine alpha transparency. One headless torso sprite.",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-65e18caf-5878-46c9-a2a5-280908268d53.png",
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-7c9730e1-eda8-4695-ac13-a494f68fb7f8.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+      ],
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-aab7979f-fd88-4faa-9ab9-738fc794187a.png",
+      "previousGeneration": {
+        "file": "torso_motion.png",
+        "prompt": "Production PNG game sprite for Armwrestling Club. Match the APPROVED Leva in reference image 2 exactly: short dark hair, dense full dark beard and moustache, heavy broad facial structure, warm olive/tan skin, very massive heavyweight physique, bright golden YELLOW short-sleeved crew-neck sports jersey with simple black stripe motifs and the small black armwrestling emblem. Bold dark-brown #3b1d14 outlines, angular cel shadows in two tones, warm cream highlights, sparse dark hair strokes. NO photography, gradients, 3D, anime, text, watermark, cast shadow, background or painted checkerboard. Genuine transparent alpha.\nImage 1 is EDIT TARGET: Yos TORSO defines exact 1572:1001 landscape canvas, content location, shoulder sockets, scale and flat waist crop. Image 2 is approved Leva body and yellow jersey. Transform the bare chest into Leva's massive broad torso in the YELLOW sports shirt, same shirt black sleeve stripes and small black armwrestling chest emblem as approved. Preserve template geometry: working shoulder attachment opening on viewer-left around x470 y500; free-arm socket on viewer-right around x1060 y295; neck insertion around x752 y200; flat waist crop around y955. The upper neck end keeps its template position. Short yellow sleeve on viewer-left ends above the template's existing circular arm socket; keep actual arm opening alpha, no bare working biceps or forearm. Viewer-right free sleeve and arm are entirely separate: clean torso/chest edge cut, no full sleeve/arm stump. Wide heavy chest rather than exposed muscular six-pack, yellow shirt covering all abdomen. No head, beard, face, hands, arms, shorts or accessories. One headless torso layer only; do not recreate the approved crossed arms.",
+        "refs": [
+          "C:/Users/DPiunov/Desktop/game/public/art/opponents/yos/torso_motion.png",
+          "C:/Users/DPiunov/Desktop/game/output/character-concepts/leva-full-torso-v1.png"
+        ],
+        "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a12769-14e0-7e40-aa38-bfac63318919\\exec-65e18caf-5878-46c9-a2a5-280908268d53.png"
+      }
+    }
+  ]
+}

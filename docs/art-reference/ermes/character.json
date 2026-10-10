@@ -1,0 +1,12 @@
+{
+  "torso": {
+    "scale": 0.3289,
+    "shoulder": { "x": 233.3, "y": 682.7 },
+    "neck": { "x": 751.7, "y": 357.5 },
+    "freeShoulder": { "x": 1070, "y": 310 }
+  },
+  "head": { "scale": 0.36, "neck": { "x": 312, "y": 660 } },
+  "arms": { "scale": 1, "drop": 35, "sag": { "angle": 0, "drop": 0 } },
+  "freeArm": { "scale": 0.75 },
+  "cuff": { "scale": 1.2 }
+}

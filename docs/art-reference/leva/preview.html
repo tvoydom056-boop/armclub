@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Спрайты Левы</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#211619;color:#f4e8cd;font:16px system-ui}main{max-width:1320px;margin:auto;padding:20px}h1{margin:12px 0}h2{margin:24px 0 12px}p{color:#d8c8b3}.controls{display:flex;gap:20px;flex-wrap:wrap;margin:16px 0;align-items:center}.controls select{padding:8px;border-radius:8px;background:#f4e8cd;color:#211619}.controls input{width:260px;accent-color:#f4cf20}#scene{aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:12px}canvas{display:block;max-width:100%;height:auto!important}.heads{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.heads figure,.parts figure{margin:0;padding:10px;background:#3a282d;border-radius:10px;text-align:center}.heads img{width:100%;height:220px;object-fit:contain}.heads figcaption,.parts figcaption{padding:8px 0}.parts{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.parts img{width:100%;height:350px;object-fit:contain}.atlas{background:repeating-conic-gradient(#493139 0 25%,#302228 0 50%) 0/24px 24px;padding:12px}.atlas img{width:100%;display:block}a{color:#f6d749}#status{min-height:24px}@media(max-width:800px){.heads{grid-template-columns:repeat(3,1fr)}.heads img{height:180px}.parts{grid-template-columns:1fr}.parts img{height:280px}}
+</style>
+<main>
+<h1>Лева — полный набор спрайтов</h1>
+<p>Жёлтая спортивная футболка, семь выражений лица и девять поз борьбы.</p>
+<div class="controls"><label>Позиция рук <input id="position" type="range" min="-1" max="1" step="0.01" value="0"></label><label>Выражение <select id="expression"></select></label></div>
+<div id="status">Загрузка сцены…</div><div id="scene"></div>
+<h2>Выражения лица</h2><section class="heads" id="heads"></section>
+<h2>Девять поз рук</h2><section class="atlas"><img src="../../../public/art/opponents/leva/arms_motion.png" alt="Все девять поз борьбы"></section>
+<h2>Части персонажа</h2><section class="parts" id="parts"></section>
+<p><a href="overview.png">Общий просмотр PNG</a> · <a href="../../../output/leva-sprites.zip">Скачать ZIP</a></p>
+</main>
+<script type="module">
+import Phaser from 'phaser';
+import { ArtStage } from '/src/game/artStage.ts';
+import { HEAD_KEYS, headKey, joinedArmsKey, oppKey, meKey, sceneKey, backgroundKey } from '/src/game/art.ts';
+const assetBase='/art/opponents/leva/';
+const labels=['Спокойствие','Напряжение','Смена хвата','Усталость','Поражение','Победа','Пресс'];
+const position=document.querySelector('#position'),expression=document.querySelector('#expression'),status=document.querySelector('#status');
+expression.innerHTML=HEAD_KEYS.map((key,index)=>`<option value="${key}">${labels[index]}</option>`).join('');
+document.querySelector('#heads').innerHTML=HEAD_KEYS.map((key,index)=>`<figure><img src="../../../public/art/opponents/leva/head_${key}.png" alt="${labels[index]}"><figcaption>${labels[index]}</figcaption></figure>`).join('');
+document.querySelector('#parts').innerHTML=['torso_motion','arm_free','cuff'].map((key,index)=>`<figure><img src="../../../public/art/opponents/leva/${key}.png" alt="${['Торс','Свободная рука','Накладка плеча'][index]}"><figcaption>${['Торс','Свободная рука','Накладка плеча'][index]}</figcaption></figure>`).join('');
+// This isolated preview aliases Leva's textures to the existing Yos rig.
+// The main application's opponent registry, balance and career are unchanged.
+class Preview extends Phaser.Scene {
+ preload(){
+  this.errors=[];this.load.on('loaderror',file=>this.errors.push(file.url));
+  this.load.image(sceneKey('table'),'/art/scene/table.png');
+  this.load.image(backgroundKey('yos'),'/art/opponents/yos/bg_georgia_gym.png');
+  for(const key of ['free_idle','free_grip'])this.load.image(meKey(key),`/art/me/${key}.png`);
+  for(const key of ['torso_motion','arm_free','cuff'])this.load.image(oppKey('yos',key),`${assetBase}${key}.png`);
+  this.load.image(joinedArmsKey('yos'),`${assetBase}arms_motion.png`);
+  for(const key of HEAD_KEYS)this.load.image(headKey('yos',key),`${assetBase}head_${key}.png`);
+ }
+ create(){
+  if(this.errors.length){status.textContent='Не загрузились изображения: '+this.errors.join(', ');document.title='ERROR: Leva';return;}
+  this.art=new ArtStage(this,'yos');
+  this.frame={dt:1/60,p:0,ourTech:'hook',oppTech:'hook',fighting:true,head:'calm',breathe:0,lower:0,ourEffort:0,shakeOur:{x:0,y:0},shakeOpp:{x:0,y:0}};
+  for(let index=0;index<90;index++)this.art.update(this.frame);
+  window.levaPreview={scene:this,art:this.art,frame:this.frame};
+  status.textContent='Сцена готова. Переключайте выражения и положение рук.';document.title='READY: Leva';
+ }
+ update(){if(this.art){this.frame.p=Number(position.value);this.frame.head=expression.value;this.frame.oppTech=expression.value==='press'?'press':'hook';this.art.update(this.frame);}}
+}
+new Phaser.Game({type:Phaser.CANVAS,parent:'scene',width:1280,height:720,banner:false,audio:{noAudio:true},scene:[Preview]});
+</script>
+</html>

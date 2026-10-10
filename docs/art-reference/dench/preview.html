@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Дэнч — полный набор спрайтов</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#211619;color:#f4e8cd;font:16px system-ui}main{max-width:1320px;margin:auto;padding:24px}h1{margin:0 0 10px;font-size:32px}h2{margin:28px 0 12px}p{color:#d8c8b3;line-height:1.6}.controls{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin:18px 0}.controls select{padding:10px;border-radius:8px;background:#f4e8cd;color:#211619}.controls input{width:260px;accent-color:#edb44b}canvas{width:100%;height:auto;display:block;border-radius:12px}.heads{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}figure{margin:0;padding:10px;background:#3a282d;border-radius:10px;text-align:center}.heads img{width:100%;height:210px;object-fit:contain}figcaption{padding:10px 0;font-size:14px}.parts{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.parts img{width:100%;height:330px;object-fit:contain}.atlas{background:repeating-conic-gradient(#493139 0 25%,#302228 0 50%) 0/24px 24px;padding:12px;border-radius:12px}.atlas img{width:100%;display:block}a{color:#f6d749}.note{font-size:14px}#status{min-height:24px}@media(max-width:800px){main{padding:16px}.heads{grid-template-columns:repeat(3,1fr)}.heads img{height:180px}.parts{grid-template-columns:1fr}.parts img{height:280px}}
+</style>
+</head>
+<body><main>
+<h1>Дэнч</h1>
+<p>Чёрная спортивная майка, открытые руки, семь выражений лица и девять поз борьбы.</p>
+<div class="controls"><label>Поза рук <input id="position" type="range" min="0" max="8" step="1" value="4"></label><label>Выражение <select id="expression"></select></label><span id="pose-label"></span></div>
+<div id="status" role="status">Загрузка спрайтов…</div>
+<canvas id="scene" width="1280" height="720" aria-label="Дэнч за столом для армрестлинга"></canvas>
+<p class="note">Сборка спрайтов для просмотра. Ползунок переключает девять нарисованных поз.</p>
+<h2>Выражения лица</h2><section class="heads" id="heads"></section>
+<h2>Девять поз борьбы</h2><section class="atlas"><img src="../../../public/art/opponents/dench/arms_motion.png" alt="Атлас девяти поз рук Дэнча"></section>
+<h2>Части персонажа</h2><section class="parts" id="parts"></section>
+<p><a href="overview.png">Общий лист PNG</a> · <a href="../../../output/dench-sprites.zip">Скачать полный набор ZIP</a></p>
+</main>
+<script>
+(() => {
+  const base='../../../public/art/', fighter=base+'opponents/dench/';
+  const keys=['calm','strain','telegraph','tired','lose','win','press'];
+  const labels=['Спокойствие','Усилие','Смена техники','Усталость','Поражение','Победа','Пресс'];
+  const position=document.querySelector('#position'),expression=document.querySelector('#expression');
+  const canvas=document.querySelector('#scene'),ctx=canvas.getContext('2d');
+  expression.innerHTML=keys.map((key,i)=>`<option value="${key}">${labels[i]}</option>`).join('');
+  document.querySelector('#heads').innerHTML=keys.map((key,i)=>`<figure><img src="${fighter}head_${key}.png" alt="${labels[i]}"><figcaption>${labels[i]}</figcaption></figure>`).join('');
+  document.querySelector('#parts').innerHTML=['torso_motion','arm_free','cuff'].map((key,i)=>`<figure><img src="${fighter}${key}.png" alt="${['Торс','Свободная рука','Плечевой стык'][i]}"><figcaption>${['Торс','Свободная рука','Плечевой стык'][i]}</figcaption></figure>`).join('');
+  const poses=[
+    {grip:[210,195],center:[294,470],shoulder:[131,136],elbow:[123,266],size:.957},
+    {grip:[250,140],center:[384,425],shoulder:[160,145],elbow:[187,260],size:.943},
+    {grip:[310,120],center:[464,390],shoulder:[159,150],elbow:[176,267],size:.958},
+    {grip:[300,110],center:[539,370],shoulder:[153,144],elbow:[194,282],size:.981},
+    {grip:[300,110],center:[614,365],shoulder:[170,145],elbow:[205,285],size:1},
+    {grip:[320,110],center:[689,370],shoulder:[158,144],elbow:[203,281],size:1.007},
+    {grip:[415,105],center:[779,390],shoulder:[149,114],elbow:[217,251],size:1.135},
+    {grip:[425,125],center:[869,430],shoulder:[162,117],elbow:[232,248],size:1.135},
+    {grip:[420,135],center:[959,470],shoulder:[158,113],elbow:[222,244],size:1.1}
+  ];
+  const assets={};
+  const urls={bg:base+'scene/bg.png',table:base+'scene/table.png',pad:base+'scene/pad_opp.png',pin_opp:base+'scene/pin_opp.png',pin_me:base+'scene/pin_me.png',player_free:base+'me/free_idle.png',torso:fighter+'torso_motion.png',free:fighter+'arm_free.png',arms:fighter+'arms_motion.png'};
+  keys.forEach(key=>urls['head_'+key]=fighter+'head_'+key+'.png');
+  function draw() {
+    const index=Number(position.value),pose=poses[index],scale=1/pose.size;
+    const shoulder=[pose.center[0]+(pose.shoulder[0]-pose.grip[0])*scale,pose.center[1]+(pose.shoulder[1]-pose.grip[1])*scale];
+    const body=[shoulder[0]+644-467.5,shoulder[1]+580-408.75];
+    const bodyW=1100*.47,bodyH=700*.47;
+    const left=body[0]-526*.47,top=body[1]-695*.47;
+    ctx.clearRect(0,0,1280,720);ctx.drawImage(assets.bg,0,0,1280,720);
+    // Free arm follows the torso's far shoulder; draw it behind the torso.
+    const free=[left+1060/1572*bodyW,top+295/1001*bodyH];
+    const angle=Math.atan2(550-free[1],1112-free[0])-Math.atan2(448,441);
+    ctx.save();ctx.translate(free[0],free[1]);ctx.rotate(angle);ctx.drawImage(assets.free,-60*.75,-45*.75,560*.75,620*.75);ctx.restore();
+    ctx.drawImage(assets.table,0,730-assets.table.height*.5,assets.table.width*.5,assets.table.height*.5);
+    ctx.drawImage(assets.pin_opp,285-75,518-75,150,150);ctx.drawImage(assets.pin_me,985-75,518-75,150,150);
+    ctx.save();ctx.beginPath();ctx.rect(0,0,1280,401);ctx.clip();ctx.drawImage(assets.torso,left,top,bodyW,bodyH);ctx.restore();
+    const neck=[left+752/1572*bodyW,top+200/1001*bodyH];
+    const headScale=.35;
+    ctx.drawImage(assets['head_'+expression.value],neck[0]-300*headScale,neck[1]-660*headScale,600*headScale,700*headScale);
+    const elbow=[pose.center[0]+(pose.elbow[0]-pose.grip[0])*scale,pose.center[1]+(pose.elbow[1]-pose.grip[1])*scale];
+    ctx.drawImage(assets.pad,elbow[0]-100,elbow[1]-94*.42,200,94);
+    const col=index%3,row=Math.floor(index/3),sheet=assets.arms;
+    const x=Math.round(col*sheet.width/3),y=Math.round(row*sheet.height/3);
+    const w=Math.round((col+1)*sheet.width/3)-x,h=Math.round((row+1)*sheet.height/3)-y;
+    ctx.drawImage(sheet,x,y,w,h,pose.center[0]-pose.grip[0]*scale,pose.center[1]-pose.grip[1]*scale,w*scale,h*scale);
+    ctx.drawImage(assets.player_free,0,720-assets.player_free.height*.5,assets.player_free.width*.5,assets.player_free.height*.5);
+    document.querySelector('#pose-label').textContent=`Кадр ${index+1} / 9${index===4?' — нейтраль':index===0?' — левый пин':index===8?' — правый пин':''}`;
+    window.denchPreview={ready:true,expression:expression.value,frame:index,spriteCount:11};
+  }
+  Promise.all(Object.entries(urls).map(([key,url])=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{assets[key]=image;resolve();};image.onerror=()=>reject(new Error(url));image.src=url;}))).then(()=>{
+    document.querySelector('#status').textContent='Набор готов. Переключайте позы и выражения.';
+    position.addEventListener('input',draw);expression.addEventListener('change',draw);draw();
+  }).catch(error=>document.querySelector('#status').textContent='Не удалось загрузить изображение: '+error.message);
+})();
+</script>
+</body></html>

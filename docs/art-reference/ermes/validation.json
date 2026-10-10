@@ -1,0 +1,86 @@
+﻿[
+    {
+        "file":  "arms_motion.png",
+        "width":  1670,
+        "height":  941,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "arm_free.png",
+        "width":  560,
+        "height":  620,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "concept.png",
+        "width":  1160,
+        "height":  1355,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "cuff.png",
+        "width":  151,
+        "height":  151,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_calm.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_lose.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_press.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_strain.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_telegraph.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_tired.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "head_win.png",
+        "width":  600,
+        "height":  700,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    },
+    {
+        "file":  "torso_motion.png",
+        "width":  1572,
+        "height":  1001,
+        "format":  "Format32bppArgb",
+        "cornerAlpha":  0
+    }
+]

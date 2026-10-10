@@ -1,0 +1,343 @@
+{
+  "character": "ilya",
+  "sprite_count": 11,
+  "expressions": [
+    "calm",
+    "strain",
+    "telegraph",
+    "tired",
+    "lose",
+    "win",
+    "press"
+  ],
+  "distinct_heads": true,
+  "arm_pose_count": 9,
+  "max_head_bbox_drift_px": 0,
+  "files": [
+    {
+      "file": "head_calm.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 202947,
+      "bytes": 498245,
+      "sha256": "4e4a2d6ad516012b3e3ba1dacc1fa53b24a55448fefce2729292cf83c5a3290c"
+    },
+    {
+      "file": "head_strain.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 203638,
+      "bytes": 502861,
+      "sha256": "b4320fc8886a31e32c4055efdaa0e2e98f6b5239a8206e9e60dee43d7e7377f2"
+    },
+    {
+      "file": "head_telegraph.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 203965,
+      "bytes": 498001,
+      "sha256": "3d78d1edef2820dc1342577c0fca863ad6f2d6d1728f7ea5d6e31897e6c95589"
+    },
+    {
+      "file": "head_tired.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 203932,
+      "bytes": 508724,
+      "sha256": "694cec32aafbdec08ac2e027132dce2a3f4a99f02d8a559fa12f09c3c09cc69d"
+    },
+    {
+      "file": "head_lose.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 203904,
+      "bytes": 502194,
+      "sha256": "1379ff65ae3557bc51e60151bce2e3663f572bfb0e4d6768edb57428abc75b8b"
+    },
+    {
+      "file": "head_win.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 203414,
+      "bytes": 511167,
+      "sha256": "38d2911b45da130c914f60a715fe1ae466f537d25678f8624d0d3e426fe12c82"
+    },
+    {
+      "file": "head_press.png",
+      "size": [
+        600,
+        700
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        78,
+        24,
+        520,
+        661
+      ],
+      "transparent_pixels": 204954,
+      "bytes": 505842,
+      "sha256": "a945e9f84758e7d7f5d2e48e8e74b88cd81f7d87d6c40d73642c48f5b57d6426"
+    },
+    {
+      "file": "torso_motion.png",
+      "size": [
+        1572,
+        1001
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        105,
+        11,
+        1168,
+        989
+      ],
+      "transparent_pixels": 907198,
+      "bytes": 937053,
+      "sha256": "87866ae0f893bcd5b0aa85a69326aea7fa485b5fd163cc3a0eb3ee5539e63006"
+    },
+    {
+      "file": "arm_free.png",
+      "size": [
+        560,
+        620
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        7,
+        15,
+        556,
+        591
+      ],
+      "transparent_pixels": 240217,
+      "bytes": 236672,
+      "sha256": "68710787613b7bec8da1fb0793a1ad94406460c3c4c699fa2cc13f96aefff6ac"
+    },
+    {
+      "file": "cuff.png",
+      "size": [
+        151,
+        151
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        26,
+        29,
+        129,
+        126
+      ],
+      "transparent_pixels": 15676,
+      "bytes": 19830,
+      "sha256": "cf1df5bd88a81bbec341dfb381b267b1ea06869760962e3ed618f390bdbc7351"
+    },
+    {
+      "file": "arms_motion.png",
+      "size": [
+        1670,
+        941
+      ],
+      "mode": "RGBA",
+      "visible_bbox": [
+        46,
+        43,
+        1664,
+        918
+      ],
+      "transparent_pixels": 925717,
+      "bytes": 1599886,
+      "sha256": "3160f3f5f4d732acea68ec939dd8f61a39d93e44cf9df89257b36cd4a06af523",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": [
+            0,
+            0,
+            557,
+            314
+          ],
+          "visible_bbox": [
+            48,
+            54,
+            501,
+            314
+          ]
+        },
+        {
+          "index": 1,
+          "bounds": [
+            557,
+            0,
+            1113,
+            314
+          ],
+          "visible_bbox": [
+            76,
+            57,
+            531,
+            314
+          ]
+        },
+        {
+          "index": 2,
+          "bounds": [
+            1113,
+            0,
+            1670,
+            314
+          ],
+          "visible_bbox": [
+            73,
+            43,
+            527,
+            314
+          ]
+        },
+        {
+          "index": 3,
+          "bounds": [
+            0,
+            314,
+            557,
+            627
+          ],
+          "visible_bbox": [
+            46,
+            33,
+            504,
+            306
+          ]
+        },
+        {
+          "index": 4,
+          "bounds": [
+            557,
+            314,
+            1113,
+            627
+          ],
+          "visible_bbox": [
+            72,
+            29,
+            522,
+            306
+          ]
+        },
+        {
+          "index": 5,
+          "bounds": [
+            1113,
+            314,
+            1670,
+            627
+          ],
+          "visible_bbox": [
+            65,
+            29,
+            536,
+            306
+          ]
+        },
+        {
+          "index": 6,
+          "bounds": [
+            0,
+            627,
+            557,
+            941
+          ],
+          "visible_bbox": [
+            52,
+            19,
+            557,
+            291
+          ]
+        },
+        {
+          "index": 7,
+          "bounds": [
+            557,
+            627,
+            1113,
+            941
+          ],
+          "visible_bbox": [
+            0,
+            21,
+            556,
+            291
+          ]
+        },
+        {
+          "index": 8,
+          "bounds": [
+            1113,
+            627,
+            1670,
+            941
+          ],
+          "visible_bbox": [
+            0,
+            21,
+            551,
+            291
+          ]
+        }
+      ]
+    }
+  ],
+  "total_bytes": 6320475
+}

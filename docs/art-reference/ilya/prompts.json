@@ -1,0 +1,105 @@
+{
+  "mode": "built-in image_gen",
+  "character": "ilya",
+  "approved_identity": "output/character-concepts/ilya-tests-v1/head_calm.png",
+  "approved_concept": "output/character-concepts/ilya-tests-v1/upper_body.png",
+  "generation": [
+    {
+      "file": "head_strain.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_strain.png game sprite by editing ONLY its expression.\nChange: Strong physical effort: eyebrows pulled inward and slightly downward, eyes slightly narrowed, jaw clenched, lips parted to reveal a small row of gritted teeth. Restrained tension, two small sweat drops at temple. Still recognizably Ilya, not a rage caricature.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-ec415fa1-67f7-4ac0-98fb-d5dedec28d38.png"
+    },
+    {
+      "file": "head_telegraph.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_telegraph.png game sprite by editing ONLY its expression.\nChange: Preparing a tactical change of grip: alert intensely focused eyes, brow lowered slightly more than calm, lips tightly closed and pressed together, one mouth corner slightly tense. Determined calculating expression, different from both the calm and teeth-clenched effort states. No sweat.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-d7db97de-9b5d-470d-8718-cd0d3fce4126.png"
+    },
+    {
+      "file": "head_tired.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_tired.png game sprite by editing ONLY its expression.\nChange: Exhaustion after sustained physical effort: upper eyelids noticeably drooped, brows raised slightly at the center, mouth slightly open for a breath, a few small temple sweat drops. No tears or sadness; a tired young athlete.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-1c5fe9db-fc0c-4320-8d6c-e94bcc818c93.png"
+    },
+    {
+      "file": "head_lose.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_lose.png game sprite by editing ONLY its expression.\nChange: Defeat: brows raised at their inner ends, startled disappointed eyes, mouth open in a small exhalation with downward mouth corners, three small temple sweat drops. Restrained sports disappointment, no comedic screaming or tears.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-51af361a-2f6a-43ca-b38c-eebdf4c8bd6f.png"
+    },
+    {
+      "file": "head_win.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_win.png game sprite by editing ONLY its expression.\nChange: Victory: confident happy smile showing upper teeth, cheeks slightly lifted, relaxed eyebrows and bright eyes. A restrained natural victorious grin; same youthful Ilya, no exaggerated giant mouth.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-d107f958-6078-47a3-be77-42fd09c23edf.png"
+    },
+    {
+      "file": "head_press.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nEdit target: approved master head_calm.png of ILYA. Create ONE head_press.png game sprite by editing ONLY its expression.\nChange: Armwrestling press effort: eyes focused downward toward the gripping hands, brows tightly pulled inward, chin slightly tucked within the same head silhouette, lips tight and small gritted teeth visible, two small sweat drops. Head looks down with concentration as if leaning over the match. Keep same outer head position and neck bottom; do not rotate the whole sprite or change its scale.\nInvariants: preserve EXACT same person, hairstyle, face proportions, skull and jaw outline, ears, nose, neck contour and bottom cut, canvas dimensions 1160x1355, near-frontal three-quarter angle, entire head position, scale, lighting and graphic rendering. Every expression must register to the same base head. Do not add shoulders, body, clothes, arms or props. Do not reinterpret the face or hairstyle. One isolated head with short neck. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-56e237a2-05e3-405b-afab-785b5997b5bf.png"
+    },
+    {
+      "file": "torso_motion.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/dench/torso_motion.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/upper_body.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/head_calm.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset: one isolated torso_motion.png game sprite.\nImage 1 is the exact torso layer geometry EDIT TARGET; images 2 and 3 are approved ILYA's physique, clothing, skin color and rendering. Replace ONLY the torso's identity/build with Ilya's moderately muscular athletic chest, natural neck and black sleeveless sports top. Keep the slight three-quarter view, torso-only silhouette, landscape 1572:1001 ratio, scale, position and ALL arm socket locations from image 1. Neck insertion near (752,200), working arm root on viewer-left, free arm root on viewer-right near (1060,295), waist ending near y955. Match Ilya's approved black fitted sleeveless shirt with understated charcoal angular panel shapes, round collar and broad shoulder straps. Ilya is a lean muscular young adult, less bulky than image 1, no thick heavyweight neck or inflated trapezius. Adjust chest volume subtly to keep anchors fixed. Bare shoulder roots only, not full arms: the working biceps and free arm are separate layers. NO head, forearms, elbows, hands or extra hanging arm stump. Keep clean neck attachment cut and complete torso within canvas with transparent margin. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-71300811-18a4-44a0-8ec9-fbbc26c5d8ee.png"
+    },
+    {
+      "file": "arm_free.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/dench/arm_free.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/upper_body.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset: one transparent arm_free.png sprite.\nImage 1 is the exact free arm geometry EDIT TARGET. Image 2 is approved ILYA's build, bare arm, skin palette and style. Preserve image 1's diagonal arm from upper-left shoulder attachment to lower-right hand holding ONE dark grey vertical cylindrical table peg, exact 560:620 portrait ratio, overall registration and anatomical grip. Change the arm into Ilya's naturally muscular young athletic arm, slightly leaner than original, warm tan/ochre skin, smooth largely hairless skin with sparse short graphic hatch accents, clear rounded deltoid and biceps and forearm, no dense hair. Do not add shirt sleeves. Keep five plausible fingers grasping peg and one thumb, not six digits. Same cut shoulder root near (60,45), elbow bend, wrist and grip near (501,493). No head, torso or table, only arm and peg. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-66d3d0fd-e2d1-4f89-8449-5b87a64d94ac.png"
+    },
+    {
+      "file": "cuff.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/dench/cuff.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/upper_body.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset: one cuff.png bare shoulder-joint cover sprite for ILYA, not a fabric cuff.\nImage 1 is the exact shape and registration EDIT TARGET, a small rounded bare deltoid cover used to hide the seam between torso and working arm. Image 2 is approved Ilya physique and skin style. Keep the original compact rounded asymmetrical shoulder-cap silhouette, position and square 151:151 canvas ratio. Match Ilya's warm tan/ochre skin with dark brown contour and crisp angular shadows, a little smoother and leaner than source. No sleeve, no arm extension, no fingers, no neck or torso, no red wristband. Same alpha margins. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-4093ce0f-b6af-4e36-b211-3d789b7a670d.png"
+    },
+    {
+      "file": "arms_motion.png",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/dench/arms_motion.png",
+        "C:/Users/DPiunov/Desktop/game/output/character-concepts/ilya-tests-v1/upper_body.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset: ONE 3x3 armwrestling pose atlas arms_motion.png for ILYA.\nImage 1 is the exact atlas EDIT TARGET and geometric template. Image 2 is approved ILYA's physique, bare arm color and rendering. Preserve the landscape 1670:941 ratio, EXACTLY 3 equal columns and 3 equal rows, all 9 different pose directions, original per-cell shoulder roots, elbow, wrist, grip and player forearm bottom cuts, transparent gutters and grid registration. Row-major order left pin to neutral middle cell index 4 to right pin. Each cell has one connected pair of arms with ONE interlocked hand grip.\nChange ONLY the OPPONENT arm at LEFT in every cell to Ilya's muscular but naturally leaner young athletic arm. Smooth mostly hairless skin, a few sparse short hatch strokes, warm tan and ochre planes matching image 2, clear deltoid and biceps, strong forearm, no exaggerated heavyweight bulk. Keep the original arm anchor locations fixed; adapt internal shading and modestly reduce mass without moving shoulder, elbow or clasp. The PLAYER arm at RIGHT in every cell must remain unchanged, including RED wristband with ONE WHITE STRIPE, bare forearm entering bottom of the cell. Preserve anatomically plausible locked fingers and thumbs. All 9 poses different; never repeat neutral. No body, head, sleeves, table, padding, gridlines, labels or extra elements. Fully transparent background and gutters; no bleeding into neighbouring cells. Match the approved Ilya artwork exactly: warm ochre/tan skin, youthful natural face, short ash-light brown cropped hair, grey-blue eyes, no beard, black sleeveless athletic shirt where applicable. Hand-drawn 2D comic art, thick dark-brown #3b1d14 contour, crisp angular flat cel shadow planes, small cream highlights and restrained short hatch marks. No photorealistic texture, gradients, 3D, backgrounds, glow, vignette, shadows outside silhouette, text, logos or checkerboard. True transparent PNG alpha, fully transparent outside character, opaque inside.",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a127ca-7686-71b0-93be-683d0bb52547\\exec-a19e6c3b-18ef-4d3a-ba86-ceeb86acbad1.png"
+    }
+  ],
+  "reused": [
+    {
+      "file": "head_calm.png",
+      "source": "output/character-concepts/ilya-tests-v1/head_calm.png"
+    },
+    {
+      "file": "concept.png",
+      "source": "output/character-concepts/ilya-tests-v1/upper_body.png"
+    }
+  ],
+  "export": "export-sprites.ps1 — canvas sizing and head registration only; preserves original generated PNGs.",
+  "scope": "Sprite production package. No roster/balance edits."
+}
