@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { TUNING, createMatch, playerForce, rewardFor, stepMatch, type MatchConfig, type MatchState } from './match';
-import { OPPONENTS, opponentById } from './opponents';
+import { OPPONENTS, ROSTERS, V2_POWER, opponentById } from './opponents';
 import { mulberry32 } from './rng';
 import { COUNTER, matchup, TECHNIQUES, type Technique } from './techniques';
 import { UPGRADES, deriveStats, emptyLevels, upgradeCost, type Levels } from './upgrades';
@@ -176,6 +176,18 @@ describe('экономика', () => {
     expect(rewardFor(boris, false, 30)).toBeGreaterThan(0);
     expect(rewardFor(boris, true, 10)).toBeGreaterThan(rewardFor(boris, true, 40));
     expect(rewardFor(boris, true, 40)).toBeGreaterThan(rewardFor(boris, false, 40));
+  });
+});
+
+describe('версия 2', () => {
+  it('бойцы в 1.5 раза сильнее, остальное не меняется', () => {
+    for (const o of ROSTERS[2]) {
+      const base = opponentById(o.id, 1); // бойцов только версии 2 версия 1 отдаёт в исходном виде
+      expect(o.power).toBeCloseTo(base.power * V2_POWER);
+      expect(o.weights).toEqual(base.weights);
+    }
+    expect(opponentById('boris', 2).power).toBeCloseTo(2.2 * 1.5);
+    expect(opponentById('boris', 1).power).toBe(2.2);
   });
 });
 

@@ -128,7 +128,7 @@ export class MatchScene extends Phaser.Scene {
     });
 
     this.unsubs.push(
-      bus.on('match:start', ({ oppId, stats }) => this.startMatch({ opp: opponentById(oppId), stats })),
+      bus.on('match:start', ({ oppId, stats, version }) => this.startMatch({ opp: opponentById(oppId, version), stats })),
       bus.on('match:abort', () => this.abortMatch()),
       bus.on('input:tech', (t) => {
         this.pendingTech = t;

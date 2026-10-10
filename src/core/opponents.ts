@@ -238,10 +238,16 @@ const ERMES: OpponentDef = {
     hairStyle: 'messy', facial: 'beard', glasses: false, build: 1.2, belly: 0, accent: 0x9aa3ad },
 };
 
+/** Во сколько раз бойцы версии 2 сильнее, чем в версии 1. */
+export const V2_POWER = 1.5;
+const harder = (o: OpponentDef): OpponentDef => ({ ...o, power: o.power * V2_POWER });
+
 /** Состав боёв по версии игры; порядок — порядок открытия. */
 export const ROSTERS: Readonly<Record<1 | 2, readonly OpponentDef[]>> = {
   1: OPPONENTS,
-  2: [OPPONENTS[0], LEVA, DENCH, VITALIK, ILYA, ERMES],
+  2: [OPPONENTS[0], LEVA, DENCH, VITALIK, ILYA, ERMES].map(harder),
 };
+const EASY = [...OPPONENTS, LEVA, DENCH, VITALIK, ILYA, ERMES];
 
-export const opponentById = (id: string): OpponentDef => [...OPPONENTS, LEVA, DENCH, VITALIK, ILYA, ERMES].find((o) => o.id === id) ?? OPPONENTS[0];
+export const opponentById = (id: string, version: 1 | 2 = 1): OpponentDef =>
+  ROSTERS[version].find((o) => o.id === id) ?? EASY.find((o) => o.id === id) ?? OPPONENTS[0];

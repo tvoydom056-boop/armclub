@@ -18,7 +18,7 @@ interface BusEvents {
   'rig:set': CharacterArt;
   'rig:points': ArtPoints;
   'game:ready': { ok: true };
-  'match:start': { oppId: string; stats: PlayerStats };
+  'match:start': { oppId: string; stats: PlayerStats; version: 1 | 2 };
   'match:end': { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; clicks: number };
   'match:abort': { oppId: string | null };
   'input:tech': Technique;
