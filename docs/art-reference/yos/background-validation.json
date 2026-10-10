@@ -1,0 +1,13 @@
+{
+  "errors": [],
+  "cardBackground": "url(\"http://127.0.0.1:5173/art/opponents/yos/bg_georgia_gym.png\")",
+  "match": {
+    "artFor": "yos",
+    "key": "art:opponents/yos/bg_georgia_gym",
+    "width": 1672,
+    "height": 941,
+    "visible": true,
+    "displayWidth": 1280,
+    "displayHeight": 720
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "files": [
+    {
+      "file": "head_calm.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 674289,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        11,
+        586,
+        700
+      ],
+      "visible_bbox": [
+        24,
+        38,
+        585,
+        639
+      ],
+      "transparent_pixels": 177524
+    },
+    {
+      "file": "head_strain.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 707636,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        9,
+        33,
+        600,
+        700
+      ],
+      "visible_bbox": [
+        14,
+        33,
+        594,
+        644
+      ],
+      "transparent_pixels": 165346
+    },
+    {
+      "file": "head_telegraph.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 690998,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        34,
+        592,
+        700
+      ],
+      "visible_bbox": [
+        17,
+        35,
+        590,
+        641
+      ],
+      "transparent_pixels": 169326
+    },
+    {
+      "file": "head_tired.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 686728,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        16,
+        34,
+        592,
+        700
+      ],
+      "visible_bbox": [
+        17,
+        37,
+        589,
+        641
+      ],
+      "transparent_pixels": 171945
+    },
+    {
+      "file": "head_lose.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 692567,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        8,
+        34,
+        592,
+        700
+      ],
+      "visible_bbox": [
+        13,
+        38,
+        588,
+        650
+      ],
+      "transparent_pixels": 167674
+    },
+    {
+      "file": "head_win.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 693104,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        11,
+        26,
+        593,
+        700
+      ],
+      "visible_bbox": [
+        15,
+        36,
+        592,
+        643
+      ],
+      "transparent_pixels": 167726
+    },
+    {
+      "file": "head_press.png",
+      "size": [
+        600,
+        700
+      ],
+      "bytes": 699497,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        34,
+        590,
+        700
+      ],
+      "visible_bbox": [
+        7,
+        36,
+        586,
+        646
+      ],
+      "transparent_pixels": 166537
+    },
+    {
+      "file": "torso_motion.png",
+      "size": [
+        1572,
+        1001
+      ],
+      "bytes": 1388237,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        0,
+        1478,
+        977
+      ],
+      "visible_bbox": [
+        84,
+        0,
+        1467,
+        956
+      ],
+      "transparent_pixels": 685583
+    },
+    {
+      "file": "arm_free.png",
+      "size": [
+        560,
+        620
+      ],
+      "bytes": 189517,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        7,
+        14,
+        559,
+        605
+      ],
+      "visible_bbox": [
+        7,
+        15,
+        555,
+        605
+      ],
+      "transparent_pixels": 255749
+    },
+    {
+      "file": "cuff.png",
+      "size": [
+        151,
+        151
+      ],
+      "bytes": 21705,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        16,
+        17,
+        136,
+        137
+      ],
+      "visible_bbox": [
+        17,
+        18,
+        136,
+        136
+      ],
+      "transparent_pixels": 13199
+    },
+    {
+      "file": "arms_motion.png",
+      "size": [
+        1670,
+        941
+      ],
+      "bytes": 1325555,
+      "mode": "RGBA",
+      "alpha_bbox": [
+        35,
+        21,
+        1670,
+        927
+      ],
+      "visible_bbox": [
+        41,
+        42,
+        1669,
+        920
+      ],
+      "transparent_pixels": 1005881
+    },
+    {
+      "file": "bg_police.png",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 3442389,
+      "mode": "RGBA"
+    },
+    {
+      "file": "concept.png",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2060908,
+      "mode": "RGB"
+    }
+  ],
+  "distinct_heads": true,
+  "total_bytes": 13273130
+}

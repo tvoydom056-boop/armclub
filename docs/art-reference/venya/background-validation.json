@@ -1,0 +1,13 @@
+{
+  "errors": [],
+  "cardBackground": "url(\"http://127.0.0.1:5173/art/opponents/venya/bg_birch_park.png\")",
+  "match": {
+    "artFor": "venya",
+    "key": "art:opponents/venya/bg_birch_park",
+    "width": 1672,
+    "height": 941,
+    "visible": true,
+    "displayWidth": 1280,
+    "displayHeight": 720
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "tool": "built-in image_gen",
+  "files": [
+    {
+      "file": "head_calm.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-48b35e82-433d-4d19-85b4-8edc61850af0.png"
+    },
+    {
+      "file": "torso_motion.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-f2b5ec17-5ad0-4435-92f2-112154f38f7f.png"
+    },
+    {
+      "file": "arm_free.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-5890e7aa-583e-4571-9fd0-2e60c0784a3b.png"
+    },
+    {
+      "file": "cuff.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-61248420-732f-4449-8fa7-7a5e34a778a4.png"
+    },
+    {
+      "file": "arms_motion.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-7ba2cec1-cb8f-4907-a4d3-dc588b81e067.png"
+    },
+    {
+      "file": "bg_police.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-0f7b0bda-5f18-4fc5-a0b8-562ec5b0dabe.png"
+    },
+    {
+      "file": "head_strain.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-4799e9b2-56d8-406f-b9e9-796ca42ec08b.png"
+    },
+    {
+      "file": "head_telegraph.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-fd21c4f6-eeaf-492f-b80f-28ffb524df9e.png"
+    },
+    {
+      "file": "head_tired.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-f954d745-0774-425d-bb5f-799a8f8660ba.png"
+    },
+    {
+      "file": "head_lose.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-83ebc3d8-ede0-4094-8c42-e1ae52b7a655.png"
+    },
+    {
+      "file": "head_win.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-e951b5b1-99a6-4495-a890-36b28bf2c845.png"
+    },
+    {
+      "file": "head_press.png",
+      "generatedSource": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a10720-c943-71b3-9c22-86eab8701893\\exec-6c39925c-d487-4266-b9b3-d3400493afc2.png"
+    }
+  ],
+  "masterPromptFile": "expression-prompts.json",
+  "torsoCorrectionPromptFile": "torso-seam-prompt.json",
+  "export": "export-sprites.ps1"
+}

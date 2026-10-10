@@ -1,0 +1,355 @@
+{
+  "errors": [],
+  "checks": [
+    {
+      "id": "boris",
+      "p": -1,
+      "gap": 1.2710574864626038e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1572,
+      "hand": {
+        "x": 1004.4850843622311,
+        "y": 355.83120389365956
+      }
+    },
+    {
+      "id": "boris",
+      "p": -0.5,
+      "gap": 1.1368683772161603e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1572,
+      "hand": {
+        "x": 825.8713900887932,
+        "y": 295.18004753936344
+      }
+    },
+    {
+      "id": "boris",
+      "p": 0,
+      "gap": 0,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1572,
+      "hand": {
+        "x": 760.0975674100746,
+        "y": 280.72683642708864
+      }
+    },
+    {
+      "id": "boris",
+      "p": 0.5,
+      "gap": 1.2710574864626038e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1572,
+      "hand": {
+        "x": 575.9270988745769,
+        "y": 289.1333954598821
+      }
+    },
+    {
+      "id": "boris",
+      "p": 1,
+      "gap": 8.038873388460929e-14,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1572,
+      "hand": {
+        "x": 474.4464695516479,
+        "y": 266.32065087316994
+      }
+    },
+    {
+      "id": "yos",
+      "p": -1,
+      "gap": 1.2710574864626038e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1571,
+      "hand": {
+        "x": 1002.067480235968,
+        "y": 419.9128839029922
+      }
+    },
+    {
+      "id": "yos",
+      "p": -0.5,
+      "gap": 3.595093471822542e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1571,
+      "hand": {
+        "x": 825.3770358484916,
+        "y": 359.30541020044245
+      }
+    },
+    {
+      "id": "yos",
+      "p": 0,
+      "gap": 0,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1571,
+      "hand": {
+        "x": 762.8087633388277,
+        "y": 344.79676649701867
+      }
+    },
+    {
+      "id": "yos",
+      "p": 0.5,
+      "gap": 2.2737367544323206e-13,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1571,
+      "hand": {
+        "x": 581.8370683945265,
+        "y": 352.98775148046286
+      }
+    },
+    {
+      "id": "yos",
+      "p": 1,
+      "gap": 8.038873388460929e-14,
+      "width": 420,
+      "height": 465,
+      "expectedWidth": 420,
+      "expectedHeight": 465,
+      "alpha": 1571,
+      "hand": {
+        "x": 482.2691231337145,
+        "y": 329.9690020966289
+      }
+    },
+    {
+      "id": "brunette",
+      "p": -1,
+      "gap": 1.2710574864626038e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1572,
+      "hand": {
+        "x": 1007.5959297182865,
+        "y": 440.49043136177073
+      }
+    },
+    {
+      "id": "brunette",
+      "p": -0.5,
+      "gap": 2.5421149729252077e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1572,
+      "hand": {
+        "x": 831.5202315440893,
+        "y": 379.7078698497696
+      }
+    },
+    {
+      "id": "brunette",
+      "p": 0,
+      "gap": 0,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1572,
+      "hand": {
+        "x": 769.963979623815,
+        "y": 364.8666965669488
+      }
+    },
+    {
+      "id": "brunette",
+      "p": 0.5,
+      "gap": 1.2710574864626038e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1572,
+      "hand": {
+        "x": 589.9864209545556,
+        "y": 372.6749875980386
+      }
+    },
+    {
+      "id": "brunette",
+      "p": 1,
+      "gap": 5.684341886080802e-14,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1572,
+      "hand": {
+        "x": 491.0053372550753,
+        "y": 349.40293571601154
+      }
+    },
+    {
+      "id": "olya",
+      "p": -1,
+      "gap": 1.1368683772161603e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1571,
+      "hand": {
+        "x": 1008.1212430912308,
+        "y": 433.93802853712407
+      }
+    },
+    {
+      "id": "olya",
+      "p": -0.5,
+      "gap": 2.8421709430404007e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1571,
+      "hand": {
+        "x": 831.8487659434909,
+        "y": 373.14265834787255
+      }
+    },
+    {
+      "id": "olya",
+      "p": 0,
+      "gap": 0,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1571,
+      "hand": {
+        "x": 769.963979623815,
+        "y": 358.29326999352213
+      }
+    },
+    {
+      "id": "olya",
+      "p": 0.5,
+      "gap": 1.1368683772161603e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1571,
+      "hand": {
+        "x": 589.6578865551539,
+        "y": 366.10977609614156
+      }
+    },
+    {
+      "id": "olya",
+      "p": 1,
+      "gap": 5.684341886080802e-14,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1571,
+      "hand": {
+        "x": 490.4800238821311,
+        "y": 342.8505328913649
+      }
+    },
+    {
+      "id": "spb_friend",
+      "p": -1,
+      "gap": 1.1368683772161603e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1570,
+      "hand": {
+        "x": 1008.0881289929767,
+        "y": 437.2326326323224
+      }
+    },
+    {
+      "id": "spb_friend",
+      "p": -0.5,
+      "gap": 2.5421149729252077e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1570,
+      "hand": {
+        "x": 831.9144900432681,
+        "y": 376.4367732563585
+      }
+    },
+    {
+      "id": "spb_friend",
+      "p": 0,
+      "gap": 0,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1570,
+      "hand": {
+        "x": 770.19425871219,
+        "y": 361.57998328023547
+      }
+    },
+    {
+      "id": "spb_friend",
+      "p": 0.5,
+      "gap": 1.2710574864626038e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1570,
+      "hand": {
+        "x": 590.0521450543328,
+        "y": 369.38087268955275
+      }
+    },
+    {
+      "id": "spb_friend",
+      "p": 1,
+      "gap": 1.1368683772161603e-13,
+      "width": 392,
+      "height": 434,
+      "expectedWidth": 392,
+      "expectedHeight": 434,
+      "alpha": 1570,
+      "hand": {
+        "x": 490.9722231568212,
+        "y": 346.10833162081326
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "characterId": "venya",
+  "name": "Веня",
+  "generationMode": "built-in image_gen",
+  "assetDirectory": "public/art/opponents/venya",
+  "reference": "output/character-concepts/venya-chin-chin-v1.png",
+  "headExpressions": [
+    "calm",
+    "strain",
+    "telegraph",
+    "tired",
+    "lose",
+    "win",
+    "press"
+  ],
+  "headSize": [
+    600,
+    700
+  ],
+  "parts": {
+    "torso_motion": [
+      1572,
+      1001
+    ],
+    "arm_free": [
+      560,
+      620
+    ],
+    "cuff": [
+      151,
+      151
+    ],
+    "arms_motion": {
+      "size": [
+        1670,
+        941
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "neutralFrame": 4
+    }
+  },
+  "background": "public/art/scene/bg.png",
+  "integration": {
+    "artRegistry": "src/game/art.ts",
+    "rig": "src/game/artStage.ts VENYA_RIG",
+    "opponentDefinition": "src/core/opponents.ts",
+    "careerPlacement": "last, unlocks after the preceding opponent",
+    "headScale": 0.5,
+    "headOrigin": [
+      0.5,
+      0.9285714285714286
+    ],
+    "armScale": 1
+  },
+  "preview": "docs/art-reference/venya/preview.html",
+  "validation": [
+    "asset-validation.json",
+    "preview-validation.json"
+  ],
+  "generatedSources": [
+    {
+      "file": "head_calm.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-0bdf5707-8a4f-4aa8-bc63-885a8567e481.png"
+    },
+    {
+      "file": "torso_motion.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-4bac6153-1ae9-4acf-b899-bd9eb4f255c5.png"
+    },
+    {
+      "file": "arm_free.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-68be538a-eb2f-44c6-9748-5bd18423117f.png"
+    },
+    {
+      "file": "cuff.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-dfd7d327-a9b0-4ce8-a7f2-2de6fd20c4a9.png"
+    },
+    {
+      "file": "arms_motion.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-d536cf2c-f0ba-44f0-9fcc-de3d6de1a7de.png"
+    },
+    {
+      "file": "head_strain.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-268ce6b7-60b1-4ca9-b956-18e064678fdb.png"
+    },
+    {
+      "file": "head_telegraph.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-3821a746-737b-4129-b5e0-0bfccb1c9c3c.png"
+    },
+    {
+      "file": "head_tired.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-c4ce1488-3d54-4f66-8e46-4f4ce30f9de4.png"
+    },
+    {
+      "file": "head_lose.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-9ec2c2a2-1a7c-4d82-b76b-44c23e341108.png"
+    },
+    {
+      "file": "head_win.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-650b1e74-b8a1-4954-8304-3a6c87b83a2a.png"
+    },
+    {
+      "file": "head_press.png",
+      "path": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a1082d-5eff-71a0-9e04-c4adf20be740\\exec-f57c64c9-c59c-4f2f-8761-2b58be656673.png"
+    }
+  ]
+}

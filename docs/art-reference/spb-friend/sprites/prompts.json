@@ -1,0 +1,154 @@
+{
+  "tool": "built-in image_gen",
+  "characterId": "spb_friend",
+  "approvedConcept": "docs/art-reference/spb-friend/2026-10-04/character-concept.png",
+  "approvedBackground": "docs/art-reference/spb-friend/2026-10-04/bg-neva-evening.png",
+  "assetDirectory": "public/art/opponents/spb_friend",
+  "jobs": [
+    {
+      "file": "head_calm.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\Desktop\\game\\public\\art\\opponents\\brunette\\head_calm.png",
+        "C:\\Users\\DPiunov\\Desktop\\game\\docs\\art-reference\\spb-friend\\2026-10-04\\character-concept.png"
+      ],
+      "prompt": "Production PNG sprite for the existing Armwrestling Club game.\nIMAGE ROLES: Image 1 is the existing game's EDIT TARGET and authoritative geometry template; image 2 is the APPROVED NEW BLONDE FRIEND character, authoritative for identity, black shirt and color/style. Do not copy the old brunette woman's face or clothing. Match the approved new woman exactly: dark brown hair roots with long sandy blonde ends, brown eyes, specific oval face, brows/nose/lips, small gold hoop earrings, plain fitted opaque BLACK short-sleeved top, natural athletic female proportions and warm skin. Clean dark brown outlines, detailed illustrated face and hair, hard-edged skin shading, black fabric folds/highlights, polished game-comic rendering. No photo textures or redesign. Preserve geometry, orientation, attachment locations and cut points of template as closely as possible.\nTruly transparent alpha background. NO painted checkerboard, background, scene, table, cast shadow, words, labels, logo, watermark or border. One separate usable asset, not concept collage.\nEdit target HEAD AND NECK ONLY to become the same approved blonde woman. Preserve template canvas 600x700, exact head placement, size, pose and angle. Neck bottom anchor at x345 y614, transparent margin underneath. Keep approved face identity and gold hoop earring, change the template's solid dark hair to dark-root/sandy-blonde hair. The long lower ends of hair will exist on a separate torso: head hair stops naturally just above shoulders at the same cut region as template. NO torso, shirt, collar, shoulders, hands or arms. Calm confident closed-mouth expression, direct brown-eyed gaze. This is the MASTER HEAD which all later expressions will edit; preserve large transparent margins at every edge.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "torso_motion.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-9a594579-0bb2-4d2d-b7e2-6078a338a68e.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\Desktop\\game\\public\\art\\opponents\\brunette\\torso_motion.png",
+        "C:\\Users\\DPiunov\\Desktop\\game\\docs\\art-reference\\spb-friend\\2026-10-04\\character-concept.png"
+      ],
+      "prompt": "Production PNG sprite for the existing Armwrestling Club game.\nIMAGE ROLES: Image 1 is the existing game's EDIT TARGET and authoritative geometry template; image 2 is the APPROVED NEW BLONDE FRIEND character, authoritative for identity, black shirt and color/style. Do not copy the old brunette woman's face or clothing. Match the approved new woman exactly: dark brown hair roots with long sandy blonde ends, brown eyes, specific oval face, brows/nose/lips, small gold hoop earrings, plain fitted opaque BLACK short-sleeved top, natural athletic female proportions and warm skin. Clean dark brown outlines, detailed illustrated face and hair, hard-edged skin shading, black fabric folds/highlights, polished game-comic rendering. No photo textures or redesign. Preserve geometry, orientation, attachment locations and cut points of template as closely as possible.\nTruly transparent alpha background. NO painted checkerboard, background, scene, table, cast shadow, words, labels, logo, watermark or border. One separate usable asset, not concept collage.\nEdit only the template body's clothing/hair to match approved woman. Same 1572x1001 canvas, torso silhouette, shoulder locations, crop and attachment sections. Replace the cream high-neck knitted sweater with approved fitted plain BLACK cotton top with simple modest scoop neckline and SHORT sleeves, retaining shoulder attachment openings in the SAME positions. Exposed right-side upper-arm stump remains warm skin, left working-arm opening has simple black short-sleeve rim. Replace torso's dark brown hair with lower long sandy blonde strands connected to dark roots belonging on the separate head. NO head, face or neck above neckline insertion, NO complete hands, forearms or peg, retain only existing upper-arm attachment stump. Head insertion anchor around x770 y125 and opposite elbow attachment around x1418 y825. Preserve lower torso cut near y950. Alpha transparent around body and opening cutouts. No decorative lettering, jewelry on torso or extra accessories.",
+      "logicalSize": [
+        1572,
+        1001
+      ]
+    },
+    {
+      "file": "arm_free.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-348d94b8-5940-4555-aed5-bf14751faa23.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\Desktop\\game\\public\\art\\opponents\\brunette\\arm_free.png",
+        "C:\\Users\\DPiunov\\Desktop\\game\\docs\\art-reference\\spb-friend\\2026-10-04\\character-concept.png"
+      ],
+      "prompt": "Production PNG sprite for the existing Armwrestling Club game.\nIMAGE ROLES: Image 1 is the existing game's EDIT TARGET and authoritative geometry template; image 2 is the APPROVED NEW BLONDE FRIEND character, authoritative for identity, black shirt and color/style. Do not copy the old brunette woman's face or clothing. Match the approved new woman exactly: dark brown hair roots with long sandy blonde ends, brown eyes, specific oval face, brows/nose/lips, small gold hoop earrings, plain fitted opaque BLACK short-sleeved top, natural athletic female proportions and warm skin. Clean dark brown outlines, detailed illustrated face and hair, hard-edged skin shading, black fabric folds/highlights, polished game-comic rendering. No photo textures or redesign. Preserve geometry, orientation, attachment locations and cut points of template as closely as possible.\nTruly transparent alpha background. NO painted checkerboard, background, scene, table, cast shadow, words, labels, logo, watermark or border. One separate usable asset, not concept collage.\nEdit the isolated diagonal free arm template, EXACT canvas 560x620. Preserve template arm placement, anatomical geometry, elbow location, wrist orientation, five fingers gripping the vertical cylindrical black/steel handle centered around x501 y493. Replace the cream long rolled sweater sleeve with a plain short BLACK shirt sleeve at upper left matching approved character; below the short cuff the upper arm and forearm are natural warm bare skin. Maintain upper shoulder attachment cut and the same diagonal shoulder-to-hand overall silhouette. One arm holding one peg ONLY. NO head, torso, hair, second arm or tabletop. Soft cotton sleeve folds rather than knit.",
+      "logicalSize": [
+        560,
+        620
+      ]
+    },
+    {
+      "file": "cuff.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-1ac6ff12-81ef-4c94-98d6-8f7284432969.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\Desktop\\game\\public\\art\\opponents\\brunette\\cuff.png",
+        "C:\\Users\\DPiunov\\Desktop\\game\\docs\\art-reference\\spb-friend\\2026-10-04\\character-concept.png"
+      ],
+      "prompt": "Production PNG sprite for the existing Armwrestling Club game.\nIMAGE ROLES: Image 1 is the existing game's EDIT TARGET and authoritative geometry template; image 2 is the APPROVED NEW BLONDE FRIEND character, authoritative for identity, black shirt and color/style. Do not copy the old brunette woman's face or clothing. Match the approved new woman exactly: dark brown hair roots with long sandy blonde ends, brown eyes, specific oval face, brows/nose/lips, small gold hoop earrings, plain fitted opaque BLACK short-sleeved top, natural athletic female proportions and warm skin. Clean dark brown outlines, detailed illustrated face and hair, hard-edged skin shading, black fabric folds/highlights, polished game-comic rendering. No photo textures or redesign. Preserve geometry, orientation, attachment locations and cut points of template as closely as possible.\nTruly transparent alpha background. NO painted checkerboard, background, scene, table, cast shadow, words, labels, logo, watermark or border. One separate usable asset, not concept collage.\nEdit the small sleeve-joint overlay template ONLY. Same 151x151 canvas, orientation, silhouette footprint and attachment centered at x87 y91. Replace cream knitted sleeve material with plain BLACK short-sleeve cotton fabric rim matching approved woman's black shirt. Simple seam and dark gray hard-edged folds, clean dark brown outline. This is ONLY a small open sleeve/cuff patch used to hide an arm attachment seam, NO arm, wrist, hand, skin, torso, hair or background. Keep transparent opening and transparent exterior.",
+      "logicalSize": [
+        151,
+        151
+      ]
+    },
+    {
+      "file": "arms_motion.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-85ca6d63-597c-49fe-9878-229b902e7e46.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\Desktop\\game\\public\\art\\opponents\\brunette\\arms_motion.png",
+        "C:\\Users\\DPiunov\\Desktop\\game\\docs\\art-reference\\spb-friend\\2026-10-04\\character-concept.png"
+      ],
+      "prompt": "Production PNG sprite for the existing Armwrestling Club game.\nIMAGE ROLES: Image 1 is the existing game's EDIT TARGET and authoritative geometry template; image 2 is the APPROVED NEW BLONDE FRIEND character, authoritative for identity, black shirt and color/style. Do not copy the old brunette woman's face or clothing. Match the approved new woman exactly: dark brown hair roots with long sandy blonde ends, brown eyes, specific oval face, brows/nose/lips, small gold hoop earrings, plain fitted opaque BLACK short-sleeved top, natural athletic female proportions and warm skin. Clean dark brown outlines, detailed illustrated face and hair, hard-edged skin shading, black fabric folds/highlights, polished game-comic rendering. No photo textures or redesign. Preserve geometry, orientation, attachment locations and cut points of template as closely as possible.\nTruly transparent alpha background. NO painted checkerboard, background, scene, table, cast shadow, words, labels, logo, watermark or border. One separate usable asset, not concept collage.\nEdit existing NINE-POSE 3x3 armwrestling atlas; preserve EXACT 1670x941 canvas, 3 columns x 3 rows, exact cell positions and dimensions, every pose, transparent gutters, all bare skin, every elbow and finger, central gripping hands, and PLAYER forearm with red-and-white wristband. Change ONLY the opponent's cream knitted cuffs at left of EACH of nine cells into a plain BLACK short sleeve rim matching approved new character. Do not add hair or jewelry. Do NOT redesign, rearrange, enlarge, shift or redraw the arms and grip from scratch. Center cell neutral upright clasp; pose sequence top-left through bottom-right unchanged. All cells contain the SAME pair of two interlocked hands with intact arm attachments; precisely nine distinct connected arm pairs. NO gridlines, labels, persons, heads, torso, table or background. Match original alpha cutouts and cell crop limits.",
+      "logicalSize": [
+        1670,
+        941
+      ]
+    },
+    {
+      "file": "head_strain.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-09089775-c0b3-4cda-87b5-22259f295911.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Heavy sustained effort: lowered inward tense brows, narrowed eyes looking toward player, clenched teeth briefly visible between tense lips, tight jaw, tiny beads of sweat on forehead and cheek. Recognizable strained determination, not rage or a different person.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "head_telegraph.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-678ab2df-83ed-45bd-b021-89594e95c94c.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Preparing to change technique: brows drawn together, eyes clearly glancing DOWN toward hands, lips CLOSED firmly compressed, slightly tense jaw. A focused calculating expression distinctly different from teeth-baring strain.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "head_tired.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-e6f47f41-d5c6-4804-b480-b3eb5a5950bb.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Exhausted and catching breath: upper eyelids droop visibly, inner brows lift slightly, mouth gently OPEN while panting, modest sweat beads along forehead/temple. Fatigued but natural, still same face.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "head_lose.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-7b3a0b66-f5c9-4879-84d1-745d88ceae2d.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Just lost an armwrestling bout: eyes squeezed CLOSED, eyebrows compressed and raised slightly with disappointment, lips pulled into a small frustrated grimace. Natural brief frustration, no tears or injury.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "head_win.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-c937474f-0bb6-41b8-8719-ba186df5f5f7.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Victory: confident warm broad triumphant SMILE with small amount of visible teeth, eyes slightly narrowed happily, eyebrows relaxed/lifted. Same woman's recognizable face, no open-mouth roar or exaggerated distortion.",
+      "logicalSize": [
+        600,
+        700
+      ]
+    },
+    {
+      "file": "head_press.png",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-1c23c3c4-e9be-4140-b523-10e69482e902.png",
+      "refs": [
+        "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-74fd7861-85b6-42a3-9536-e72167d8b2ca.png"
+      ],
+      "prompt": "Use case: identity-preserve / precise-object-edit. EDIT THE SINGLE PROVIDED MASTER HEAD SPRITE. It is the approved specific Petersburg friend for Armwrestling Club: brown eyes, dark brown roots to sandy blonde hair, small gold hoop earrings, illustrated warm skin and clean dark brown linework. Preserve identity EXACTLY.\nChange ONLY expression INSIDE the face (eyebrows, eyelids, gaze, mouth, and small sweat beads if specified). Keep ALL hair pixels/outer silhouette, earring, ears, face outline, nose shape/position, chin outline, neck, neck cut, head angle, scale, lighting and shading outside facial expression unchanged. Do not shift/rotate/zoom/crop the head. Same full transparent canvas dimensions as input reference; same alpha mask and same transparent margins; absolutely no head motion between animation frames. One isolated head and neck ONLY, no clothing, shoulders, body, hands, background, text, watermark or frame. Keep artwork quality and hard-edged comic rendering.\nEXPRESSION: Committing to a powerful press finish: eyebrows low and intense, eyes sharply focused down and forward, lips tightly pressed CLOSED, jaw set, subtle tension in cheek. Controlled determination, distinctly different from strain (no exposed teeth) and telegraph (stronger force, steady focused eyes).",
+      "logicalSize": [
+        600,
+        700
+      ]
+    }
+  ],
+  "discardedVariants": [
+    {
+      "file": "head_calm",
+      "source": "C:\\Users\\DPiunov\\.codex\\generated_images\\01a107b8-702f-74c3-b964-8c1578e4b801\\exec-71295186-bb89-4d90-867d-7d68604a5781.png",
+      "prompt": "Precise technical PNG canvas adjustment of the supplied transparent master game head sprite. Preserve the existing approved blonde woman's calm expression, ALL face details, eye gaze, closed lips, hair, gold earring, neck, outline, drawing style, alpha transparency and placement. Do not redesign or repaint any feature. Input canvas is 1161 x 1355. The matching six animation expressions are 1160 x 1355. Output EXACTLY 1160 x 1355 by removing ONLY the single rightmost fully transparent pixel column. Keep every visible pixel at the same x and y; no resizing, zoom, rotation, centering or crop of visible artwork. The entire visible hair/neck silhouette must remain intact and the same calm head. No other change. Truly transparent background, no text or added objects.",
+      "reason": "Canvas adjustment changed visible composition. Original approved-identity master retained; native-size difference normalized at rendering."
+    }
+  ]
+}

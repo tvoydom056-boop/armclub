@@ -1,0 +1,28 @@
+{
+  "errors": [],
+  "loaded": [
+    "http://127.0.0.1:5173/art/opponents/boris/torso_motion.png?v=shoulder-2",
+    "http://127.0.0.1:5173/art/opponents/yos/torso_motion.png?v=shoulder-2",
+    "http://127.0.0.1:5173/art/opponents/boris/torso_motion.png?v=shoulder-2",
+    "http://127.0.0.1:5173/art/opponents/yos/torso_motion.png?v=shoulder-2"
+  ],
+  "checks": [
+    {
+      "id": "boris",
+      "src": "blob:http://127.0.0.1:5173/ccd01782-2902-4ed4-b6bd-4673f141e5be",
+      "stumpAlpha": 0,
+      "retainedShoulderAlpha": 254,
+      "armWidth": 420,
+      "armHeight": 465
+    },
+    {
+      "id": "yos",
+      "src": "blob:http://127.0.0.1:5173/479fc94b-ccf2-4b1a-96d4-3ddab9593029",
+      "stumpAlpha": 0,
+      "retainedShoulderAlpha": 253,
+      "armWidth": 420,
+      "armHeight": 465
+    }
+  ],
+  "artReplacementReloadsGame": true
+}

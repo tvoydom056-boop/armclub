@@ -1,0 +1,75 @@
+{
+  "characterId": "spb_friend",
+  "name": "Подруга из Петербурга",
+  "assetDirectory": "public/art/opponents/spb_friend",
+  "approvedSource": {
+    "character": "docs/art-reference/spb-friend/2026-10-04/character-concept.png",
+    "background": "docs/art-reference/spb-friend/2026-10-04/bg-neva-evening.png"
+  },
+  "background": {
+    "file": "bg_neva.png",
+    "displaySize": [
+      1280,
+      720
+    ]
+  },
+  "heads": {
+    "files": [
+      "head_calm.png",
+      "head_strain.png",
+      "head_telegraph.png",
+      "head_tired.png",
+      "head_lose.png",
+      "head_win.png",
+      "head_press.png"
+    ],
+    "logicalSize": [
+      600,
+      700
+    ],
+    "normalization": "Use the existing Swap logical-size rendering; native PNGs are retained at generated resolution. Head widths differ by one native pixel."
+  },
+  "parts": {
+    "torso_motion": {
+      "logicalSize": [
+        1572,
+        1001
+      ],
+      "referenceRig": "BRUNETTE_RIG",
+      "note": "Black short sleeves; neckline differs from original sweater. Neck and shoulder joins need in-scene visual tuning."
+    },
+    "arm_free": {
+      "logicalSize": [
+        560,
+        620
+      ],
+      "note": "Normalize the generated high-resolution PNG to logical 560x620 before applying the existing crop/scale anchors."
+    },
+    "cuff": {
+      "logicalSize": [
+        151,
+        151
+      ],
+      "note": "Normalize to logical 151x151 for the sleeve joint; cuff visibility determined during scene integration."
+    },
+    "arms_motion": {
+      "nativeSize": [
+        1670,
+        941
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "neutralFrame": 4,
+      "reference": "src/game/armMotion.ts ARM_POSES; nine-pose geometry based on existing brunette atlas."
+    }
+  },
+  "integrationStatus": "Sprites created and checked. Not yet registered as a playable opponent; game source files unchanged.",
+  "nextImplementationSteps": [
+    "Register opponent id and choose combat tuning separately.",
+    "Add spb_friend to ART_OPPONENTS and load bg_neva.png.",
+    "Add SPB_FRIEND_RIG with native-to-logical sizes for free arm/cuff and verify neck/sleeve attachment points.",
+    "Check all seven heads and nine poses in the running scene before enabling career placement."
+  ]
+}

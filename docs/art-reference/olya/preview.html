@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Спрайты Оли</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#1b202e;color:#f4ead7;font:16px system-ui}main{width:1280px;margin:auto}h1,h2{margin:20px 0 12px}#scene{width:1280px;height:720px}canvas{display:block}.heads{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:12px;background:#343d50}.head{margin:0;text-align:center;background:#202839;border-radius:10px;overflow:hidden}.head img{display:block;width:100%;height:212px;object-fit:contain}.head figcaption{padding:10px 2px;font-size:14px}.atlas{background:repeating-conic-gradient(#343d50 0 25%,#202839 0 50%) 0/24px 24px;padding:12px}.atlas img{display:block;width:100%}.info{font-size:14px;color:#b5c4dc;margin-bottom:16px}
+</style>
+<main>
+<h1>Оля — полицейский участок</h1><div class="info">Сборка из отдельных PNG в существующей сцене Phaser. Позиция задаётся параметром p от −1 до 1.</div><div id="scene"></div>
+<h2>Семь выражений лица</h2><section class="heads" id="heads"></section>
+<h2>Девять поз борьбы</h2><section class="atlas" id="atlas"><img src="/art/opponents/olya/arms_motion.png" alt="Девять поз борьбы Оли"></section>
+</main>
+<script type="module">
+import Phaser from 'phaser';
+import { ArtStage } from '/src/game/artStage.ts';
+import { headKey, joinedArmsKey, oppKey, sceneKey, meKey } from '/src/game/art.ts';
+const query=new URLSearchParams(location.search);
+const p=Number(query.get('p')||0), expression=query.get('head')||'calm';
+const keys=['calm','strain','telegraph','tired','lose','win','press'];
+const labels=['Спокойствие','Напряжение','Смена техники','Усталость','Поражение','Победа','Пресс'];
+document.querySelector('#heads').innerHTML=keys.map((key,i)=>`<figure class="head"><img src="/art/opponents/olya/head_${key}.png" alt="${labels[i]}"><figcaption>${labels[i]}</figcaption></figure>`).join('');
+class Preview extends Phaser.Scene {
+ preload(){
+  this.errors=[];this.load.on('loaderror',file=>this.errors.push(file.url));
+  this.load.image(sceneKey('bg'),'/art/opponents/olya/bg_police.png');
+  for(const n of ['table','pad_opp','pad_me','pin_opp','pin_me'])this.load.image(sceneKey(n),`/art/scene/${n}.png`);
+  for(const n of ['free_idle','free_grip'])this.load.image(meKey(n),`/art/me/${n}.png`);
+  for(const n of ['torso_motion','arm_free','cuff'])this.load.image(oppKey('olya',n),`/art/opponents/olya/${n}.png`);
+  this.load.image(joinedArmsKey('olya'),'/art/opponents/olya/arms_motion.png');
+  for(const key of keys)this.load.image(headKey('olya',key),`/art/opponents/olya/head_${key}.png`);
+ }
+ create(){
+  if(this.errors.length){document.title='ERROR: '+this.errors.join(',');return;}
+  this.art=new ArtStage(this,'olya');
+  // These overrides are confined to this preview and document Olya's insertion points.
+  const old=this.art.rig;
+  this.art.rig={...old,torso:{...old.torso,y:605},neck:{x:770/1572*1100,y:125/1001*700},head:{...old.head,origin:{x:345/600,y:595/700}},free:{...old.free,scale:0.9,reachMax:Math.hypot(236,163),crop:{x:180,y:240,width:380,height:380},elbow:{x:1418/1572*1100,y:825/1001*700}}};
+  this.art.free.setScale(0.9);
+  this.art.free.setCrop(180,240,380,380);
+  for(const object of this.art.head.objects())object.setOrigin(345/600,595/700);
+  this.frame={dt:1/60,p,ourTech:expression==='press'?'press':'hook',oppTech:expression==='press'?'press':'hook',fighting:true,head:expression,breathe:0,lower:0,ourEffort:0,shakeOur:{x:0,y:0},shakeOpp:{x:0,y:0}};
+  for(let i=0;i<90;i++)this.art.update(this.frame);
+  window.olyaPreview={scene:this,art:this.art,frame:this.frame};
+  document.title='READY: Olya';
+ }
+ update(){if(this.art)this.art.update(this.frame);}
+}
+new Phaser.Game({type:Phaser.CANVAS,parent:'scene',width:1280,height:720,banner:false,audio:{noAudio:true},scene:[Preview]});
+</script>
+</html>

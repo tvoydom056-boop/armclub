@@ -1,0 +1,49 @@
+{
+  "tool": "built-in image_gen",
+  "masterPrompt": "Edit the supplied approved Olya concept into ONE isolated transparent HEAD AND NECK sprite for the SAME adult woman. Keep her face identity, blue-gray eyes, eyebrows, nose, pink lips, pearl drop earrings, warm skin, head inclination and dark wavy hair EXACTLY as in the reference. Calm confident gentle closed-mouth smile, looking at the viewer. Only head, hair around the head and neck: no police shirt, shoulders, torso, arms, hands, animals or furniture. Cleanly cut the lower hair near shoulder height; the longer hair belongs to another torso sprite. Place the head in a portrait canvas with aspect ratio 600:700, desired 600x700 logical pixels: head top near y30, head silhouette between x50 and x565, neck bottom at x345 y614, transparent padding below to y700. Preserve clean illustrated dark outlines and the reference shading, no photograph rendering. True transparent alpha background; no checkerboard painted into the sprite, no labels or text. This is the master game head, centered and ready for expression edits.",
+  "master": "public/art/opponents/olya/head_calm.png",
+  "jobs": [
+    {
+      "file": "head_strain.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Straining during armwrestling: teeth clenched and visibly together, brows pulled down, eyes narrowed with effort, lips parted just enough to see clenched teeth, subtle forehead crease and a few small sweat drops. Determined, not horror or caricature.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    },
+    {
+      "file": "head_telegraph.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Preparing a technique change: lips firmly pressed together, eyebrows slightly lowered, eyes glance DOWN toward the hands with a calculating focused look. Mouth closed, no visible teeth, no sweat. Clearly distinguish this intent signal from straining, without turning or moving the head.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    },
+    {
+      "file": "head_tired.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Exhausted after prolonged effort: heavy half-closed eyelids, brows slightly raised toward center, mouth a little open while breathing, small sweat droplets at temple/forehead. Keep facial beauty and recognizability, no exaggerated age or deformation.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    },
+    {
+      "file": "head_lose.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Reaction after defeat: eyes closed/squeezed shut, eyebrows with an inward frustrated crease, corners of lips slightly down in a restrained disappointed grimace. No crying, no injury, no bruises. Same exact head pose.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    },
+    {
+      "file": "head_win.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Joyful victory: broad natural confident smile showing upper teeth, cheeks raised, eyes slightly narrowed with happy amusement, eyebrows relaxed. Friendly playful triumph; preserve facial identity and head pose.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    },
+    {
+      "file": "head_press.png",
+      "prompt": "Edit ONLY the facial expression of the supplied master head_calm image of Olya. This is an animation sprite variant, not a new portrait. Preserve EXACTLY the existing image's canvas aspect ratio 600:700, crop, head size, head position, tilt, outer hair silhouette, every strand outside the face, pearl earring, neck cut, lighting, warm palette, illustrated style and transparent alpha background. Same adult woman, same eyes' color, eyebrows, nose and lip identity. No zoom, recentering, shoulder, costume, extra object, label or background. Change only facial features needed for the expression specified below. The chin/neck and hairstyle should remain aligned with the original so switching images never shifts her head. Output one single transparent head/neck PNG sprite with logical canvas600x700, maintaining identical content placement.\nEXPRESSION: Forceful press technique: stronger focused exertion, brows low and firm, eyes directed DOWN slightly, jaw set, lips pressed in a determined closed-mouth line, subtle cheek tension. No visible clenched teeth so this differs from strain. Do not lower, rotate or scale the head itself; pose animation is handled by the game.",
+      "refs": [
+        "C:/Users/DPiunov/Desktop/game/public/art/opponents/olya/head_calm.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "character": {
+    "id": "olya",
+    "name": "Подруга Оля",
+    "position": 4,
+    "after": "brunette"
+  },
+  "assetDirectory": "public/art/opponents/olya",
+  "background": {
+    "file": "bg_police.png",
+    "textureKey": "art:opponents/olya/bg_police",
+    "displaySize": [
+      1280,
+      720
+    ]
+  },
+  "head": {
+    "logicalSize": [
+      600,
+      700
+    ],
+    "scale": 0.31,
+    "origin": {
+      "x": 0.575,
+      "y": 0.85
+    },
+    "expressions": [
+      "calm",
+      "strain",
+      "telegraph",
+      "tired",
+      "lose",
+      "win",
+      "press"
+    ]
+  },
+  "rig": {
+    "base": "BRUNETTE_RIG",
+    "torso": {
+      "y": 605
+    },
+    "neck": {
+      "x": 538.8040712468194,
+      "y": 87.41258741258741
+    },
+    "free": {
+      "scale": 0.9,
+      "reachMax": 286.81875810344064,
+      "crop": {
+        "x": 180,
+        "y": 240,
+        "width": 380,
+        "height": 380
+      },
+      "elbow": {
+        "x": 992.2391857506361,
+        "y": 576.9230769230769
+      }
+    },
+    "cuffVisible": false
+  },
+  "requiredChanges": [
+    {
+      "file": "src/core/opponents.ts",
+      "instruction": "Добавить OpponentDef с id olya и именем Подруга Оля четвёртой после brunette; параметры боя выбрать отдельно."
+    },
+    {
+      "file": "src/game/art.ts",
+      "instruction": "Добавить olya в ART_OPPONENTS; backgroundKey для olya должен возвращать art:opponents/olya/bg_police; queueArt должен загрузить bg_police.png."
+    },
+    {
+      "file": "src/game/artStage.ts",
+      "instruction": "Добавить OLYA_RIG на основе BRUNETTE_RIG с параметрами из этого файла и выбрать его при id === olya. Эти параметры уже проверены в preview.html."
+    },
+    {
+      "file": "src/ui/Portrait.tsx",
+      "instruction": "После добавления olya в ART_OPPONENTS существующий Portrait загрузит её head_calm.png и torso_motion.png; для карточки можно уточнить CSS размещение."
+    }
+  ],
+  "preview": "docs/art-reference/olya/preview.html",
+  "status": "Sprites and preview complete; character is not yet registered as a playable opponent."
+}
