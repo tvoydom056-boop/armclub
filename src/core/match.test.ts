@@ -60,6 +60,24 @@ describe('старт матча', () => {
     const second = stepMatch(s, cfg, { clicks: 1 }, DT, rng);
     expect(second.some((e) => e.type === 'startBonus')).toBe(false);
   });
+
+  it('каждый уровень «Взрывного старта» усиливает рывок, даже при прокачанной силе', () => {
+    const afterStart = (explosive: number) => {
+      const cfg = cfgFor('boris', { ...emptyLevels(), biceps: 10, explosive });
+      const rng = mulberry32(4);
+      const s = createMatch(cfg, rng);
+      toFight(s, cfg, rng);
+      stepMatch(s, cfg, { clicks: 1 }, DT, rng);
+      return { s, cfg, rng };
+    };
+    for (let l = 1; l <= 15; l++) expect(afterStart(l).s.momentum).toBeGreaterThan(afterStart(l - 1).s.momentum);
+    // следующий клик не обрезает рывок до потолка
+    const { s, cfg, rng } = afterStart(15);
+    const peak = s.momentum;
+    stepMatch(s, cfg, { clicks: 1 }, DT, rng);
+    expect(s.momentum).toBeGreaterThan(TUNING.maxMomentum);
+    expect(s.momentum).toBeGreaterThan(peak * 0.9);
+  });
 });
 
 describe('ход боя', () => {
@@ -105,7 +123,7 @@ describe('ход боя', () => {
   });
 
   it('соперник телеграфирует смену техники заранее', () => {
-    const cfg = cfgFor('zina');
+    const cfg = cfgFor('venya');
     const rng = mulberry32(7);
     const s = createMatch(cfg, rng);
     toFight(s, cfg, rng);
@@ -119,6 +137,20 @@ describe('ход боя', () => {
     expect(sawTelegraph).toBe(true);
     expect(sawSwitchAfter).toBe(true);
   });
+
+  it('выносливость тратится, пока кликаешь, даже с прокачкой на максимуме, и копится в паузах', () => {
+    const maxStamina = UPGRADES.find((u) => u.id === 'stamina')!.maxLevel;
+    const cfg = cfgFor('boris', { ...emptyLevels(), stamina: maxStamina });
+    const rng = mulberry32(8);
+    const s = createMatch(cfg, rng);
+    toFight(s, cfg, rng);
+    // 4 клика в секунду пять секунд
+    for (let i = 0; i < 60 * 5; i++) stepMatch(s, cfg, { clicks: i % 15 === 0 ? 1 : 0 }, DT, rng);
+    const afterClicks = s.stamina;
+    expect(afterClicks).toBeLessThan(0.95);
+    for (let i = 0; i < 60 * 2; i++) stepMatch(s, cfg, { clicks: 0 }, DT, rng);
+    expect(s.stamina).toBeGreaterThan(afterClicks);
+  });
 });
 
 describe('экономика', () => {
@@ -126,6 +158,16 @@ describe('экономика', () => {
     for (const u of UPGRADES) {
       expect(upgradeCost(u, 5)).toBeGreaterThan(upgradeCost(u, 0));
       expect(upgradeCost(u, 0)).toBe(Math.ceil(u.baseCost));
+    }
+  });
+
+  it('каждый купленный уровень меняет характеристики', () => {
+    for (const u of UPGRADES) {
+      for (let l = 1; l <= u.maxLevel; l++) {
+        const prev = deriveStats({ ...emptyLevels(), [u.id]: l - 1 });
+        const next = deriveStats({ ...emptyLevels(), [u.id]: l });
+        expect(next, `${u.name}, ур. ${l}`).not.toEqual(prev);
+      }
     }
   });
 
@@ -223,19 +265,19 @@ describe('баланс (боты)', () => {
     expect(winRate('boris', emptyLevels(), 'reader').rate).toBeGreaterThanOrEqual(0.85);
   });
 
-  it('у новичка почти нет шансов против босса подвала', () => {
-    expect(winRate('leha', emptyLevels(), 'reader').rate).toBeLessThanOrEqual(0.2);
+  it('у новичка почти нет шансов против финального босса', () => {
+    expect(winRate('venya', emptyLevels(), 'reader').rate).toBeLessThanOrEqual(0.2);
   });
 
   it('прокачка и чтение соперника побеждают босса', () => {
     const levels = lv({ biceps: 10, fingers: 10, triceps: 10, grip: 6, stamina: 6, wrist: 3, shoulder: 3 });
-    expect(winRate('leha', levels, 'reader').rate).toBeGreaterThanOrEqual(0.6);
+    expect(winRate('venya', levels, 'reader').rate).toBeGreaterThanOrEqual(0.6);
   });
 
   it('чтение соперника лучше, чем бездумный спам одной техникой', () => {
     const levels = lv({ biceps: 3, fingers: 3, triceps: 3, grip: 2, stamina: 2 });
-    const reader = winRate('max', levels, 'reader').rate;
-    const dumb = winRate('max', levels, 'hook-only').rate;
+    const reader = winRate('spb_friend', levels, 'reader').rate;
+    const dumb = winRate('spb_friend', levels, 'hook-only').rate;
     expect(reader).toBeGreaterThan(dumb);
   });
 });

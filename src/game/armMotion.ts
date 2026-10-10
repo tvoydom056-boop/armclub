@@ -22,7 +22,8 @@ export const ARM_POSES = [
 export const ARM_SCALE = 1;
 /** Насколько кадр можно довернуть к плечу между позами. Размер не подгоняется — рука не «дышит». */
 export const ARM_FIT = { angle: 0.08 };
-export const PIN_CUSHIONS = { win: { x: 285, y: 518 }, lose: { x: 985, y: 518 } };
+/** Куда приходит захват на пине. Самих подушек на столе больше не рисуем — это просто точки касания. */
+export const PIN_CUSHIONS ={ win: { x: 285, y: 518 }, lose: { x: 985, y: 518 } };
 
 export function motionFrames(p: number) {
   const at = 4 - Math.max(-1, Math.min(1, p)) * 4;

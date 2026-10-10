@@ -20,11 +20,11 @@ export const TUNING = {
   pressBoost: 1.25,
   pressPenalty: 0.65,
   oppPressGate: 0.15,
-  clickCost: { hook: 0.011, toproll: 0.015, press: 0.026 } as Record<Technique, number>,
+  clickCost: { hook: 0.0077, toproll: 0.0105, press: 0.0182 } as Record<Technique, number>,
   oppTechCost: { hook: 1, toproll: 1.15, press: 1.7 } as Record<Technique, number>,
+  /** Выносливость восстанавливается только в паузе между кликами длиннее этой. */
   idleAfter: 0.45,
   regenIdle: 0.16,
-  regenBusy: 0.03,
   switchTime: 0.35,
   switchPenalty: 0.55,
   ready: [1.1, 2.6] as const,
@@ -110,6 +110,12 @@ function weightedPick(weights: Record<Technique, number>, rng: Rng): Technique {
   return TECHNIQUES[TECHNIQUES.length - 1];
 }
 
+/** Босс не жмёт пресс, пока не впереди (там пресс под штрафом), — берёт лучшее из крюка и топролла. */
+function bossPick(pick: Technique, opp: OpponentDef, playerTech: Technique, position: number): Technique {
+  if (!opp.boss || pick !== 'press' || position <= -TUNING.oppPressGate) return pick;
+  return matchup('hook', playerTech) > matchup('toproll', playerTech) ? 'hook' : 'toproll';
+}
+
 export function createMatch(cfg: MatchConfig, rng: Rng): MatchState {
   const { opp } = cfg;
   return {
@@ -127,7 +133,8 @@ export function createMatch(cfg: MatchConfig, rng: Rng): MatchState {
     startUsed: false,
     clicks: 0,
     opp: {
-      tech: weightedPick(opp.weights, rng),
+      // босс не начинает с пресса: со старта он под штрафом
+      tech: weightedPick(opp.boss ? { ...opp.weights, press: 0 } : opp.weights, rng),
       next: null,
       telegraphLeft: 0,
       decisionLeft: randRange(rng, opp.decision),
@@ -174,11 +181,11 @@ function finish(s: MatchState, result: 'won' | 'lost', reason: EndReason, ev: Ma
 }
 
 function chooseOppTech(s: MatchState, cfg: MatchConfig, rng: Rng): Technique {
-  if (rng() < cfg.opp.reactiveness) return COUNTER[s.tech];
+  if (rng() < cfg.opp.reactiveness) return bossPick(COUNTER[s.tech], cfg.opp, s.tech, s.position);
   const w = { ...cfg.opp.weights };
   if (s.position <= -TUNING.oppPressGate) w.press *= 2.5;
   else if (s.position > 0.3) w.press *= 0.4;
-  return weightedPick(w, rng);
+  return bossPick(weightedPick(w, rng), cfg.opp, s.tech, s.position);
 }
 
 function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev: MatchEvent[]) {
@@ -272,22 +279,24 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
 
   for (let i = 0; i < input.clicks; i++) {
     const t = s.tech;
-    let impulse = cfg.stats.power[t] * staminaFactor(s.stamina);
+    const impulse = cfg.stats.power[t] * staminaFactor(s.stamina);
+    let bonus = 0;
     if (!s.startUsed && s.time <= TUNING.startWindow) {
       s.startUsed = true;
-      impulse += TUNING.startImpulse * cfg.stats.explosive;
+      bonus = TUNING.startImpulse * cfg.stats.explosive;
       ev.push({ type: 'startBonus' });
     }
-    s.momentum = Math.min(TUNING.maxMomentum, s.momentum + impulse);
+    // потолок ограничивает только клики: иначе он съедал рывок, и прокачка «Взрывного старта» не работала
+    s.momentum = Math.max(s.momentum, Math.min(TUNING.maxMomentum, s.momentum + impulse)) + bonus;
     s.stamina = Math.max(0, s.stamina - TUNING.clickCost[t] * cfg.stats.costMult[t]);
     s.clicks += 1;
-    ev.push({ type: 'click', power: impulse });
+    ev.push({ type: 'click', power: impulse + bonus });
   }
   s.sinceClick = input.clicks > 0 ? 0 : s.sinceClick + dt;
 
   s.momentum *= Math.exp(-dt / TUNING.momentumTau);
-  const regen = (s.sinceClick > TUNING.idleAfter ? TUNING.regenIdle : TUNING.regenBusy) * cfg.stats.regen;
-  s.stamina = Math.min(1, s.stamina + regen * dt);
+  // пока кликаешь — не восстанавливается, иначе прокачанное восстановление перекрывало расход
+  if (s.sinceClick > TUNING.idleAfter) s.stamina = Math.min(1, s.stamina + TUNING.regenIdle * cfg.stats.regen * dt);
 
   stepOpponent(s, cfg, dt, rng, ev);
 

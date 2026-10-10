@@ -8,7 +8,6 @@ import {
   type MatchEvent,
   type MatchState,
 } from '../../core/match';
-import { crowd } from '../../audio/engine';
 import { sfx } from '../../audio/sfx';
 import { opponentById } from '../../core/opponents';
 import { mulberry32, type Rng } from '../../core/rng';
@@ -117,7 +116,6 @@ export class MatchScene extends Phaser.Scene {
       this.pendingClicks += 1;
     });
     const kb = this.input.keyboard;
-    kb?.addCapture('SPACE');
     kb?.on('keydown', (ev: KeyboardEvent) => {
       if (ev.code === 'Space') {
         if (!ev.repeat) this.pendingClicks += 1;
@@ -163,8 +161,9 @@ export class MatchScene extends Phaser.Scene {
     this.beatTimer = 0;
     this.useArt(cfg.opp.id);
     useHud.setState({ active: true, oppName: cfg.opp.name, oppNick: cfg.opp.nick });
-    this.banner('ПРИГОТОВИЛСЬ…', '#ffe14a', 60, 900, 540);
-    crowd.start();
+    this.banner('ПРИГОТОВИЛИСЬ…', '#ffe14a', 60, 900, 540);
+    // пробел глушим только на время боя: Phaser ловит его на всём окне, и в меню он не нажимал кнопки
+    this.input.keyboard?.addCapture('SPACE');
     sfx.ready();
   }
 
@@ -198,7 +197,7 @@ export class MatchScene extends Phaser.Scene {
   }
 
   private abortMatch(): void {
-    crowd.stop();
+    this.input.keyboard?.removeCapture('SPACE');
     this.cfg = null;
     this.state = null;
     this.endInfo = null;
@@ -228,7 +227,7 @@ export class MatchScene extends Phaser.Scene {
       this.endTimer -= dt;
       if (this.endTimer <= 0 && this.endInfo && this.cfg && this.state) {
         useHud.setState({ active: false });
-        crowd.stop();
+        this.input.keyboard?.removeCapture('SPACE');
         bus.emit('match:end', {
           oppId: this.cfg.opp.id,
           result: this.endInfo.result,
@@ -613,7 +612,6 @@ export class MatchScene extends Phaser.Scene {
   private syncHud(): void {
     const s = this.state;
     if (!s) return;
-    crowd.level(s.phase === 'fight' ? 0.4 + Math.abs(s.position) * 0.4 + (s.opp.surgeLeft > 0 ? 0.2 : 0) : 0.25);
     useHud.setState({
       phase: s.phase,
       position: s.position,

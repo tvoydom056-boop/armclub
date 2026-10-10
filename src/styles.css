@@ -755,7 +755,7 @@ img.portrait {
 .tug-track {
   position: relative;
   height: 2em;
-  background: linear-gradient(90deg, #c8283c 0 14%, #4f3466 14% 86%, #2a64d1 86%);
+  background: linear-gradient(90deg, #2a64d1 0 14%, #4f3466 14% 86%, #c8283c 86%);
   border: 0.25em solid var(--ink);
   border-radius: 1.2em;
 }

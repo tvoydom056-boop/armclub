@@ -15,7 +15,8 @@ export const useSettings = create<SettingsStore>()(
     (set) => ({
       muted: false,
       volume: 0.7,
-      toggleMute: () => set((s) => ({ muted: !s.muted })),
+      // при громкости 0 кнопка показывает «звук выкл.», значит включение должно вернуть громкость
+      toggleMute: () => set((s) => (s.muted || s.volume === 0 ? { muted: false, volume: s.volume || 0.7 } : { muted: true })),
       setVolume: (v) => set({ volume: Math.max(0, Math.min(1, v)), muted: false }),
     }),
     { name: 'armwrestling-club-settings', version: 1 },

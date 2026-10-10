@@ -1,8 +1,7 @@
 import Phaser from 'phaser';
 import type { Technique } from '../core/techniques';
-import { headKey, meKey, oppKey, sceneKey, type ClaspPose, type HeadKey } from './art';
+import { backgroundKey, headKey, meKey, oppKey, sceneKey, type ClaspPose, type HeadKey } from './art';
 import { JoinedArms } from './joinedArms';
-import { PIN_CUSHIONS } from './armMotion';
 import { clamp } from '../core/rng';
 import type { Pt } from './layout';
 
@@ -11,7 +10,7 @@ import type { Pt } from './layout';
  * готовые позы сохраняют форму локтей; корпус следует за плечом рабочей руки.
  * Координаты — логические пиксели сцены 1280×720; «px» — пиксели самих картинок (они нарисованы вдвое крупнее).
  */
-/** Торс: низ «культей» рук стоит на столе, торс нависает над дальним краем стола. */
+/** Торс нависает над дальним краем стола; свободная рука крепится отдельно у плеча. */
 const TORSO = { x: 638, y: 511, scale: 0.47, origin: { x: 526 / 1100, y: 695 / 700 } };
 /** Точка на торсе (px), куда встаёт низ шеи. */
 const TORSO_NECK = { x: 526, y: 150 };
@@ -22,36 +21,83 @@ const CUFF = { origin: { x: 87 / 151, y: 91 / 151 }, scale: 1.2 };
 /** Небольшой наклон сохраняет перекрытие рукавов даже при полном прессе. */
 const TILT_LIMIT = 0.08;
 
-/**
- * Локоть культи (1418, 892 px торса 1572×1001) — шарнир обрезанного предплечья под торсом.
- * crop убирает весь рукав; origin — точка, вокруг которой ставится рука, squeeze — подтягивание при усилии.
- * peg — штырь на столе (сцена): кулак держит его и стоит на месте, origin тогда — центр штыря в кулаке,
- * reach — направление предплечья на картинке (от кулака к локтю). Рука целиком, с рукавом, лежит под торсом:
- * предплечье поворачивается к локтю культи, а лишняя длина руки прячется под толстовкой.
- * Кулак тащится за телом, только когда локоть дальше reachMax px картинки (Борю почти положили).
- */
+/** Полная свободная рука в логических 560×620 px: верх рукава входит под край торса. */
 const FREE = {
-  elbow: { x: 1418 / 1572 * 1100, y: 892 / 1001 * 700 },
-  crop: { x: 0, y: 0, width: 560, height: 620 },
-  scale: 0.65, origin: { x: 501 / 560, y: 493 / 620 }, rot: -0.2, squeeze: 0.06,
-  reach: { x: 265 - 501, y: 330 - 493 },
-  reachMax: 520, minTurn: -0.6,
-  peg: { x: 1112, y: 550 } as Pt | null,
+  shoulder: { x: 1070 / 1572 * 1100, y: 310 / 1001 * 700 },
+  origin: { x: 60 / 560, y: 45 / 620 },
+  grip: { x: 501, y: 493 },
+  scale: 0.75, squeeze: 0.025,
+  peg: { x: 1112, y: 550 },
 };
 
 /** Точки соединения зависят от нарисованного тела, а не от порядка бойца. */
 const YOS_RIG = {
   torso: { ...TORSO, x: 644, y: 580 },
   neck: { x: 752 / 1572 * 1100, y: 200 / 1001 * 700 },
-  head: { scale: 0.31, origin: { x: 365 / 600, y: 663 / 700 } },
+  head: { scale: 0.35, origin: { x: 365 / 600, y: 663 / 700 } },
   cuff: { ...CUFF, scale: 0.85 },
+  /** Руки Йоса нарисованы крупнее тела — уменьшаем всю связку вокруг захвата. */
+  arms: 0.85,
+  /** Сдвиг захвата вниз (логические px); торс и голова едут за плечом руки. */
+  drop: 0,
+  /** Наклон кулака вниз на пути к нашему штырю (рад) и сдвиг захвата (px), который держит плечо на месте. */
+  sag: { angle: 0, drop: 0 },
   free: {
     ...FREE,
-    crop: { x: 0, y: 200, width: 560, height: 420 },
-    scale: 0.65, origin: { x: 170 / 560, y: 220 / 620 }, rot: -0.4, peg: null,
+    shoulder: { x: 1060 / 1572 * 1100, y: 295 / 1001 * 700 },
+    scale: 0.75,
   },
 };
-const BORIS_RIG = { torso: TORSO, neck: TORSO_NECK, head: HEAD, cuff: CUFF, free: FREE };
+const BORIS_RIG = { torso: TORSO, neck: TORSO_NECK, head: HEAD, cuff: CUFF, free: FREE, arms: 1, drop: 0, sag: { angle: 0, drop: 0 } };
+/** Пушистая шея Вени перекрывает кремовую грудку; руки используют геометрию Йоса. Голова опущена — уши не прячутся под шкалой пина. */
+const VENYA_RIG = {
+  ...YOS_RIG,
+  head: { scale: 0.5, origin: { x: 300 / 600, y: 460 / 700 } },
+  arms: 1,
+};
+/**
+ * Девушки нарисованы стройнее Бори, а их головы — с волосами и полями, лицо в кадре мельче.
+ * Торс и голову укрупняем, руки чуть уменьшаем; сильнее 0.95 нельзя — наша рука с той же
+ * картинки перестаёт доставать до красной подушки.
+ */
+const SLIM_TORSO = { ...TORSO, y: 625, scale: 0.55 };
+const SLIM_ARMS = 0.95;
+const SLIM_FREE = 0.62;
+/** Круглый вырез футболки: шея Ани входит в него; правая рука голая. */
+const ANYA_RIG = {
+  ...BORIS_RIG,
+  torso: SLIM_TORSO,
+  neck: { x: 820 / 1571 * 1100, y: 190 / 1001 * 700 },
+  head: { scale: 0.44, origin: { x: 362 / 600, y: 573 / 700 } },
+  arms: SLIM_ARMS,
+  /** Захват был на уровне шеи — опускаем всю фигуру. */
+  drop: 60,
+  free: { ...FREE, shoulder: { x: 1100 / 1571 * 1100, y: 270 / 1001 * 700 }, scale: SLIM_FREE },
+};
+/** Открытый ворот формы: шея Оли входит в вырез, а не в воротник-хомут. Голова чуть меньше — волосы не упираются в край экрана. */
+const OLYA_RIG = {
+  ...BORIS_RIG,
+  torso: SLIM_TORSO,
+  neck: { x: 790 / 1572 * 1100, y: 40 / 1001 * 700 },
+  head: { scale: 0.42, origin: { x: 405 / 600, y: 480 / 700 } },
+  arms: SLIM_ARMS,
+  /** Волосы заходили под полосу пина — опускаем всю фигуру. */
+  drop: 60,
+  free: { ...FREE, shoulder: { x: 1100 / 1572 * 1100, y: 260 / 1001 * 700 }, scale: SLIM_FREE },
+};
+/** Шея подруги входит в воротник свитера; её лицо короче лица Бори. Рука опущена: локоть стоит на столе, а не на его краю. */
+const BRUNETTE_RIG = {
+  ...BORIS_RIG,
+  torso: SLIM_TORSO,
+  /** Шея глубже в воротнике, голова мельче, чем у Ани: крупная висела над телом. */
+  neck: { x: 770 / 1572 * 1100, y: 150 / 1001 * 700 },
+  head: { scale: 0.39, origin: { x: 345 / 600, y: 614 / 700 } },
+  arms: SLIM_ARMS,
+  drop: 40,
+  /** Дожимая, она тянула руку горизонтально на уровне груди — кулак опускаем, тело остаётся на месте. */
+  sag: { angle: 0.14, drop: 32 },
+  free: { ...FREE, shoulder: { x: 1100 / 1572 * 1100, y: 280 / 1001 * 700 }, scale: SLIM_FREE },
+};
 
 /** Картинка с плавной сменой текстуры: старая гаснет за time секунд. */
 class Swap {
@@ -131,29 +177,24 @@ export class ArtStage {
   private rig: typeof BORIS_RIG;
 
   constructor(scene: Phaser.Scene, private id: string) {
-    this.rig = id === 'yos' ? YOS_RIG : BORIS_RIG;
+    this.rig = id === 'venya' ? VENYA_RIG : id === 'yos' ? YOS_RIG : id === 'brunette' ? BRUNETTE_RIG : id === 'olya' ? OLYA_RIG : id === 'spb_friend' ? ANYA_RIG : BORIS_RIG;
     const { torso, head, free, cuff } = this.rig;
     const img = (key: string, depth: number) => scene.add.image(0, 0, key).setDepth(depth);
-    const bg = img(sceneKey('bg'), 0).setOrigin(0, 0).setDisplaySize(1280, 720);
+    const bg = img(backgroundKey(id), 0).setOrigin(0, 0).setDisplaySize(1280, 720);
     // дальний край стола (100 px сверху картинки) на y=400, торс нависает над столом
     const table = img(sceneKey('table'), 20).setOrigin(0.5, 1).setScale(0.5).setPosition(640, 730);
-    // подушки лежат на столе перед торсом: красная под его локтем, синяя у нас в правом нижнем углу
-    const padOpp = img(sceneKey('pad_opp'), 21.5).setDisplaySize(340, 110).setPosition(555, 577);
-    const padMe = img(sceneKey('pad_me'), 21.5).setScale(0.42).setPosition(1115, 705);
-    const pinOpp = img(sceneKey('pin_opp'), 24).setDisplaySize(165, 165).setPosition(PIN_CUSHIONS.win.x, PIN_CUSHIONS.win.y);
-    const pinMe = img(sceneKey('pin_me'), 24).setDisplaySize(165, 165).setPosition(PIN_CUSHIONS.lose.x, PIN_CUSHIONS.lose.y);
     this.torso = img(oppKey(id, 'torso_motion'), 21).setOrigin(torso.origin.x, torso.origin.y);
     this.head = new Swap(scene, headKey(id, 'calm'), 22, head.origin, 0.14, { x: 600, y: 700 });
     this.free = img(oppKey(id, 'arm_free'), 20.8).setOrigin(free.origin.x, free.origin.y)
-      .setCrop(free.crop.x, free.crop.y, free.crop.width, free.crop.height).setScale(free.scale).setRotation(free.rot);
+      .setDisplaySize(560 * free.scale, 620 * free.scale);
 
-    this.arms = new JoinedArms(scene, id);
+    this.arms = new JoinedArms(scene, id, this.rig.arms);
     // Цельный голый дельтоид Йоса уже закрывает стык; накладка нужна рукаву Бори.
-    this.cuff = img(oppKey(id, 'cuff'), 32).setOrigin(cuff.origin.x, cuff.origin.y).setVisible(id !== 'yos');
+    this.cuff = img(oppKey(id, 'cuff'), 32).setOrigin(cuff.origin.x, cuff.origin.y).setVisible(id === 'boris');
 
     this.ourFree = new Swap(scene, meKey('free_idle'), 34, { x: 0, y: 1 }, 0.08);
     this.ourFree.place(0, 720, 0, 0.5);
-    this.all = [bg, table, padOpp, padMe, pinOpp, pinMe, this.torso, this.free, ...this.head.objects(), this.arms.object, this.cuff, ...this.ourFree.objects()];
+    this.all = [bg, table, this.torso, this.free, ...this.head.objects(), this.arms.object, this.cuff, ...this.ourFree.objects()];
   }
 
   destroy(): void {
@@ -163,10 +204,12 @@ export class ArtStage {
   update(f: ArtFrame): ArtResult {
     const { torso: body, neck: neckAnchor, head, free: freeArm, cuff } = this.rig;
     const pose: ClaspPose = f.fighting ? f.ourTech : 'neutral';
+    // на пути к нашему штырю (p < 0) кулак опускается ниже плеча; в нейтрали и у самой подушки наклона нет
+    const sag = Math.sin(Math.PI * clamp(-f.p, 0, 1));
     const C = this.arms.update(pose, f.p, {
       x: (f.shakeOur.x + f.shakeOpp.x) * 0.3,
-      y: (f.shakeOur.y + f.shakeOpp.y) * 0.3,
-    }, f.dt);
+      y: (f.shakeOur.y + f.shakeOpp.y) * 0.3 + this.rig.drop + this.rig.sag.drop * sag,
+    }, f.dt, this.rig.sag.angle * sag);
     this.cuff.setPosition(this.arms.shoulder.x, this.arms.shoulder.y)
       .setRotation(this.arms.rotation).setScale(this.arms.scale * cuff.scale);
 
@@ -195,24 +238,13 @@ export class ArtStage {
     const straining = f.fighting && (pressing || f.head === 'strain' || f.head === 'telegraph');
     this.freePull += ((straining ? 1 : 0) - this.freePull) * (1 - Math.exp(-f.dt * 8));
     const free = bodyPoint(
-      body.x + (freeArm.elbow.x - body.origin.x * 1100) * body.scale,
-      body.y + (freeArm.elbow.y - body.origin.y * 700) * body.scale,
+      body.x + (freeArm.shoulder.x - body.origin.x * 1100) * body.scale,
+      body.y + (freeArm.shoulder.y - body.origin.y * 700) * body.scale,
     );
-    if (freeArm.peg) {
-      // кулак на штыре: стоит на месте, предплечье смотрит на локоть культи
-      const toElbow = { x: free.x - freeArm.peg.x, y: free.y - freeArm.peg.y };
-      const dist = Math.hypot(toElbow.x, toElbow.y);
-      const reach = freeArm.reachMax * freeArm.scale;
-      const drag = Math.max(0, dist - reach) / dist;
-      // когда Борю валят на нашу сторону, локоть уходит ниже кулака: не даём руке развернуться рукавом
-      // вниз из-под толстовки
-      const turn = Math.max(freeArm.minTurn,
-        Phaser.Math.Angle.Wrap(Math.atan2(toElbow.y, toElbow.x) - Math.atan2(freeArm.reach.y, freeArm.reach.x)));
-      this.free.setPosition(freeArm.peg.x + toElbow.x * drag, freeArm.peg.y + toElbow.y * drag)
-        .setRotation(turn - this.freePull * freeArm.squeeze * 0.3);
-    } else {
-      this.free.setPosition(free.x, free.y).setRotation(freeArm.rot + tilt - this.freePull * freeArm.squeeze);
-    }
+    // Плечо всегда соединено с телом. Руку поворачиваем целиком к рукояти, сохраняя её размер.
+    const reach = { x: freeArm.grip.x - freeArm.origin.x * 560, y: freeArm.grip.y - freeArm.origin.y * 620 };
+    const turn = Math.atan2(freeArm.peg.y - free.y, freeArm.peg.x - free.x) - Math.atan2(reach.y, reach.x);
+    this.free.setPosition(free.x, free.y).setRotation(turn - this.freePull * freeArm.squeeze);
 
     // свободная рука: сжимает рукоять, когда давим
     this.ourFree.set(meKey(f.ourEffort > 0.25 ? 'free_grip' : 'free_idle'));

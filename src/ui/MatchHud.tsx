@@ -36,8 +36,9 @@ export function MatchHud() {
 
         <div className="tug">
           <div className="tug-caps">
-            <span className="cap cap-opp">ЕГО ПИН</span>
+            {/* побеждая, ты гнёшь его руку влево — к своей стороне экрана */}
             <span className="cap cap-you">ТВОЙ ПИН</span>
+            <span className="cap cap-opp">ЕГО ПИН</span>
           </div>
           <div className="tug-track">
             <div className="tug-fill" style={fillStyle} />

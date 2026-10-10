@@ -127,59 +127,9 @@ export function noise(o: NoiseOpts): void {
   };
 }
 
-/* ---------- гул толпы ---------- */
-
-interface CrowdNodes {
-  src: AudioBufferSourceNode;
-  gain: GainNode;
-  lfo: OscillatorNode;
-}
-let crowdNodes: CrowdNodes | null = null;
+/* ---------- толпа ---------- */
 
 export const crowd = {
-  start(): void {
-    const a = live();
-    if (!a || !noiseBuf || crowdNodes) return;
-    const { c, out } = a;
-    const src = c.createBufferSource();
-    src.buffer = noiseBuf;
-    src.loop = true;
-    const band = c.createBiquadFilter();
-    band.type = 'bandpass';
-    band.frequency.value = 650;
-    band.Q.value = 0.5;
-    const gain = c.createGain();
-    gain.gain.value = 0;
-    // медленное «дыхание» толпы
-    const lfo = c.createOscillator();
-    lfo.frequency.value = 0.35;
-    const depth = c.createGain();
-    depth.gain.value = 0.012;
-    lfo.connect(depth).connect(gain.gain);
-    src.connect(band).connect(gain).connect(out);
-    src.start();
-    lfo.start();
-    crowdNodes = { src, gain, lfo };
-  },
-
-  /** 0..1 — насколько толпа разошлась. */
-  level(v: number): void {
-    if (!crowdNodes || !ctx) return;
-    crowdNodes.gain.gain.setTargetAtTime(0.02 + v * 0.09, ctx.currentTime, 0.3);
-  },
-
-  stop(): void {
-    const n = crowdNodes;
-    if (!n || !ctx) return;
-    crowdNodes = null;
-    n.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.15);
-    window.setTimeout(() => {
-      n.src.stop();
-      n.lfo.stop();
-      n.gain.disconnect();
-    }, 800);
-  },
-
   /** Волна голосов: ликование (высокая) или разочарованное «у-у-у» (низкая). */
   swell(kind: 'cheer' | 'boo', at = 0): void {
     if (kind === 'cheer') {

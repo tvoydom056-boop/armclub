@@ -1,5 +1,6 @@
 import { sfx } from '../audio/sfx';
 import { useSettings } from '../store/settings';
+import { ClubIcon } from './ClubIcon';
 
 /** Кнопка «звук вкл/выкл» (клавиша M) и, по желанию, ползунок громкости. */
 export function SoundToggle({ slider = false }: { slider?: boolean }) {
@@ -15,14 +16,16 @@ export function SoundToggle({ slider = false }: { slider?: boolean }) {
         className="sound-btn"
         data-sfx="none"
         title="Звук (M)"
+        aria-label={off ? 'Включить звук' : 'Выключить звук'}
+        aria-pressed={!off}
         onClick={(e) => {
           toggleMute();
           // иначе ПРОБЕЛ (клик по сопернику) нажимал бы эту же кнопку
           e.currentTarget.blur();
-          if (muted) sfx.ui.click();
+          if (off) sfx.ui.click();
         }}
       >
-        {off ? '🔇' : '🔊'}
+        <ClubIcon name={off ? 'muted' : 'sound'} />
       </button>
       {slider && (
         <input

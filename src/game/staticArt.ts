@@ -111,9 +111,9 @@ function plank(i: number): string {
   return `<line x1="${fx}" y1="408" x2="${nx}" y2="${H}"/>`;
 }
 
-/** Стол в перспективе, подушки для локтей и касания, поручни. Видим сверху-сбоку. */
+/** Стол в перспективе и поручни. Видим сверху-сбоку. */
 export function tableSvg(): string {
-  const { oppElbow, pinWin, pinLose, oppPeg, ourPeg } = LAYOUT;
+  const { oppPeg, ourPeg } = LAYOUT;
   const planks = Array.from({ length: 13 }, (_, k) => plank(k - 6)).join('');
   return `${svgOpen}
   <defs>
@@ -135,22 +135,6 @@ export function tableSvg(): string {
   </g>
   <polygon points="250,395 1030,395 1034,410 246,410" fill="#f6c98a" stroke="${OUT}" stroke-width="5"/>
   <polygon points="250,395 1030,395 1430,${H} -150,${H}" fill="none" stroke="${OUT}" stroke-width="7"/>
-
-  <!-- его сторона: красные подушки -->
-  <ellipse cx="${oppElbow.x}" cy="${oppElbow.y + 12}" rx="82" ry="23" fill="#c8283c" stroke="${OUT}" stroke-width="6"/>
-  <ellipse cx="${oppElbow.x - 10}" cy="${oppElbow.y + 6}" rx="48" ry="9" fill="#ff7b86" opacity="0.75"/>
-  <g transform="rotate(-14 ${pinWin.x - 6} ${pinWin.y + 22})">
-    <rect x="${pinWin.x - 62}" y="${pinWin.y + 4}" width="112" height="38" rx="14" fill="#e8344a" stroke="${OUT}" stroke-width="6"/>
-    <rect x="${pinWin.x - 50}" y="${pinWin.y + 10}" width="70" height="8" rx="4" fill="#ff9aa3" opacity="0.8"/>
-  </g>
-
-  <!-- наша сторона: синие подушки -->
-  <ellipse cx="${LAYOUT.playerBase.x - 10}" cy="${H - 8}" rx="250" ry="62" fill="#2a64d1" stroke="${OUT}" stroke-width="7"/>
-  <ellipse cx="${LAYOUT.playerBase.x - 40}" cy="${H - 34}" rx="150" ry="12" fill="#7fb0ff" opacity="0.7"/>
-  <g transform="rotate(12 ${pinLose.x} ${pinLose.y + 32})">
-    <rect x="${pinLose.x - 96}" y="${pinLose.y + 8}" width="192" height="62" rx="22" fill="#2f78f0" stroke="${OUT}" stroke-width="7"/>
-    <rect x="${pinLose.x - 78}" y="${pinLose.y + 18}" width="110" height="12" rx="6" fill="#9cc6ff" opacity="0.85"/>
-  </g>
 
   <!-- поручни для свободной руки -->
   <g>
