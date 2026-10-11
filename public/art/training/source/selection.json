@@ -1,0 +1,308 @@
+[
+  {
+    "n": 1,
+    "file": "items_sheet_1.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/items_sheet_1.png",
+    "staged": "source/import/items_sheet_1.png"
+  },
+  {
+    "n": 2,
+    "file": "items_sheet_2.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/items_sheet_2.png",
+    "staged": "source/import/items_sheet_2.png"
+  },
+  {
+    "n": 3,
+    "file": "gym_card.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/gym_card.png",
+    "staged": "source/import/gym_card.png"
+  },
+  {
+    "n": 4,
+    "file": "map_base.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/map_base-v2.png",
+    "staged": "source/import/map_base.png"
+  },
+  {
+    "n": 5,
+    "file": "map_buildings.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/map_buildings.png",
+    "staged": "source/import/map_buildings.png"
+  },
+  {
+    "n": 6,
+    "file": "map_marks.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/map_marks.png",
+    "staged": "source/import/map_marks.png"
+  },
+  {
+    "n": 7,
+    "file": "room_home.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/room_home.png",
+    "staged": "source/import/room_home.png"
+  },
+  {
+    "n": 8,
+    "file": "room_gym.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/room_gym.png",
+    "staged": "source/import/room_gym.png"
+  },
+  {
+    "n": 9,
+    "file": "room_shop.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/room_shop.png",
+    "staged": "source/import/room_shop.png"
+  },
+  {
+    "n": 10,
+    "file": "shopkeeper.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/shopkeeper.png",
+    "staged": "source/import/shopkeeper.png"
+  },
+  {
+    "n": 11,
+    "file": "shopkeeper_happy.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/shopkeeper_happy.png",
+    "staged": "source/import/shopkeeper_happy.png"
+  },
+  {
+    "n": 12,
+    "file": "shopkeeper_doubt.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/shopkeeper_doubt.png",
+    "staged": "source/import/shopkeeper_doubt.png"
+  },
+  {
+    "n": 13,
+    "file": "fx_sheet.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/fx_sheet.png",
+    "staged": "source/import/fx_sheet.png"
+  },
+  {
+    "n": 14,
+    "file": "stamps.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/stamps-v2.png",
+    "staged": "source/import/stamps.png"
+  },
+  {
+    "n": 15,
+    "file": "gripper_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/gripper_rest.png",
+    "staged": "source/import/gripper_rest.png"
+  },
+  {
+    "n": 16,
+    "file": "gripper_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/gripper_peak.png",
+    "staged": "source/import/gripper_peak.png"
+  },
+  {
+    "n": 17,
+    "file": "gripper_pro_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/gripper_pro_rest.png",
+    "staged": "source/import/gripper_pro_rest.png"
+  },
+  {
+    "n": 18,
+    "file": "gripper_pro_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/gripper_pro_peak.png",
+    "staged": "source/import/gripper_pro_peak.png"
+  },
+  {
+    "n": 19,
+    "file": "pushups_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/pushups_rest.png",
+    "staged": "source/import/pushups_rest.png"
+  },
+  {
+    "n": 20,
+    "file": "pushups_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/pushups_peak.png",
+    "staged": "source/import/pushups_peak.png"
+  },
+  {
+    "n": 21,
+    "file": "run_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/run_rest.png",
+    "staged": "source/import/run_rest.png"
+  },
+  {
+    "n": 22,
+    "file": "run_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/run_peak.png",
+    "staged": "source/import/run_peak.png"
+  },
+  {
+    "n": 23,
+    "file": "run_street.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/run_street-v2.png",
+    "staged": "source/import/run_street.png"
+  },
+  {
+    "n": 24,
+    "file": "dog.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/dog.png",
+    "staged": "source/import/dog.png"
+  },
+  {
+    "n": 25,
+    "file": "jump_rope_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/jump_rope_rest.png",
+    "staged": "source/import/jump_rope_rest.png"
+  },
+  {
+    "n": 26,
+    "file": "jump_rope_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/jump_rope_peak.png",
+    "staged": "source/import/jump_rope_peak.png"
+  },
+  {
+    "n": 27,
+    "file": "medball_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/medball_rest.png",
+    "staged": "source/import/medball_rest.png"
+  },
+  {
+    "n": 28,
+    "file": "medball_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/medball_peak.png",
+    "staged": "source/import/medball_peak.png"
+  },
+  {
+    "n": 29,
+    "file": "strap_dumbbell_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/strap_dumbbell_rest.png",
+    "staged": "source/import/strap_dumbbell_rest.png"
+  },
+  {
+    "n": 30,
+    "file": "strap_dumbbell_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/strap_dumbbell_peak.png",
+    "staged": "source/import/strap_dumbbell_peak.png"
+  },
+  {
+    "n": 31,
+    "file": "straight_bar_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/straight_bar_rest.png",
+    "staged": "source/import/straight_bar_rest.png"
+  },
+  {
+    "n": 32,
+    "file": "straight_bar_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/straight_bar_peak.png",
+    "staged": "source/import/straight_bar_peak.png"
+  },
+  {
+    "n": 33,
+    "file": "cone_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/cone_rest.png",
+    "staged": "source/import/cone_rest.png"
+  },
+  {
+    "n": 34,
+    "file": "cone_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/cone_peak.png",
+    "staged": "source/import/cone_peak.png"
+  },
+  {
+    "n": 35,
+    "file": "strap_block_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/strap_block_rest.png",
+    "staged": "source/import/strap_block_rest.png"
+  },
+  {
+    "n": 36,
+    "file": "strap_block_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/strap_block_peak.png",
+    "staged": "source/import/strap_block_peak.png"
+  },
+  {
+    "n": 37,
+    "file": "triple_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/triple_rest.png",
+    "staged": "source/import/triple_rest.png"
+  },
+  {
+    "n": 38,
+    "file": "triple_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/triple_peak.png",
+    "staged": "source/import/triple_peak.png"
+  },
+  {
+    "n": 39,
+    "file": "roller_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/roller_rest.png",
+    "staged": "source/import/roller_rest.png"
+  },
+  {
+    "n": 40,
+    "file": "roller_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/roller_peak.png",
+    "staged": "source/import/roller_peak.png"
+  },
+  {
+    "n": 41,
+    "file": "fat_grip_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/fat_grip_rest.png",
+    "staged": "source/import/fat_grip_rest.png"
+  },
+  {
+    "n": 42,
+    "file": "fat_grip_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/fat_grip_peak.png",
+    "staged": "source/import/fat_grip_peak.png"
+  },
+  {
+    "n": 43,
+    "file": "eccentric_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/eccentric_rest.png",
+    "staged": "source/import/eccentric_rest.png"
+  },
+  {
+    "n": 44,
+    "file": "eccentric_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/eccentric_peak.png",
+    "staged": "source/import/eccentric_peak.png"
+  },
+  {
+    "n": 45,
+    "file": "multispin_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/multispin_rest.png",
+    "staged": "source/import/multispin_rest.png"
+  },
+  {
+    "n": 46,
+    "file": "multispin_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/multispin_peak.png",
+    "staged": "source/import/multispin_peak.png"
+  },
+  {
+    "n": 47,
+    "file": "dips_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/dips_rest.png",
+    "staged": "source/import/dips_rest.png"
+  },
+  {
+    "n": 48,
+    "file": "dips_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/dips_peak.png",
+    "staged": "source/import/dips_peak.png"
+  },
+  {
+    "n": 49,
+    "file": "tricep_rope_rest.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/tricep_rope_rest.png",
+    "staged": "source/import/tricep_rope_rest.png"
+  },
+  {
+    "n": 50,
+    "file": "tricep_rope_peak.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/tricep_rope_peak.png",
+    "staged": "source/import/tricep_rope_peak.png"
+  },
+  {
+    "n": 51,
+    "file": "weight_stack.png",
+    "accepted": "C:/Users/DPiunov/Desktop/game/public/art/training/source/accepted/weight_stack.png",
+    "staged": "source/import/weight_stack.png"
+  }
+]

@@ -1,0 +1,283 @@
+{
+  "backgrounds": [
+    {
+      "file": "map_base.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "room_home.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "room_gym.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "room_shop.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "run_street.png",
+      "width": 1024,
+      "height": 1536
+    }
+  ],
+  "sprites": [
+    {
+      "file": "shopkeeper.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "file": "shopkeeper_happy.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "file": "shopkeeper_doubt.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "file": "dog.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "weight_stack.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "file": "map/home.png",
+      "width": 768,
+      "height": 512
+    },
+    {
+      "file": "map/shop.png",
+      "width": 768,
+      "height": 512
+    },
+    {
+      "file": "map/gym.png",
+      "width": 768,
+      "height": 512
+    },
+    {
+      "file": "map/bar.png",
+      "width": 768,
+      "height": 512
+    },
+    {
+      "file": "map/chain.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "map/shutter.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "map/player.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "map/star.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "map/steam.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "map/sign.png",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "pairs": [
+    {
+      "id": "pushups",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        684292,
+        682027
+      ],
+      "differentChannels": 2464286
+    },
+    {
+      "id": "run",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1061270,
+        1060217
+      ],
+      "differentChannels": 2293047
+    },
+    {
+      "id": "straight_bar",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1035830,
+        1165270
+      ],
+      "differentChannels": 2682995
+    },
+    {
+      "id": "dips",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1060298,
+        1085369
+      ],
+      "differentChannels": 1468863
+    },
+    {
+      "id": "jump_rope",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        861098,
+        876664
+      ],
+      "differentChannels": 1970616
+    },
+    {
+      "id": "gripper",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1075972,
+        1082045
+      ],
+      "differentChannels": 2316470
+    },
+    {
+      "id": "gripper_pro",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1070820,
+        1075020
+      ],
+      "differentChannels": 2235793
+    },
+    {
+      "id": "strap_dumbbell",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        895072,
+        931813
+      ],
+      "differentChannels": 2242723
+    },
+    {
+      "id": "medball",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        889632,
+        1016059
+      ],
+      "differentChannels": 2553190
+    },
+    {
+      "id": "strap_block",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        826748,
+        822137
+      ],
+      "differentChannels": 1995597
+    },
+    {
+      "id": "tricep_rope",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        1054871,
+        1143802
+      ],
+      "differentChannels": 1712276
+    },
+    {
+      "id": "fat_grip",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        824264,
+        825317
+      ],
+      "differentChannels": 1874064
+    },
+    {
+      "id": "roller",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        831283,
+        831638
+      ],
+      "differentChannels": 1995071
+    },
+    {
+      "id": "cone",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        836071,
+        826441
+      ],
+      "differentChannels": 2082056
+    },
+    {
+      "id": "eccentric",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        810239,
+        807176
+      ],
+      "differentChannels": 2162399
+    },
+    {
+      "id": "triple",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        828709,
+        820731
+      ],
+      "differentChannels": 2471185
+    },
+    {
+      "id": "multispin",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": [
+        814808,
+        821422
+      ],
+      "differentChannels": 2089679
+    }
+  ],
+  "warnings": [],
+  "roadEdges": {
+    "meanChannelDifference": 1.3375651041666667,
+    "maxChannelDifference": 11
+  }
+}
