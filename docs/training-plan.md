@@ -113,13 +113,15 @@
 |---|---|---|
 | T1 ✅ | `core/training.ts` и тесты | `npx vitest run` зелёный. У каждого стата есть путь прокачки, опыт за подход считается по формуле §4 |
 | T2 ✅ | Стор: опыт, снаряды, клубная карта, миграция | Старое сохранение открывается с теми же уровнями. Бой сбрасывает перетрен |
-| T3 ✅ | UI: Лавка, места, Статы (на заглушках) — `src/ui/Training.tsx`; до T4 подход засчитывается кнопкой с оценкой «Норм» | Можно купить ручку и клубную карту, зайти в зал и увидеть упражнения |
-| T4 | Мини-игры 1–4 | Каждая проходится за 10 с, оценка совпадает с ощущением. Опыт капает в стат |
+| T3 ✅ | UI: Лавка, места, Статы (на заглушках) — `src/ui/Training.tsx`; подход запускает мини-игру (T4) | Можно купить ручку и клубную карту, зайти в зал и увидеть упражнения |
+| T4 ✅ | Мини-игры 1–4 — `src/core/trainingGames.ts` (+ тесты с ботами), оверлей `src/ui/TrainingGame.tsx`; числа в `GAME_TUNING` | Каждая проходится за 10 с, оценка совпадает с ощущением. Опыт капает в стат |
 | T5 | Спарринг на ядре матча (после T1–T4 и T6) | 10-секундный бой с партнёром даёт опыт двум статам. До этого этапа бара в списке мест нет |
 | T6 | Спрайты из §9 | Лавка, места и мини-игры на нарисованном арте |
 | T7 | Баланс | Бот-симуляция «бой → подходы»: лига v2 проходится за разумное число циклов. Таблица в `match.test.ts` остаётся в коридоре 20–60 с |
 
 ## 9. Спрайты: промты для GPT
+
+> Актуальный сценарий для GPT — [training-art-prompt.md](training-art-prompt.md), дизайн карты, комнат и анимаций — [training-games.md](training-games.md). Ниже — первая версия промтов, оставлена для истории.
 
 Порядок как в [art-brief.md](art-brief.md) §0: к каждому запросу прикладывать `docs/art-reference/style_fighter.webp` и `target_scene.webp`, а в начало промта вставлять блок стиля из art-brief §1 (ниже он повторён).
 Предметы лавки рисуем **одной сеткой**, затем режем: так у них гарантированно один масштаб и одна манера. Если GPT путает предметы — генерировать по одному, приложив первую готовую иконку как эталон.
@@ -240,7 +242,7 @@ to a pulley at the top-left. Arm relaxed, elbow on a padded table edge at the bo
 First-person view, 2560×1440, flat #FF00FF background. The player's own right hand (same wristband as the attached reference)
 grips a knurled steel roller handle from above with the fingertips, the roller is hanging on a cable. Wrist neutral.
 ```
-Правка: `Same image, change only the hand: fingers rolled over the top of the roller, wrist pronated (turned inward), knuckles white with effort.` → `roll_rest.png`, `roll_peak.png`.
+Правка: `Same image, change only the hand: fingers rolled over the top of the roller, wrist pronated (turned inward), knuckles white with effort.` → `spin_rest.png`, `spin_peak.png`.
 
 **Сжатие (эспандер):**
 

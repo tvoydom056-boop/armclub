@@ -8,6 +8,7 @@ import { useGame } from '../store/game';
 import { sfx } from '../audio/sfx';
 import { ClubIcon, type IconName } from './ClubIcon';
 import { UpgradeArt } from './UpgradeArt';
+import { TrainingGame } from './TrainingGame';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
 const pct = (v: number) => `${Math.round(v * 100)}%`;
@@ -34,6 +35,7 @@ export const canBuySomething = (coins: number, owned: readonly ItemId[], gym: bo
 
 export function Training() {
   const [section, setSection] = useState<Section>('gym');
+  const [playing, setPlaying] = useState<ExerciseDef | null>(null);
   const coins = useGame((s) => s.coins);
   const owned = useGame((s) => s.owned);
   const gym = useGame((s) => s.gym);
@@ -50,36 +52,28 @@ export function Training() {
         <nav className="shop-cats" aria-label="Разделы тренировки">
           {SECTIONS.map((s) => <button key={s.id} className={`cat ${section === s.id ? 'on' : ''}`} aria-pressed={section === s.id} style={{ '--c': s.color } as CSSProperties} onClick={() => setSection(s.id)}><span className="cat-icon"><ClubIcon name={s.icon} /></span><span className="cat-name">{s.name}</span>{s.id === 'shop' && canBuySomething(coins, owned, gym) && <i className="dot" />}</button>)}
         </nav>
-        {section === 'gym' && <Gym toShop={() => setSection('shop')} />}
+        {section === 'gym' && <Gym toShop={() => setSection('shop')} onStart={setPlaying} />}
         {section === 'shop' && <Shop />}
         {section === 'stats' && <Stats toGym={() => setSection('gym')} />}
       </div>
+      {playing && <TrainingGame ex={playing} onClose={() => setPlaying(null)} />}
     </div>
   );
 }
 
-function Gym({ toShop }: { toShop: () => void }) {
+function Gym({ toShop, onStart }: { toShop: () => void; onStart: (ex: ExerciseDef) => void }) {
   const owned = useGame((s) => s.owned);
   const gym = useGame((s) => s.gym);
   const fatigue = useGame((s) => s.fatigue);
   const levels = useGame((s) => s.levels);
   const xp = useGame((s) => s.xp);
-  const train = useGame((s) => s.train);
   const [place, setPlace] = useState<PlaceId>('home');
   const [selId, setSelId] = useState('pushups');
-  const [note, setNote] = useState<string | null>(null);
   const list = EXERCISES.filter((e) => e.place === place);
   const sel = list.find((e) => e.id === selId) ?? list[0];
   const can = canDo(sel, owned, gym);
   const gains = setGains(sel, 'ok', fatigue);
-  const pickPlace = (p: PlaceId) => { setPlace(p); setSelId(EXERCISES.find((e) => e.place === p)!.id); setNote(null); };
-  // Мини-игра появится в T4; до неё подход засчитывается с оценкой «Норм».
-  const doSet = () => {
-    const r = train(sel.id, 'ok');
-    if (!r) return;
-    sfx.ui.buy();
-    setNote(r.gains.map((g) => `${statName(g.stat)} +${g.xp} опыта${g.levelsGained ? ` — уровень ${r.patch.levels![g.stat]}!` : ''}`).join(', '));
-  };
+  const pickPlace = (p: PlaceId) => { setPlace(p); setSelId(EXERCISES.find((e) => e.place === p)!.id); };
   return (
     <>
       <section className="training-center" aria-label={`Упражнения: ${PLACES[place].name}`}>
@@ -89,7 +83,7 @@ function Gym({ toShop }: { toShop: () => void }) {
           </div>
           <small>ОПЫТ ×{PLACES[place].tier.toFixed(1)} {place === 'home' ? '· БЕСПЛАТНО' : gym ? '· ПО КЛУБНОЙ КАРТЕ' : '· НУЖНА КЛУБНАЯ КАРТА'}</small>
         </div>
-        <div className="shop-grid dense">{list.map((e) => <ExerciseCard key={e.id} ex={e} selected={e.id === sel.id} can={canDo(e, owned, gym)} xp={setGains(e, 'ok', fatigue)[0].xp} onPick={() => { setSelId(e.id); setNote(null); }} />)}</div>
+        <div className="shop-grid dense">{list.map((e) => <ExerciseCard key={e.id} ex={e} selected={e.id === sel.id} can={canDo(e, owned, gym)} xp={setGains(e, 'ok', fatigue)[0].xp} onPick={() => setSelId(e.id)} />)}</div>
       </section>
       <aside className="shop-detail card" aria-label="Выбранное упражнение" aria-live="polite">
         <div className="detail-heading"><span className="eyebrow">МИНИ-ИГРА: {GAME_NAMES[sel.game].toUpperCase()}</span><span className="detail-category"><ClubIcon name="body" /></span></div>
@@ -99,11 +93,11 @@ function Gym({ toShop }: { toShop: () => void }) {
         <div className="detail-effect">
           {gains.map((g, i) => <div key={g.stat} className={i === 0 ? 'next-effect' : ''}><span>{statName(g.stat)} · ур. {levels[g.stat]} · опыт {xp[g.stat]} / {xpToNext(upgradeById(g.stat), levels[g.stat])}</span><b>+{g.xp} опыта{i > 0 ? ' (половина)' : ''} · свежесть {pct(freshness(fatigue[g.stat] ?? 0))}</b></div>)}
         </div>
-        <button className="btn big" data-sfx="none" disabled={!can} onClick={doSet}>{can ? <>Сделать подход<ClubIcon name="arrow" /></> : <><ClubIcon name="lock" />Закрыто</>}</button>
+        <button className="btn big" disabled={!can} onClick={() => onStart(sel)}>{can ? <>Сделать подход<ClubIcon name="arrow" /></> : <><ClubIcon name="lock" />Закрыто</>}</button>
         <p className="purchase-note">
           {!can
             ? <>{sel.place === 'gym' && !gym ? 'Нужна клубная карта качалки. ' : ''}{sel.item && !owned.includes(sel.item) ? `Нужен снаряд «${itemById(sel.item).name}». ` : ''}<button className="link-btn" onClick={toShop}>В лавку</button></>
-            : note ?? 'Каждый следующий подход на тот же стат слабее. Бой снимает перетрен.'}
+            : 'Опыт — «Норм». «Отлично» даёт ×1.3, «Слабо» ×0.6. Следующий подход на тот же стат слабее, бой снимает перетрен.'}
         </p>
       </aside>
     </>

@@ -215,3 +215,50 @@
 .club-hub .place-btn:hover { color: #fff0d6; }
 .club-hub .place-btn.on { background: #a8373e; color: #fff0d6; border-color: #d86a58; }
 .club-hub .link-btn { padding: 0; border: none; background: none; color: #a8373e; font: inherit; text-decoration: underline; }
+/* подход: оверлей мини-игры поверх раздела тренировки */
+.club-hub .training { position: relative; }
+.club-hub .tgame { position: absolute; inset: -.4em -.6em; z-index: 10; display: grid; place-items: center; background: #0d090cd9; }
+.club-hub .tgame-card { width: 44em; max-width: 100%; padding: 1.4em 1.6em; display: flex; flex-direction: column; gap: 1em; color: #3d2924; border-top: .35em solid var(--cat, #7bd34a); user-select: none; }
+.club-hub .tgame-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1em; }
+.club-hub .tgame-head .eyebrow { color: #996644; }
+.club-hub .tgame-head h3 { font-size: 2em; line-height: 1.15; margin-top: .2em; }
+.club-hub .tgame-exit { display: flex; align-items: center; gap: .5em; padding: .4em .7em; border: .12em solid #b9a184; border-radius: .35em; background: none; color: #7a5b43; font-size: .85em; }
+.club-hub .tgame-intro { display: flex; flex-direction: column; gap: .9em; font-size: 1.05em; line-height: 1.5; }
+.club-hub .tgame-hint { color: #7a5b43; font-size: .85em; }
+.club-hub .tgame-timer { height: .6em; border-radius: .3em; background: #c4af8a; overflow: hidden; }
+.club-hub .tgame-timer i { display: block; height: 100%; background: #a8373e; }
+.club-hub .tgame-field { position: relative; height: 19em; display: grid; place-items: center; background: #d7b885; border: .15em solid #ab7e54; border-radius: .4em; cursor: pointer; touch-action: none; overflow: hidden; }
+.club-hub .tgame-field p { text-align: center; color: #5b392c; font-weight: 700; }
+.club-hub .tgame-flash { position: absolute; top: .6em; right: .8em; font: 1.6em var(--display); color: #3b2723; animation: tgame-flash .6s ease-out forwards; pointer-events: none; }
+@keyframes tgame-flash { from { transform: scale(1.4); opacity: 1; } to { transform: scale(1); opacity: 0; } }
+.club-hub .tgame-score { display: flex; justify-content: space-between; align-items: center; font-size: 1.05em; }
+.club-hub .tgame-grade, .club-hub .tgame-big { font-family: var(--display); }
+.club-hub .g-weak { color: #9e503c; }
+.club-hub .g-ok { color: #8b6c2a; }
+.club-hub .g-great { color: #4f7a2c; }
+.club-hub .tgame-result { display: flex; flex-direction: column; align-items: center; gap: .7em; text-align: center; }
+.club-hub .tgame-big { font-size: 3.2em; line-height: 1; }
+.club-hub .tgame-result ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .35em; }
+.club-hub .tgame-result em { color: #4f7a2c; font-style: normal; font-weight: 700; }
+/* механики-заглушки */
+.club-hub .tg-pull, .club-hub .tg-squeeze, .club-hub .tg-burst, .club-hub .tg-spin { display: flex; flex-direction: column; align-items: center; gap: .9em; width: 100%; }
+.club-hub .tg-vbar { position: relative; width: 4em; height: 14em; background: #c4af8a; border: .15em solid #6b4a33; border-radius: .3em; overflow: hidden; }
+.club-hub .tg-vbar i { position: absolute; left: 0; right: 0; bottom: 0; background: #a65a39; }
+.club-hub .tg-pull.stun .tg-vbar { filter: grayscale(.8); }
+.club-hub .tg-zone { position: absolute; z-index: 1; background: #7bd34a8c; outline: .12em solid #4f7a2c; }
+.club-hub .tg-vbar .tg-zone { left: 0; right: 0; }
+.club-hub .tg-red { position: absolute; left: 0; right: 0; height: .25em; background: #d8323e; z-index: 2; }
+.club-hub .tg-vbar i, .club-hub .tg-hbar i { z-index: 0; opacity: .9; }
+.club-hub .tg-hbar { position: relative; width: 80%; height: 3em; background: #c4af8a; border: .15em solid #6b4a33; border-radius: .3em; overflow: hidden; }
+.club-hub .tg-hbar i { position: absolute; left: 0; top: 0; bottom: 0; background: #a65a39; }
+.club-hub .tg-hbar .tg-zone { top: 0; bottom: 0; }
+.club-hub .tg-target { position: absolute; top: 0; bottom: 0; width: .2em; margin-left: -.1em; background: #3b2723; z-index: 2; }
+.club-hub .tg-reps { display: flex; gap: .4em; min-height: 1em; }
+.club-hub .tg-reps span { width: 1em; height: 1em; border-radius: 50%; background: currentColor; border: .1em solid #3b2723; }
+.club-hub .tg-spin { position: relative; }
+.club-hub .tg-wheel { position: relative; width: 9em; height: 9em; border-radius: 50%; background: #c4af8a; border: .3em solid #6b4a33; transform: rotate(var(--a)); transition: transform .12s ease-out; }
+.club-hub .tg-wheel i { position: absolute; left: 50%; top: .5em; width: 1.2em; height: 3.6em; margin-left: -.6em; border-radius: .6em; background: #a65a39; border: .15em solid #3b2723; }
+.club-hub .tg-ring { position: absolute; left: 50%; top: 4.8em; width: 9.6em; height: 9.6em; border-radius: 50%; border: .3em solid #6b4a3399; pointer-events: none; }
+.club-hub .tg-ring.on { border-color: #4f7a2c; }
+.club-hub .tg-sign { font: 5em var(--display); color: #8f7a61; }
+.club-hub .tg-burst.go .tg-sign { color: #a8373e; transform: scale(1.1); }
