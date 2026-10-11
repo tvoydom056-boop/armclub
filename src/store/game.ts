@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { rewardFor, type EndReason } from '../core/match';
 import { OPPONENTS, opponentById, type OpponentDef } from '../core/opponents';
-import { emptyLevels, upgradeById, upgradeCost, type Levels, type UpgradeId } from '../core/upgrades';
+import { SAVE_VERSION, freshSave, migrateSave, type SaveData } from '../core/save';
+import { buyGym, buyItem, trainSet, type Grade, type ItemId, type SetResult, type TrainingPatch, type TrainingState } from '../core/training';
+import { upgradeById, upgradeCost, type UpgradeId } from '../core/upgrades';
 
 type Screen = 'hub' | 'match';
 type Tab = 'fights' | 'shop';
@@ -16,13 +18,6 @@ interface MatchResult {
   firstWin: boolean;
 }
 
-interface SaveData {
-  coins: number;
-  levels: Levels;
-  wins: Record<string, number>;
-  losses: number;
-}
-
 interface GameStore extends SaveData {
   screen: Screen;
   tab: Tab;
@@ -33,70 +28,86 @@ interface GameStore extends SaveData {
   setVersion: (version: 1 | 2) => void;
   startMatch: (oppId: string) => void;
   finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number }) => void;
+  /** Старая покупка уровня за монеты: уходит вместе со старой витриной (этап T3). */
   buy: (id: UpgradeId) => boolean;
+  buyItem: (id: ItemId) => boolean;
+  buyGym: () => boolean;
+  train: (exerciseId: string, grade: Grade) => SetResult | null;
   setTab: (tab: Tab) => void;
   toHub: (tab?: Tab) => void;
   resetSave: () => void;
 }
 
-const freshSave = (): SaveData => ({ coins: 0, levels: emptyLevels(), wins: {}, losses: 0 });
-
 export const useGame = create<GameStore>()(
   persist(
-    (set, get) => ({
-      ...freshSave(),
-      screen: 'hub',
-      tab: 'fights',
-      version: 1,
-      oppId: null,
-      result: null,
-
-      setVersion: (version) => set({ version }),
-
-      startMatch: (oppId) => set({ screen: 'match', oppId, result: null }),
-
-      finishMatch: ({ oppId, result, reason, time }) => {
-        const won = result === 'won';
-        const opp = opponentById(oppId);
-        const reward = rewardFor(opp, won, time);
-        const prevWins = get().wins[oppId] ?? 0;
-        set((s) => ({
-          coins: s.coins + reward,
-          wins: won ? { ...s.wins, [oppId]: prevWins + 1 } : s.wins,
-          losses: won ? s.losses : s.losses + 1,
-          result: { oppId, won, reason, time, reward, firstWin: won && prevWins === 0 },
-        }));
-      },
-
-      buy: (id) => {
-        const s = get();
-        const def = upgradeById(id);
-        const level = s.levels[id];
-        if (level >= def.maxLevel) return false;
-        const cost = upgradeCost(def, level);
-        if (s.coins < cost) return false;
-        set({ coins: s.coins - cost, levels: { ...s.levels, [id]: level + 1 } });
+    (set, get) => {
+      /** Применяет изменение, если оно возможно. */
+      const apply = (patch: TrainingPatch): boolean => {
+        if (!patch) return false;
+        set(patch);
         return true;
-      },
+      };
+      return {
+        ...freshSave(),
+        screen: 'hub',
+        tab: 'fights',
+        version: 1,
+        oppId: null,
+        result: null,
 
-      setTab: (tab) => set({ tab }),
-      toHub: (tab) => set((s) => ({ screen: 'hub', result: null, tab: tab ?? s.tab })),
-      resetSave: () => set({ ...freshSave(), screen: 'hub', tab: 'fights', oppId: null, result: null }),
-    }),
+        setVersion: (version) => set({ version }),
+
+        startMatch: (oppId) => set({ screen: 'match', oppId, result: null }),
+
+        finishMatch: ({ oppId, result, reason, time }) => {
+          const won = result === 'won';
+          const opp = opponentById(oppId);
+          const reward = rewardFor(opp, won, time);
+          const prevWins = get().wins[oppId] ?? 0;
+          set((s) => ({
+            coins: s.coins + reward,
+            wins: won ? { ...s.wins, [oppId]: prevWins + 1 } : s.wins,
+            losses: won ? s.losses : s.losses + 1,
+            // бой — отдых для мышц: перетрен сбрасывается
+            fatigue: {},
+            result: { oppId, won, reason, time, reward, firstWin: won && prevWins === 0 },
+          }));
+        },
+
+        buy: (id) => {
+          const s = get();
+          const def = upgradeById(id);
+          const level = s.levels[id];
+          if (level >= def.maxLevel) return false;
+          const cost = upgradeCost(def, level);
+          if (s.coins < cost) return false;
+          set({ coins: s.coins - cost, levels: { ...s.levels, [id]: level + 1 } });
+          return true;
+        },
+
+        buyItem: (id) => apply(buyItem(get(), id)),
+        buyGym: () => apply(buyGym(get())),
+        train: (exerciseId, grade) => {
+          const r = trainSet(get(), exerciseId, grade);
+          if (r) set(r.patch);
+          return r;
+        },
+
+        setTab: (tab) => set({ tab }),
+        toHub: (tab) => set((s) => ({ screen: 'hub', result: null, tab: tab ?? s.tab })),
+        resetSave: () => set({ ...freshSave(), screen: 'hub', tab: 'fights', oppId: null, result: null }),
+      };
+    },
     {
       name: 'armwrestling-club-save',
-      version: 1,
-      partialize: (s): SaveData => ({ coins: s.coins, levels: s.levels, wins: s.wins, losses: s.losses }),
-      merge: (persisted, current) => {
-        const p = (persisted ?? {}) as Partial<SaveData>;
-        // Йос занимает прежнее место Вити: победы продолжают открывать третьего бойца.
-        const wins = { ...(p.wins ?? {}) };
-        if (wins.vitya !== undefined) {
-          wins.yos = (wins.yos ?? 0) + wins.vitya;
-          delete wins.vitya;
-        }
-        return { ...current, ...p, wins, levels: { ...emptyLevels(), ...(p.levels ?? {}) } };
+      version: SAVE_VERSION,
+      partialize: (s): SaveData => {
+        const t: TrainingState = { coins: s.coins, levels: s.levels, xp: s.xp, owned: s.owned, gym: s.gym, fatigue: s.fatigue };
+        return { ...t, wins: s.wins, losses: s.losses };
       },
+      // Вся миграция в merge (migrateSave), здесь только пропускаем старые версии дальше.
+      migrate: (persisted) => persisted as SaveData,
+      merge: (persisted, current) => ({ ...current, ...migrateSave(persisted) }),
     },
   ),
 );
