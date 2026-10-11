@@ -13,6 +13,9 @@ import { ResultModal } from './ui/ResultModal';
 /** Редактор рига персонажа: только в dev, по адресу ?rig=<id>. */
 const rigId = import.meta.env.DEV ? new URLSearchParams(location.search).get('rig') : null;
 const RigEditor = import.meta.env.DEV ? lazy(() => import('./ui/RigEditor')) : null;
+/** Лист поз персонажа: только в dev, по адресу ?sheet=<id>. */
+const sheetId = import.meta.env.DEV ? new URLSearchParams(location.search).get('sheet') : null;
+const RigSheet = import.meta.env.DEV ? lazy(() => import('./ui/RigSheet')) : null;
 
 export default function App() {
   const screen = useGame((s) => s.screen);
@@ -47,10 +50,11 @@ export default function App() {
   return (
     <div className="stage" onPointerDownCapture={tick}>
       <div ref={phaserRoot} className="phaser-root" />
-      {screen === 'match' && !rigId && <MatchHud />}
+      {screen === 'match' && !rigId && !sheetId && <MatchHud />}
       {screen === 'hub' && <Hub />}
       {screen === 'match' && result && <ResultModal />}
       {rigId && RigEditor && <Suspense fallback={null}><RigEditor id={rigId} root={phaserRoot} /></Suspense>}
+      {sheetId && RigSheet && <Suspense fallback={null}><RigSheet id={sheetId} /></Suspense>}
     </div>
   );
 }

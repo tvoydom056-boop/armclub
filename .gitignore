@@ -41,3 +41,7 @@ docs/art-reference/arms-side-pin-checks/
 docs/art-reference/video_frames/
 output/
 *.MOV
+
+# отчёты визуальной регрессии (npm run test:visual)
+test-results/
+playwright-report/

@@ -32,3 +32,34 @@
 .rig-handle-neck { background: #3fb950; }
 .rig-handle-free { background: #539bf5; }
 .rig-ghost { position: fixed; z-index: 998; opacity: .35; pointer-events: none; }
+
+.rig-issues { margin: 4px 0; padding-left: 16px; max-height: 160px; overflow: auto; }
+.rig-issues li { margin: 2px 0; }
+.rig-hints, ul.rig-hint { margin: 4px 0; padding-left: 16px; }
+.rig-hints li, ul.rig-hint li { margin: 2px 0; }
+.rig-error { color: #ff8a80; }
+.rig-warn { color: #ffd479; }
+.rig-ok { color: #9ee6a0; }
+.rig-link { color: #8ec5ff; }
+
+/* Лист поз (?sheet=<id>, только dev) */
+.rig-sheet {
+  position: fixed; inset: 0; z-index: 1000; overflow: auto; padding: 12px 16px;
+  background: #120d1c; color: #f4ead8; font: 13px/1.35 system-ui, sans-serif;
+}
+.rig-sheet header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 6px; }
+.rig-sheet h2 { margin: 0; font-size: 18px; }
+.rig-sheet h3 { margin: 14px 0 6px; font-size: 13px; color: #ffcf6a; }
+.rig-sheet button { padding: 3px 10px; font: inherit; color: #1b1424; background: #e8dcc6; border: 0; border-radius: 4px; cursor: pointer; }
+.rig-sheet nav { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.rig-sheet nav a { color: #b9ad98; }
+.rig-sheet nav a.current { color: #fff; font-weight: 700; }
+.rig-sheet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.rig-sheet figure { margin: 0; }
+.rig-sheet figure img, .rig-sheet-wait { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 4px; background: #2a1740; }
+.rig-sheet figure img { cursor: zoom-in; }
+.rig-sheet figcaption { color: #b9ad98; font-size: 12px; }
+.rig-sheet-card { width: 21em; font-size: 16px; }
+.rig-sheet-card .opp-pic { position: relative; height: 7.4em; }
+.rig-sheet-big { position: fixed; inset: 0; z-index: 1001; display: grid; place-items: center; background: rgba(0, 0, 0, .85); cursor: zoom-out; }
+.rig-sheet-big img { max-width: 98vw; max-height: 98vh; }

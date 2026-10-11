@@ -50,13 +50,7 @@ export interface CharacterArt {
 }
 
 /** Размеры шаблонов, в которых заданы точки манифеста. */
-export const TEMPLATE = {
-  torso: { x: 1572, y: 1001 },
-  head: { x: 600, y: 700 },
-  armFree: { x: 560, y: 620 },
-  cuff: { x: 151, y: 151 },
-  armsMotion: { x: 1670, y: 941 },
-} as const;
+export { TEMPLATE } from './characterSpec.mjs';
 
 const files = import.meta.glob<CharacterArt>('./characters/*.json', { eager: true, import: 'default' });
 

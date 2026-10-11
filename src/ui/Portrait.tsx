@@ -1,5 +1,6 @@
 import type { OpponentLook } from '../core/opponents';
 import { characterArt } from '../game/characters';
+import { opponentArtUrl } from '../game/art';
 
 const hex = (n: number) => '#' + n.toString(16).padStart(6, '0');
 const darker = (n: number, k: number) => {
@@ -16,10 +17,10 @@ export function Portrait({ look, id, bust = false }: { look: OpponentLook; id?: 
     const fit = art.bust && { width: `${art.bust.width}em`, bottom: `${art.bust.bottom}em` };
     if (bust) return (
       <div className="fighter-bust" aria-hidden="true">
-        <img className="fighter-head" style={fit} src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />
+        <img className="fighter-head" style={fit} src={opponentArtUrl(id, 'head_calm')} alt="" />
       </div>
     );
-    return <img className="portrait" src={`${import.meta.env.BASE_URL}art/opponents/${id}/head_calm.png`} alt="" />;
+    return <img className="portrait" src={opponentArtUrl(id, 'head_calm')} alt="" />;
   }
   const w = 120 * look.build;
   const hair = hex(look.hair);

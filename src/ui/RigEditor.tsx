@@ -22,6 +22,35 @@ const HANDLES: Record<Handle, string> = { torso: 'Торс', neck: 'Шея', fre
 const TECHS: RigPreview['tech'][] = ['neutral', 'hook', 'toproll', 'press'];
 const SCENE_W = 1280;
 
+/** Ответ проверки набора (tools/characterValidation.mjs через dev-сервер). */
+interface Issue { code: string; path: string; message: string }
+export interface CheckResult { errors: Issue[]; warnings: Issue[] }
+
+/** Проверить манифест (dev-сервер, tools/saveRigPlugin.mjs); save — ещё и записать, если ошибок нет. */
+export async function postRig(id: string, art: CharacterArt, save = false): Promise<{ ok: boolean; result: CheckResult }> {
+  const res = await fetch(`/__rig/${save ? '' : 'check/'}${id}`, { method: 'POST', body: JSON.stringify(art) });
+  return { ok: res.ok, result: await res.json() };
+}
+
+/** Подсказка рига по картинкам бойца (tools/characterHints.mjs через dev-сервер). */
+interface Hint { art?: CharacterArt; notes?: string[]; error?: string }
+async function fetchHint(id: string): Promise<Hint> {
+  const res = await fetch(`/__rig/hint/${id}`, { method: 'POST' });
+  return res.json();
+}
+const fmt = (p: Pt) => `${p.x}, ${p.y}`;
+
+export function Issues({ check }: { check: CheckResult | null }) {
+  if (!check) return null;
+  if (!check.errors.length && !check.warnings.length) return <p className="rig-ok">Проверка: замечаний нет</p>;
+  return (
+    <ul className="rig-issues">
+      {check.errors.map((i, n) => <li key={`e${n}`} className="rig-error"><b>{i.path}</b> {i.message}</li>)}
+      {check.warnings.map((i, n) => <li key={`w${n}`} className="rig-warn"><b>{i.path}</b> {i.message}</li>)}
+    </ul>
+  );
+}
+
 const clone = (r: CharacterArt): CharacterArt => JSON.parse(JSON.stringify(r));
 /** Точки — до 0.1 px шаблона, масштабы — до 4 знаков. */
 const tidy = (r: CharacterArt): CharacterArt => JSON.parse(JSON.stringify(r, (k, v) =>
@@ -74,6 +103,8 @@ export default function RigEditor({ id, root }: { id: string; root: RefObject<HT
   const [points, setPoints] = useState<ArtPoints | null>(null);
   const [ghost, setGhost] = useState(true);
   const [status, setStatus] = useState('');
+  const [check, setCheck] = useState<CheckResult | null>(null);
+  const [hint, setHint] = useState<Hint | null>(null);
   const rect = useStageRect(root);
   const drag = useRef<{ handle: Handle; from: Pt; rig: CharacterArt; tilt: number } | null>(null);
 
@@ -88,6 +119,16 @@ export default function RigEditor({ id, root }: { id: string; root: RefObject<HT
   useEffect(() => {
     if (ready && saved) bus.emit('rig:preview', view);
   }, [ready, saved, view]);
+  // проверка набора на каждую правку, когда мышь отпустили
+  useEffect(() => {
+    if (!rig) return;
+    let live = true;
+    const timer = setTimeout(() => postRig(id, tidy(rig)).then(({ result }) => live && setCheck(result), () => live && setCheck(null)), 400);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
+  }, [id, rig]);
 
   const apply = (next: CharacterArt) => {
     setRig(next);
@@ -96,16 +137,24 @@ export default function RigEditor({ id, root }: { id: string; root: RefObject<HT
   };
 
   if (!saved || !rig) {
+    // точки — по картинкам нового бойца (подсказка), а не копия чужого манифеста
     const create = async () => {
-      const res = await fetch(`/__rig/${id}`, { method: 'POST', body: JSON.stringify(CHARACTERS[REFERENCE]) });
-      setStatus(res.ok ? 'Создан из boris.json — страница перезагрузится' : await res.text());
+      const suggested = await fetchHint(id);
+      if (!suggested.art) {
+        setStatus(`Не создан: ${suggested.error}`);
+        return;
+      }
+      const { ok, result } = await postRig(id, suggested.art, true);
+      setCheck(result);
+      setStatus(ok ? 'Создан по картинкам — страница перезагрузится; сверь с эталоном и подгони' : 'Не создан: исправь ошибки набора');
     };
     return createPortal(
       <div className="rig-panel">
         <h3>Нет манифеста «{id}»</h3>
         <p>Спрайты должны лежать в public/art/opponents/{id}/ (docs/adding-opponent.md).</p>
-        <button onClick={create}>Создать src/game/characters/{id}.json из {REFERENCE}.json</button>
+        <button onClick={create}>Создать src/game/characters/{id}.json по картинкам</button>
         <p>{status}</p>
+        <Issues check={check} />
       </div>,
       document.body,
     );
@@ -140,14 +189,19 @@ export default function RigEditor({ id, root }: { id: string; root: RefObject<HT
     apply(next);
   };
   const save = async () => {
-    const res = await fetch(`/__rig/${id}`, { method: 'POST', body: JSON.stringify(tidy(rig)) });
-    setStatus(res.ok ? `Сохранено в src/game/characters/${id}.json` : `Ошибка: ${await res.text()}`);
+    const { ok, result } = await postRig(id, tidy(rig), true);
+    setCheck(result);
+    setStatus(ok ? `Сохранено в src/game/characters/${id}.json` : `Не сохранено: ошибок ${result.errors.length}`);
   };
   const copy = async () => {
     await navigator.clipboard.writeText(JSON.stringify(tidy(rig), null, 2));
     setStatus('JSON скопирован');
   };
   const reset = () => apply(clone(saved));
+  const applyHint = (art: CharacterArt) => edit((r) => {
+    r.head = clone(art).head;
+    r.torso.neck = { ...art.torso.neck };
+  });
 
   const handleAt: Record<Handle, Pt | undefined> = { torso: points?.shoulder, neck: points?.neck, free: points?.freeShoulder };
   const ref = CHARACTERS[REFERENCE];
@@ -228,6 +282,24 @@ export default function RigEditor({ id, root }: { id: string; root: RefObject<HT
           <button onClick={reset}>Сбросить</button>
         </div>
         <p className="rig-status">{status}</p>
+        <Issues check={check} />
+        <section>
+          <button onClick={async () => setHint(await fetchHint(id))}>Подсказать точки по картинкам</button>
+          {hint?.error && <p className="rig-error">{hint.error}</p>}
+          {hint?.art && (
+            <>
+              <ul className="rig-hints">
+                <li>низ шеи головы: {fmt(rig.head.neck)} → <b>{fmt(hint.art.head.neck)}</b></li>
+                <li>масштаб головы: {rig.head.scale} → <b>{hint.art.head.scale}</b></li>
+                <li>растворение: {rig.head.fade ? `${rig.head.fade.from}–${rig.head.fade.to}` : 'нет'} → <b>{hint.art.head.fade ? `${hint.art.head.fade.from}–${hint.art.head.fade.to}` : 'нет'}</b></li>
+                <li>шея торса: {fmt(rig.torso.neck)} → <b>{fmt(hint.art.torso.neck)}</b></li>
+              </ul>
+              <ul className="rig-hint">{hint.notes?.map((n) => <li key={n}>{n}</li>)}</ul>
+              <button onClick={() => applyHint(hint.art!)}>Применить подсказку</button>
+            </>
+          )}
+        </section>
+        <p><a className="rig-link" href={`?sheet=${id}`}>Лист поз ({id}) →</a></p>
         <p className="rig-hint">Тяни кружки: «Торс» двигает тело на плече руки, «Шея» — голову по торсу, «Св. плечо» — откуда растёт свободная рука.</p>
       </div>
     </>,

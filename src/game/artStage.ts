@@ -5,6 +5,7 @@ import { characterArt, TEMPLATE, type CharacterArt } from './characters';
 import { JoinedArms } from './joinedArms';
 import { clamp } from '../core/rng';
 import type { Pt } from './layout';
+import { FREE_ANCHORS } from './characterSpec.mjs';
 
 /**
  * Нарисованная сцена боя. Обе рабочие руки и захват — одно изображение;
@@ -23,13 +24,18 @@ const TABLE_EDGE = 401;
  * Свободная рука — общий для всех шаблон 560×620: origin — где рукав входит под торс, grip — где кулак
  * держит штырь; peg — где штырь стоит на столе (px сцены).
  */
-const FREE = { origin: { x: 60, y: 45 }, grip: { x: 501, y: 493 }, squeeze: 0.025, peg: { x: 1112, y: 550 } };
+const FREE = { ...FREE_ANCHORS, squeeze: 0.025, peg: { x: 1112, y: 550 } };
 /**
  * Свободная рука режется на две части (в px шаблона 560×620):
  * кулак со штырём стоит на месте как нарисован, а рука до запястья поворачивается вокруг wrist
  * и тянется вдоль своей оси до плеча. Стык прячется под кулаком. Короче min верх рукава уходит под торс.
  */
 const FREE_SPLIT = { fist: { x: 418, y: 375 }, feather: 30, armRight: 450, wrist: { x: 425, y: 445 }, min: 0.7, max: 1.6 };
+/**
+ * На пине −1 плечо подходит к кулаку ближе min (до 35% длины руки), и прямая рука проскакивала бы за плечо горбом у головы.
+ * Всё, что дальше плеча на OVERSHOOT px сцены вдоль руки, срезается маской — срез прячется под торсом.
+ */
+const FREE_OVERSHOOT = 15;
 
 /** Копия свободной руки, где всё левее и выше кулака плавно гаснет: стык с повёрнутой рукой под ним не виден. */
 function fistKey(scene: Phaser.Scene, key: string): string {
@@ -161,6 +167,7 @@ export class ArtStage {
   private freeRig: Phaser.GameObjects.Container;
   private freeArm: Phaser.GameObjects.Image;
   private freeFist: Phaser.GameObjects.Image;
+  private freeMask: Phaser.GameObjects.Graphics;
   private arms: JoinedArms;
   private cuff: Phaser.GameObjects.Image | null;
   private ourFree: Swap;
@@ -190,14 +197,17 @@ export class ArtStage {
     this.freeArm = scene.add.image(0, 0, oppKey(id, 'arm_free'))
       .setOrigin(wrist.x / TEMPLATE.armFree.x, wrist.y / TEMPLATE.armFree.y).setCrop(0, 0, armRight * px, TEMPLATE.armFree.y * px)
       .setRotation(-Math.atan2(FREE.origin.y - wrist.y, FREE.origin.x - wrist.x));
+    // под торсом: верх руки (плечо, рукав) прячется за телом, иначе ложится на грудь
     this.freeRig = scene.add.container(0, 0, [this.freeArm]).setDepth(20.8);
+    this.freeMask = scene.make.graphics({}, false);
+    this.freeArm.enableFilters().filters!.external.addMask(this.freeMask, false, scene.cameras.main);
 
     this.arms = new JoinedArms(scene, id, rig.arms.scale);
     this.cuff = rig.cuff ? img(oppKey(id, 'cuff'), 32).setOrigin(CUFF_ORIGIN.x, CUFF_ORIGIN.y) : null;
 
     this.ourFree = new Swap(scene, meKey('free_idle'), 34, { x: 0, y: 1 }, 0.08);
     this.ourFree.place(0, 720, 0, 0.5);
-    this.all = [bg, table, this.tableMask, this.torso, this.freeRig, this.freeFist, ...this.head.objects(), this.arms.object, ...(this.cuff ? [this.cuff] : []), ...this.ourFree.objects()];
+    this.all = [bg, table, this.tableMask, this.torso, this.freeRig, this.freeMask, this.freeFist, ...this.head.objects(), this.arms.object, ...(this.cuff ? [this.cuff] : []), ...this.ourFree.objects()];
     this.setRig(rig);
   }
 
@@ -259,8 +269,17 @@ export class ArtStage {
     const { wrist, min, max } = FREE_SPLIT;
     const reach = Math.hypot(FREE.origin.x - wrist.x, FREE.origin.y - wrist.y) * freeArm.scale;
     const toShoulder = { x: free.x - this.freeRig.x, y: free.y - this.freeRig.y };
-    this.freeRig.setRotation(Math.atan2(toShoulder.y, toShoulder.x) - this.freePull * FREE.squeeze)
-      .setScale(clamp(Math.hypot(toShoulder.x, toShoulder.y) / reach, min, max), 1);
+    const length = Math.hypot(toShoulder.x, toShoulder.y);
+    const angle = Math.atan2(toShoulder.y, toShoulder.x) - this.freePull * FREE.squeeze;
+    this.freeRig.setRotation(angle).setScale(clamp(length / reach, min, max), 1);
+    // полуплоскость со стороны кулака: от запястья до линии поперёк руки чуть дальше плеча
+    const along = { x: Math.cos(angle), y: Math.sin(angle) }, across = { x: -along.y * 2000, y: along.x * 2000 };
+    const near = { x: this.freeRig.x - along.x * 2000, y: this.freeRig.y - along.y * 2000 };
+    const far = { x: this.freeRig.x + along.x * (length + FREE_OVERSHOOT), y: this.freeRig.y + along.y * (length + FREE_OVERSHOOT) };
+    this.freeMask.clear().fillStyle(0xffffff).beginPath()
+      .moveTo(near.x - across.x, near.y - across.y).lineTo(near.x + across.x, near.y + across.y)
+      .lineTo(far.x + across.x, far.y + across.y).lineTo(far.x - across.x, far.y - across.y)
+      .closePath().fillPath();
     this.points = { shoulder: { x: shoulder.x, y: shoulder.y + f.breathe }, neck, freeShoulder: free, tilt };
 
     // свободная рука: сжимает рукоять, когда давим
