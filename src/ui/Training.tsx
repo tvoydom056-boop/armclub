@@ -9,6 +9,7 @@ import { sfx } from '../audio/sfx';
 import { ClubIcon, type IconName } from './ClubIcon';
 import { UpgradeArt } from './UpgradeArt';
 import { TrainingGame } from './TrainingGame';
+import { itemArt } from '../game/trainingArt';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
 const pct = (v: number) => `${Math.round(v * 100)}%`;
@@ -25,7 +26,7 @@ const GAME_NAMES: Record<GameKind, string> = { pull: 'Тяга', spin: 'Вращ
 
 const statName = (id: UpgradeId) => upgradeById(id).name;
 const exercisesOf = (item: ItemId) => EXERCISES.filter((e) => e.item === item);
-/** Заглушка картинки снаряда до спрайтов T6: рисунок стата, который он качает. */
+/** Стат, который снаряд качает первым: им рисуется снаряд, пока нет спрайта. */
 const itemStat = (item: ItemId) => exercisesOf(item)[0].primary;
 const placesOf = (item: ItemId) => [...new Set(exercisesOf(item).map((e) => e.place))];
 
@@ -89,7 +90,7 @@ function Gym({ toShop, onStart }: { toShop: () => void; onStart: (ex: ExerciseDe
         <div className="detail-heading"><span className="eyebrow">МИНИ-ИГРА: {GAME_NAMES[sel.game].toUpperCase()}</span><span className="detail-category"><ClubIcon name="body" /></span></div>
         <h3>{sel.name}</h3>
         <p className="detail-desc">{sel.item ? itemById(sel.item).desc : 'Без снарядов — можно всегда.'}</p>
-        <div className="detail-art"><span className="art-rays" /><UpgradeArt id={sel.primary} /><b className="lvl">СНАРЯД ×{sel.tier}</b></div>
+        <div className="detail-art"><span className="art-rays" /><ExerciseArt ex={sel} /><b className="lvl">СНАРЯД ×{sel.tier}</b></div>
         <div className="detail-effect">
           {gains.map((g, i) => <div key={g.stat} className={i === 0 ? 'next-effect' : ''}><span>{statName(g.stat)} · ур. {levels[g.stat]} · опыт {xp[g.stat]} / {xpToNext(upgradeById(g.stat), levels[g.stat])}</span><b>+{g.xp} опыта{i > 0 ? ' (половина)' : ''} · свежесть {pct(freshness(fatigue[g.stat] ?? 0))}</b></div>)}
         </div>
@@ -109,7 +110,7 @@ function ExerciseCard({ ex, selected, can, xp, onPick }: { ex: ExerciseDef; sele
   return (
     <button className={`ucard ${selected ? 'on' : ''} ${can ? 'can' : 'locked'}`} aria-pressed={selected} aria-label={`${ex.name}: ${stats}${can ? `, +${xp} опыта` : ', закрыто'}`} onClick={onPick}>
       <span className="ucard-top"><span>{GAME_NAMES[ex.game].toUpperCase()}</span>{selected ? <ClubIcon name="check" /> : !can && <ClubIcon name="lock" />}</span>
-      <UpgradeArt id={ex.primary} className="ucard-icon" /><span className="ucard-name">{ex.name}</span>
+      <ExerciseArt ex={ex} className="ucard-icon" /><span className="ucard-name">{ex.name}</span>
       <span className="ucard-bottom"><small>{stats.toUpperCase()}</small><span className="ucard-price">{can ? `+${xp}` : '—'}</span></span>
     </button>
   );
@@ -160,9 +161,16 @@ function Shop() {
   );
 }
 
-/** Заглушка до спрайтов T6: клубная карта — значок зала, снаряд — рисунок его стата. */
+/** Спрайт снаряда из лавки; пока его нет — рисунок стата, который он качает (клубная карта — значок зала). */
 function GoodsArt({ id, className = '' }: { id: Goods; className?: string }) {
+  const src = itemArt(id === 'gym' ? 'gym_card' : id);
+  if (src) return <img className={`goods-img ${className}`} src={src} alt="" draggable={false} />;
   return id === 'gym' ? <span className={`goods-icon ${className}`}><ClubIcon name="body" /></span> : <UpgradeArt id={itemStat(id)} className={className} />;
+}
+
+/** Упражнение со снарядом показывает снаряд, без снаряда — стат. */
+function ExerciseArt({ ex, className = '' }: { ex: ExerciseDef; className?: string }) {
+  return ex.item && itemArt(ex.item) ? <GoodsArt id={ex.item} className={className} /> : <UpgradeArt id={ex.primary} className={className} />;
 }
 
 function GoodsCard({ id, selected, owned, can, pop, onPick }: { id: Goods; selected: boolean; owned: boolean; can: boolean; pop: boolean; onPick: () => void }) {

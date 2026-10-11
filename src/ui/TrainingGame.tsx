@@ -9,6 +9,7 @@ import { upgradeById } from '../core/upgrades';
 import { useGame } from '../store/game';
 import { sfx } from '../audio/sfx';
 import { ClubIcon } from './ClubIcon';
+import { fxArt, gameFrames, stampArt, type FxName } from '../game/trainingArt';
 
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 const STEP = 1 / 60;
@@ -21,6 +22,18 @@ const RULES: Record<GameKind, { name: string; text: string }> = {
 };
 
 const FLASH: Partial<Record<GameEvent['type'], string>> = { hit: 'Есть!', miss: 'Мимо', fail: 'Срыв!', go: 'ГО!', falseStart: 'Фальстарт!' };
+/** Эффект из fx_sheet под надписью события. */
+const FLASH_FX: Partial<Record<GameEvent['type'], FxName>> = { hit: 'impact', rep: 'impact', fail: 'sweat', go: 'sparks' };
+
+/** Какой кадр показывать: «пик» — рука в усилии. */
+function isPeak(s: TrainingGameState): boolean {
+  switch (s.kind) {
+    case 'pull': return s.load >= GAME_TUNING.pull.zone[0];
+    case 'spin': return s.next < s.beats.length && Math.abs(s.beats[s.next] - s.time) <= GAME_TUNING.spin.window;
+    case 'squeeze': return s.holding && s.power >= 0.5;
+    case 'burst': return s.phase === 'go';
+  }
+}
 
 /** Звук на события подхода. */
 function playSound(e: GameEvent) {
@@ -41,7 +54,7 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
   const [phase, setPhase] = useState<Phase>('intro');
   const [, setFrame] = useState(0);
   const [result, setResult] = useState<{ grade: Grade; quality: number; set: SetResult | null } | null>(null);
-  const [flash, setFlash] = useState<{ text: string; key: number } | null>(null);
+  const [flash, setFlash] = useState<{ text: string; key: number; fx: string | null } | null>(null);
   const game = useRef<TrainingGameState | null>(null);
   const input = useRef<GameInput>({ presses: 0, releases: 0 });
   const phaseRef = useRef(phase);
@@ -103,7 +116,7 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
       for (const e of events) {
         playSound(e);
         const text = e.type === 'rep' ? GRADES[gradeOf(e.score)].name : FLASH[e.type];
-        if (text) setFlash({ text, key: ++flashKey });
+        if (text) setFlash({ text, key: ++flashKey, fx: FLASH_FX[e.type] ? fxArt(FLASH_FX[e.type]!) : null });
       }
       if (s.done) {
         const grade = gameGrade(s);
@@ -121,6 +134,8 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
 
   const s = game.current;
   const q = s ? gameQuality(s) : 0;
+  const frames = gameFrames(ex);
+  const levelUp = result?.set?.gains.some((g) => g.levelsGained > 0) ?? false;
   return (
     <div className="tgame" role="dialog" aria-modal="true" aria-label={`Подход: ${ex.name}`}>
       <div className="tgame-card card">
@@ -140,9 +155,10 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
         {phase === 'play' && s && (
           <>
             <div className="tgame-timer" aria-label="Время подхода"><i style={{ width: pct(1 - s.time / GAME_TIME) }} /></div>
-            <div className="tgame-field" onPointerDown={(e) => { e.preventDefault(); input.current.presses++; }}>
+            <div className={`tgame-field ${frames ? 'has-frame' : ''}`} onPointerDown={(e) => { e.preventDefault(); input.current.presses++; }}>
+              {frames && <div className="tgame-frames" aria-hidden="true">{(['rest', 'peak'] as const).map((p) => <img key={p} src={frames[p]} alt="" draggable={false} className={(p === 'peak') === isPeak(s) ? 'on' : ''} />)}</div>}
               <GameView s={s} />
-              {flash && <span key={flash.key} className="tgame-flash">{flash.text}</span>}
+              {flash && <span key={flash.key} className={`tgame-flash ${flash.fx ? 'with-fx' : ''}`} style={flash.fx ? { backgroundImage: `url("${flash.fx}")` } : undefined}>{flash.text}</span>}
             </div>
             <div className="tgame-score"><span>Качество <b>{pct(q)}</b></span><span className={`tgame-grade g-${gradeOf(q)}`}>{GRADES[gradeOf(q)].name}</span></div>
           </>
@@ -150,7 +166,8 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
 
         {phase === 'result' && result && (
           <div className="tgame-result" aria-live="polite">
-            <div className={`tgame-big g-${result.grade}`}>{GRADES[result.grade].name}</div>
+            <div className={`tgame-big g-${result.grade} ${stampArt(result.grade) ? 'stamped' : ''}`} style={stampArt(result.grade) ? { backgroundImage: `url("${stampArt(result.grade)}")` } : undefined}>{GRADES[result.grade].name}</div>
+            {levelUp && stampArt('level') && <img className="tgame-level" src={stampArt('level')!} alt="Новый уровень" />}
             <p>Качество {pct(result.quality)} · опыт ×{GRADES[result.grade].mult}</p>
             <ul>{result.set?.gains.map((g) => <li key={g.stat}><b>{upgradeById(g.stat).name}</b> +{g.xp} опыта{g.levelsGained > 0 && <em> — уровень {result.set!.patch.levels![g.stat]}!</em>}</li>)}</ul>
             <button className="btn big" onClick={onClose}>Готово<ClubIcon name="check" /></button>

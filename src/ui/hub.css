@@ -262,3 +262,14 @@
 .club-hub .tg-ring.on { border-color: #4f7a2c; }
 .club-hub .tg-sign { font: 5em var(--display); color: #8f7a61; }
 .club-hub .tg-burst.go .tg-sign { color: #a8373e; transform: scale(1.1); }
+/* спрайты тренировок (public/art/training, список — src/game/trainingArt.json) */
+.club-hub img.goods-img { display: block; object-fit: contain; min-height: 0; aspect-ratio: 1; }
+.club-hub .detail-art > img.goods-img { position: relative; height: 90%; width: auto; max-width: 90%; }
+.club-hub .tgame-frames { position: absolute; inset: 0; }
+.club-hub .tgame-frames img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; opacity: 0; }
+.club-hub .tgame-frames img.on { opacity: 1; }
+/* поверх кадра механика — компактная панель слева: рука на кадрах входит снизу справа */
+.club-hub .tgame-field.has-frame > [class^='tg-'] { position: absolute; left: .8em; top: .8em; bottom: .8em; width: 34%; justify-content: center; font-size: .7em; padding: .8em; background: #efe2c4d9; border: .15em solid #ab7e54; border-radius: .4em; }
+.club-hub .tgame-flash.with-fx { display: grid; place-items: center; min-width: 4em; min-height: 4em; padding: .5em; background: center / contain no-repeat; }
+.club-hub .tgame-big.stamped { display: grid; place-items: center; width: 4.2em; aspect-ratio: 768 / 512; font-size: 2.4em; background: center / contain no-repeat; color: #3b2723; }
+.club-hub .tgame-level { height: 5em; }
