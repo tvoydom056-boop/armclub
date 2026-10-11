@@ -1,20 +1,18 @@
-import { useState, type CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { ROSTERS, type OpponentDef } from '../core/opponents';
 import { BEATS, TECHNIQUES, TECH_INFO } from '../core/techniques';
-import { CATEGORY_INFO, UPGRADES, upgradeCost, type UpgradeCategory, type UpgradeDef } from '../core/upgrades';
 import { isUnlocked, useGame } from '../store/game';
 import { useHud } from '../store/hud';
-import { sfx } from '../audio/sfx';
 import { OPPONENT_BG, opponentBgUrl } from '../game/art';
 import { Portrait } from './Portrait';
 import { SoundToggle } from './SoundToggle';
 import { ClubIcon } from './ClubIcon';
 import { UpgradeArt } from './UpgradeArt';
+import { Training, canBuySomething } from './Training';
 import { beginMatch } from './matchControl';
 import './hub.css';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
-const CATS: UpgradeCategory[] = ['hook', 'toproll', 'press', 'body'];
 const prerequisite = (roster: readonly OpponentDef[], id: string) => roster[Math.max(0, roster.findIndex((o) => o.id === id) - 1)];
 /** Общий подвал «Яма»: фон хаба и боя у соперников без своего фона. */
 const SHARED_BG = `${import.meta.env.BASE_URL}art/scene/bg.png`;
@@ -25,8 +23,9 @@ export function Hub() {
   const setTab = useGame((s) => s.setTab);
   const version = useGame((s) => s.version);
   const setVersion = useGame((s) => s.setVersion);
-  const levels = useGame((s) => s.levels);
-  const canBuyAny = UPGRADES.some((u) => levels[u.id] < u.maxLevel && coins >= upgradeCost(u, levels[u.id]));
+  const owned = useGame((s) => s.owned);
+  const gym = useGame((s) => s.gym);
+  const canBuyAny = canBuySomething(coins, owned, gym);
   return (
     <div className={`hub club-hub hub-${tab}`} style={{ '--hub-background': `url("${SHARED_BG}")` } as CSSProperties}>
       <header className="hub-bar">
@@ -39,11 +38,11 @@ export function Hub() {
         </div>
         <nav className="tabs" aria-label="Разделы клуба">
           <button className={`tab ${tab === 'fights' ? 'on' : ''}`} aria-current={tab === 'fights' ? 'page' : undefined} onClick={() => setTab('fights')}><ClubIcon name="fight" /> Бои</button>
-          <button className={`tab ${tab === 'shop' ? 'on' : ''}`} aria-current={tab === 'shop' ? 'page' : undefined} onClick={() => setTab('shop')}><ClubIcon name="body" /> Тренировка{canBuyAny && <i className="dot" aria-hidden="true" title="Есть доступные улучшения" />}</button>
+          <button className={`tab ${tab === 'shop' ? 'on' : ''}`} aria-current={tab === 'shop' ? 'page' : undefined} onClick={() => setTab('shop')}><ClubIcon name="body" /> Тренировка{canBuyAny && <i className="dot" aria-hidden="true" title="В лавке есть что купить" />}</button>
         </nav>
         <div className="hub-right"><SoundToggle slider /><div className="coins" title="Монеты"><span className="coin" />{fmt(coins)}</div></div>
       </header>
-      <main className="hub-body">{tab === 'fights' ? <Fights /> : <Shop />}</main>
+      <main className="hub-body">{tab === 'fights' ? <Fights /> : <Training />}</main>
       <footer className="hub-footer"><span>БАР «ЯМА» <i /> ПОДВАЛЬНАЯ ЛИГА</span><span>{tab === 'fights' ? 'КАЖДЫЙ ЧЕМПИОН НАЧИНАЛ С ПЕРВОГО БОЯ' : 'СИЛЬНЕЕ С КАЖДОЙ ТРЕНИРОВКОЙ'}</span></footer>
     </div>
   );
@@ -102,60 +101,5 @@ function OpponentCard({ opp, index, wins, unlocked, unknown, ready }: { opp: Opp
         <button className="btn" aria-label={unlocked ? `В бой: ${opp.name}` : `${unknown ? 'Соперник' : opp.name}: закрыт`} disabled={!unlocked || !ready} onClick={() => beginMatch(opp.id)}>{!unlocked ? <><ClubIcon name="lock" />Закрыто</> : !ready ? 'Загрузка…' : <>В бой<ClubIcon name="arrow" /></>}</button>
       </div>
     </article>
-  );
-}
-
-function Shop() {
-  const levels = useGame((s) => s.levels);
-  const coins = useGame((s) => s.coins);
-  const buy = useGame((s) => s.buy);
-  const [cat, setCat] = useState<UpgradeCategory>('hook');
-  const [selId, setSelId] = useState(UPGRADES.find((u) => u.category === 'hook')!.id);
-  const [popId, setPopId] = useState<string | null>(null);
-  const list = UPGRADES.filter((u) => u.category === cat);
-  const sel = list.find((u) => u.id === selId) ?? list[0];
-  const level = levels[sel.id];
-  const maxed = level >= sel.maxLevel;
-  const cost = upgradeCost(sel, level);
-  const affordable = coins >= cost;
-  const catColor = CATEGORY_INFO[cat].color;
-  const totalLevels = UPGRADES.reduce((sum, u) => sum + levels[u.id], 0);
-  const affordableIn = (c: UpgradeCategory) => UPGRADES.some((u) => u.category === c && levels[u.id] < u.maxLevel && coins >= upgradeCost(u, levels[u.id]));
-  const pick = (c: UpgradeCategory) => { setCat(c); setSelId(UPGRADES.find((u) => u.category === c)!.id); };
-  const doBuy = () => { if (buy(sel.id)) { sfx.ui.buy(); setPopId(sel.id); setTimeout(() => setPopId(null), 450); } };
-  return (
-    <div className="training" style={{ '--cat': catColor } as CSSProperties}>
-      <div className="section-heading"><div><div className="eyebrow">КУЙ СВОЮ ПОБЕДУ</div><h2>Тренировочный зал</h2></div><span className="roster-progress"><ClubIcon name="body" /> Улучшений <b>{totalLevels}</b></span></div>
-      <div className="shop">
-        <nav className="shop-cats" aria-label="Группы улучшений">{CATS.map((c) => <button key={c} className={`cat ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} style={{ '--c': CATEGORY_INFO[c].color } as CSSProperties} onClick={() => pick(c)}><span className="cat-icon"><ClubIcon name={c} /></span><span className="cat-name">{CATEGORY_INFO[c].name}</span>{affordableIn(c) && <i className="dot" />}</button>)}</nav>
-        <section className="training-center" aria-label={`Улучшения: ${CATEGORY_INFO[cat].name}`}>
-          <div className="training-label"><span><ClubIcon name={cat} />{cat === 'body' ? 'Общая подготовка' : `Техника: ${CATEGORY_INFO[cat].name}`}</span><small>ВЫБЕРИ УЛУЧШЕНИЕ</small></div>
-          <div className="shop-grid">{list.map((u) => <UpgradeCard key={u.id} def={u} level={levels[u.id]} selected={u.id === sel.id} coins={coins} pop={popId === u.id} onPick={() => setSelId(u.id)} />)}</div>
-          <div className="training-advice"><span className="advice-mark"><ClubIcon name="body" /></span><div><div className="eyebrow">РАБОТАЙ НА РЕЗУЛЬТАТ</div><h3>Сила приходит с опытом.</h3><p>Победы приносят монеты. Вкладывай их в любимую технику — и возвращайся за следующим соперником.</p><button onClick={() => useGame.getState().setTab('fights')}>Вернуться к боям<ClubIcon name="arrow" /></button></div></div>
-        </section>
-        <aside className={`shop-detail card ${popId === sel.id ? 'purchased' : ''}`} aria-label="Выбранное улучшение" aria-live="polite">
-          <div className="detail-heading"><span className="eyebrow">ТВОЙ СЛЕДУЮЩИЙ ШАГ</span><span className="detail-category"><ClubIcon name={cat} /></span></div>
-          <h3>{sel.name}</h3><p className="detail-desc">{sel.desc}</p>
-          <div className="detail-art"><span className="art-rays" /><UpgradeArt id={sel.id} className={popId === sel.id ? 'pop' : ''} /><b className="lvl">УРОВЕНЬ {level} / {sel.maxLevel}</b></div>
-          <div className="detail-effect"><div><span>Сейчас</span><b>{sel.effect(level)}</b></div>{!maxed && <div className="next-effect"><span>После улучшения</span><b>{sel.effect(level + 1)}</b></div>}</div>
-          <button className={`btn big ${affordable || maxed ? '' : 'poor'}`} data-sfx="none" disabled={maxed || !affordable} onClick={doBuy}>{maxed ? <><ClubIcon name="check" />Максимум</> : <>Улучшить<span className="buy-price"><span className="coin" />{fmt(cost)}</span></>}</button>
-          <p className={`purchase-note ${maxed || affordable ? '' : 'shortfall'}`}>{maxed ? 'Ты достиг максимального уровня.' : !affordable ? `Не хватает ${fmt(cost - coins)} монет. Выиграй ещё бой.` : 'Улучшение остаётся с тобой навсегда.'}</p>
-        </aside>
-      </div>
-    </div>
-  );
-}
-
-function UpgradeCard({ def, level, selected, coins, pop, onPick }: { def: UpgradeDef; level: number; selected: boolean; coins: number; pop: boolean; onPick: () => void }) {
-  const cost = upgradeCost(def, level);
-  const maxed = level >= def.maxLevel;
-  const can = !maxed && coins >= cost;
-  return (
-    <button className={`ucard ${selected ? 'on' : ''} ${can ? 'can' : ''} ${pop ? 'pop' : ''}`} aria-pressed={selected} aria-label={`${def.name}, уровень ${level} из ${def.maxLevel}, ${maxed ? 'максимум' : `${fmt(cost)} монет`}`} onClick={onPick}>
-      <span className="ucard-top"><span>УР. {level} / {def.maxLevel}</span>{selected && <ClubIcon name="check" />}</span>
-      <UpgradeArt id={def.id} className="ucard-icon" /><span className="ucard-name">{def.name}</span>
-      <span className="ucard-lvl" role="progressbar" aria-label={`Уровень: ${def.name}`} aria-valuemin={0} aria-valuemax={def.maxLevel} aria-valuenow={level}><i style={{ width: `${(level / def.maxLevel) * 100}%` }} /></span>
-      <span className="ucard-bottom"><small>{selected ? 'ВЫБРАНО' : 'УЛУЧШЕНИЕ'}</small><span className="ucard-price">{maxed ? 'МАКС.' : <><span className="coin" />{fmt(cost)}</>}</span></span>
-    </button>
   );
 }

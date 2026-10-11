@@ -4,7 +4,6 @@ import { rewardFor, type EndReason } from '../core/match';
 import { OPPONENTS, opponentById, type OpponentDef } from '../core/opponents';
 import { SAVE_VERSION, freshSave, migrateSave, type SaveData } from '../core/save';
 import { buyGym, buyItem, trainSet, type Grade, type ItemId, type SetResult, type TrainingPatch, type TrainingState } from '../core/training';
-import { upgradeById, upgradeCost, type UpgradeId } from '../core/upgrades';
 
 type Screen = 'hub' | 'match';
 type Tab = 'fights' | 'shop';
@@ -28,8 +27,6 @@ interface GameStore extends SaveData {
   setVersion: (version: 1 | 2) => void;
   startMatch: (oppId: string) => void;
   finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number }) => void;
-  /** Старая покупка уровня за монеты: уходит вместе со старой витриной (этап T3). */
-  buy: (id: UpgradeId) => boolean;
   buyItem: (id: ItemId) => boolean;
   buyGym: () => boolean;
   train: (exerciseId: string, grade: Grade) => SetResult | null;
@@ -72,17 +69,6 @@ export const useGame = create<GameStore>()(
             fatigue: {},
             result: { oppId, won, reason, time, reward, firstWin: won && prevWins === 0 },
           }));
-        },
-
-        buy: (id) => {
-          const s = get();
-          const def = upgradeById(id);
-          const level = s.levels[id];
-          if (level >= def.maxLevel) return false;
-          const cost = upgradeCost(def, level);
-          if (s.coins < cost) return false;
-          set({ coins: s.coins - cost, levels: { ...s.levels, [id]: level + 1 } });
-          return true;
         },
 
         buyItem: (id) => apply(buyItem(get(), id)),

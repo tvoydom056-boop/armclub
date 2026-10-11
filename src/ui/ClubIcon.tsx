@@ -1,6 +1,6 @@
 import type { UpgradeCategory } from '../core/upgrades';
 
-type IconName = UpgradeCategory | 'fight' | 'lock' | 'arrow' | 'check' | 'sound' | 'muted';
+export type IconName = UpgradeCategory | 'fight' | 'lock' | 'arrow' | 'check' | 'sound' | 'muted' | 'bag' | 'stats';
 
 /** Small interface symbols share the outlines and flat fills of the game art. */
 export function ClubIcon({ name, className = '' }: { name: IconName; className?: string }) {
@@ -11,6 +11,8 @@ export function ClubIcon({ name, className = '' }: { name: IconName; className?:
       {name === 'toproll' && <><path d="M25 11a11 11 0 1 0 1 10M25 4v7h-7" /><path d="M21 16a5 5 0 1 1-5-5" /></>}
       {name === 'press' && <><path d="m13 14 13 13-3 3-13-13" fill="currentColor" /><path d="m4 12 9-9 7 7-9 9Z" fill="currentColor" /></>}
       {name === 'body' && <><path d="M8 16h16M8 8v16M4 11v10M24 8v16M28 11v10" strokeWidth="4" /></>}
+      {name === 'bag' && <><path d="M6 11h20l-2 17H8Z" fill="currentColor" /><path d="M11 14V9a5 5 0 0 1 10 0v5" /></>}
+      {name === 'stats' && <><path d="M4 28h24" /><path d="M7 28V18h5v10M14 28V9h5v19M21 28V14h5v14" fill="currentColor" /></>}
       {name === 'lock' && <><rect x="7" y="14" width="18" height="14" rx="2" fill="currentColor" /><path d="M11 14V9a5 5 0 0 1 10 0v5" /><path d="M16 20v3" stroke="var(--hub-ink, #241719)" /></>}
       {name === 'arrow' && <path d="M5 16h22m-8-8 8 8-8 8" />}
       {name === 'check' && <path d="m6 16 7 7L27 9" />}
