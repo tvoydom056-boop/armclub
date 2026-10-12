@@ -1,0 +1,91 @@
+/*
+ * Анимации экрана подхода (docs/training-games.md §3). Движение руки во время игры
+ * считает src/ui/trainingMotion.ts — здесь только разовые вспышки и финал.
+ * «Меньше движения» выключает всё это правилом prefers-reduced-motion из hub.css.
+ */
+
+/* кадры руки: поза из poseTransform, поворот и масштаб вокруг локтя */
+.club-hub .tgame-frames { transform-origin: 50% 100%; will-change: transform; }
+
+/* заглушка руки, пока нет кадров: рисунок стата справа от шкалы двигается так же, как двигался бы кадр */
+.club-hub .tgm-standin { position: absolute; left: 38%; right: 2%; top: 8%; bottom: 4%; display: grid; place-items: center; transform-origin: 50% 100%; will-change: transform; pointer-events: none; }
+.club-hub .tgm-standin > * { width: auto; height: 100%; aspect-ratio: 1; filter: grayscale(calc(.7 - .7 * var(--peak, 0))) drop-shadow(0 .3em 0 #6b4a3355); }
+
+/* срыв и фальстарт: красная кромка по краям поля */
+.club-hub .tgm-edge { position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 0 #d8323e00; animation: tgm-edge .5s ease-out forwards; }
+@keyframes tgm-edge {
+  0% { box-shadow: inset 0 0 2.5em .6em #d8323ecc; }
+  100% { box-shadow: inset 0 0 2.5em .6em #d8323e00; }
+}
+
+/* «ГО!»: удар масштаба и вспышка */
+.club-hub .tgm-go { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; pointer-events: none; font: 5em var(--display); color: #a8373e; text-shadow: .05em .05em 0 #3b2723; background: center / 30% no-repeat; animation: tgm-go .45s cubic-bezier(.2, 1.6, .4, 1) forwards; }
+@keyframes tgm-go {
+  0% { transform: scale(1.4); opacity: 0; background-color: #fff3d600; }
+  20% { opacity: 1; background-color: #fff3d655; }
+  100% { transform: scale(1); opacity: 0; background-color: #fff3d600; }
+}
+
+/* финал: печать падает сверху, карточка вздрагивает от удара */
+.club-hub .tgm-stamp { animation: tgm-stamp .45s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes tgm-stamp {
+  0% { transform: scale(2.4) rotate(-14deg); opacity: 0; }
+  70% { transform: scale(.94) rotate(-5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+}
+.club-hub .tgm-thud { animation: tgm-thud .25s linear .32s; }
+@keyframes tgm-thud {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-.25em, .2em); }
+  50% { transform: translate(.2em, -.15em); }
+  75% { transform: translate(-.1em, .1em); }
+}
+
+/* опыт: шарики вылетают из печати и летят к статам; --dx/--dy — куда, --i — очередь */
+.club-hub .tgm-orbs { position: absolute; left: 50%; top: 0; width: 0; height: 0; pointer-events: none; }
+.club-hub .tgm-orb {
+  position: absolute; width: .7em; height: .7em; margin: -.35em; border-radius: 50%;
+  background: #ffcf5a; border: .12em solid #3b2723; opacity: 0;
+  animation: tgm-orb .7s cubic-bezier(.5, 0, .7, .4) calc(.55s + var(--i, 0) * .06s) forwards;
+}
+.club-hub .tgm-orb.half { width: .5em; height: .5em; margin: -.25em; background: #f0b6a0; }
+@keyframes tgm-orb {
+  0% { transform: translate(0, 0) scale(.4); opacity: 0; }
+  15% { transform: translate(calc(var(--dx) * .1), -1.6em) scale(1.2); opacity: 1; }
+  85% { transform: translate(var(--dx), var(--dy)) scale(.6); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; }
+}
+/* строка стата вспыхивает, когда в неё долетел опыт */
+.club-hub .tgm-gain { animation: tgm-gain .35s ease-out calc(1.15s + var(--i, 0) * .06s) both; }
+@keyframes tgm-gain {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.08); color: #4f7a2c; }
+  100% { transform: scale(1); }
+}
+
+/* новый уровень: лента раскрывается с перелётом, вокруг искры */
+.club-hub .tgm-levelup { position: relative; animation: tgm-levelup .6s cubic-bezier(.2, 1.8, .4, 1) 1.3s both; }
+@keyframes tgm-levelup {
+  0% { transform: scale(0) rotate(-8deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.club-hub .tgm-levelup::before, .club-hub .tgm-levelup::after {
+  content: ''; position: absolute; top: 50%; width: .5em; height: .5em; margin-top: -.25em;
+  background: #ffcf5a; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: tgm-spark .7s ease-out 1.5s both;
+}
+.club-hub .tgm-levelup::before { left: -.6em; --sx: -1.4em; }
+.club-hub .tgm-levelup::after { right: -.6em; --sx: 1.4em; }
+@keyframes tgm-spark {
+  0% { transform: translate(0, 0) scale(.3); opacity: 1; }
+  100% { transform: translate(var(--sx), -1em) scale(1.4); opacity: 0; }
+}
+
+/* hub.css гасит анимации, но не ::after: искры, шарики и «ГО!» без анимации просто прячем */
+@media (prefers-reduced-motion: reduce) {
+  .club-hub .tgm-levelup::before, .club-hub .tgm-levelup::after, .club-hub .tgm-orbs, .club-hub .tgm-go { display: none; }
+}
+
+/* финал: шарики опыта летят от печати к строкам статов */
+.club-hub .tgame-result { position: relative; }
+.club-hub em.tgm-levelup { display: inline-block; }
