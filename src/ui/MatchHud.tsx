@@ -5,6 +5,9 @@ import { leagueById } from '../core/leagues';
 import { bus } from '../game/bus';
 import { useHud } from '../store/hud';
 import { useGame } from '../store/game';
+import { useSettings } from '../store/settings';
+import { MatchCoach } from './MatchCoach';
+import './matchLearning.css';
 import { SoundToggle } from './SoundToggle';
 import { leaveMatch } from './matchControl';
 
@@ -23,6 +26,10 @@ function Bar({ value, color, label }: { value: number; color: string; label: str
 export function MatchHud() {
   const h = useHud();
   const tournament = useGame((s) => s.tournament);
+  const oppId = useGame((s) => s.oppId);
+  const coachEnabled = useSettings((s) => s.coachEnabled);
+  const secondsLeft = Math.max(0, Math.ceil(TUNING.maxTime - h.time));
+  const pressReady = h.position >= h.pressGate;
   const league = tournament && leagueById(tournament.leagueId);
   const marker = pct((1 - h.position) / 2);
   const winning = h.position > 0;
@@ -48,7 +55,12 @@ export function MatchHud() {
           <div className="tug-track">
             <div className="tug-fill" style={fillStyle} />
             <div className="tug-mid" />
+            <div className="press-gate" style={{ left: pct((1 - h.pressGate) / 2) }} title="Пресс сильнее от этой отметки влево" />
             <div className="tug-marker" style={{ left: marker }}>🤝</div>
+          </div>
+          <div className="match-readout">
+            <span className={secondsLeft <= 10 ? 'time-low' : ''} role="timer" aria-label="Осталось до решения судьи">{secondsLeft} с</span>
+            <span className={pressReady ? 'press-ready' : ''}>{pressReady ? 'Пресс: сильная позиция' : 'Пресс: дойди до золотой отметки'}</span>
           </div>
         </div>
 
@@ -92,6 +104,7 @@ export function MatchHud() {
 
       <div className="hud-bottom">
         <div className="hint">
+          {coachEnabled && oppId === 'boris' && (h.phase === 'ready' || h.phase === 'fight') ? <MatchCoach /> : <>
           {h.phase === 'ready' ? (
             <>Не жми, пока не скажут <b>«ГО!»</b></>
           ) : (
@@ -101,6 +114,7 @@ export function MatchHud() {
               <b>1 · 2 · 3</b> — смена техники
             </>
           )}
+          </>}
         </div>
 
         <div className="techs">
@@ -122,6 +136,7 @@ export function MatchHud() {
                 <span className="tech-icon">{info.icon}</span>
                 <span className="tech-name">{info.name}</span>
                 <span className="tech-beats">бьёт: {TECH_INFO[BEATS[t]].name}</span>
+                {t === 'press' && <span className={`tech-position ${pressReady ? 'ready' : ''}`}>позиция: ×{String(pressReady ? TUNING.pressBoost : TUNING.pressPenalty).replace('.', ',')}</span>}
               </button>
             );
           })}

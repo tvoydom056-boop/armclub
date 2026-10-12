@@ -169,6 +169,7 @@ export class MatchScene extends Phaser.Scene {
     this.beatTimer = 0;
     this.useArt(cfg.opp.id);
     useHud.setState({ active: true, oppName: cfg.opp.name, oppNick: cfg.opp.nick });
+    this.syncHud();
     this.banner('ПРИГОТОВИЛИСЬ…', '#ffe14a', 60, 900, 540);
     // пробел глушим только на время боя: Phaser ловит его на всём окне, и в меню он не нажимал кнопки
     this.input.keyboard?.addCapture('SPACE');
@@ -252,6 +253,7 @@ export class MatchScene extends Phaser.Scene {
           reason: this.endInfo.reason,
           time: this.state.time,
           clicks: this.state.clicks,
+          metrics: { ...this.state.metrics },
         });
         this.endInfo = null;
       }
@@ -645,6 +647,8 @@ export class MatchScene extends Phaser.Scene {
       surging: s.opp.surgeLeft > 0,
       resting: s.opp.restLeft > 0,
       time: s.time,
+      pressGate: this.cfg!.stats.pressGate,
+      metrics: { ...s.metrics },
     });
   }
 }

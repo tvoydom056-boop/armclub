@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { LEAGUES, isLeagueOpen, isLeagueOpponentOpen, isQualified, leagueById, tournamentOpponent, type LeagueId } from '../core/leagues';
 import { opponentById } from '../core/opponents';
+import { TUNING } from '../core/match';
 import { useGame } from '../store/game';
 import { useHud } from '../store/hud';
+import { useSettings } from '../store/settings';
 import { ClubIcon } from './ClubIcon';
 import { OpponentCard } from './OpponentCard';
 import { beginMatch } from './matchControl';
 import './leagueCareer.css';
+import './matchLearning.css';
 
 export function LeagueCareer() {
   const wins = useGame((s) => s.wins);
   const cups = useGame((s) => s.cups);
   const tournament = useGame((s) => s.tournament);
   const ready = useHud((s) => s.ready);
+  const coachEnabled = useSettings((s) => s.coachEnabled);
+  const setCoachEnabled = useSettings((s) => s.setCoachEnabled);
   const [selected, selectLeague] = useState<LeagueId | null>(null);
   const current = LEAGUES.filter((league) => isLeagueOpen(league.id, cups)).at(-1)!;
   const league = leagueById(tournament?.leagueId ?? selected ?? current.id)!;
@@ -32,6 +37,16 @@ export function LeagueCareer() {
         <div><div className="eyebrow">ОТ ГАРАЖА ДО ЧЕМПИОНСТВА</div><h2 id="career-title">{allDone ? 'Карьера чемпиона' : 'Твоя карьера'}</h2></div>
         <span className="roster-progress"><ClubIcon name="check" /> Кубки <b>{cups.length} / {LEAGUES.length}</b></span>
       </div>
+      <details className="career-guide">
+        <summary>Первый бой? Как побеждать</summary>
+        <ol>
+          <li>Дождись «ГО!». Клик или ПРОБЕЛ давит руку; два фальстарта — поражение без монет и сброса перетрена.</li>
+          <li>Выбирай ответ: топролл бьёт крюк, крюк — пресс, пресс — топролл. Клавиши 1 · 2 · 3 меняют технику с коротким штрафом.</li>
+          <li>Пауза в кликах восстанавливает выносливость. Используй отдых соперника, чтобы передохнуть или усилить давление.</li>
+          <li>Пресс сильнее от золотой отметки влево. Через {TUNING.maxTime} секунд исход решает перевес руки; в центре выигрываешь ты.</li>
+        </ol>
+        <label><input type="checkbox" checked={coachEnabled} onChange={(e) => setCoachEnabled(e.target.checked)} /> Подсказки во время боя с Борей</label>
+      </details>
       <nav className="league-path" aria-label="Лиги">
         {LEAGUES.map((item, index) => {
           const available = isLeagueOpen(item.id, cups);

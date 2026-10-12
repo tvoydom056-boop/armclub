@@ -1,6 +1,6 @@
 import type { Rng } from '../core/rng';
 import type { Grade, SetResult } from '../core/training';
-import { stepTrainingGame, type GameEvent, type TrainingGameState } from '../core/trainingGames';
+import { hasTrainingInput, stepTrainingGame, type GameEvent, type TrainingGameState } from '../core/trainingGames';
 
 export type InputEdge = 'press' | 'release';
 /** Сохраняет порядок фронтов, в том числе несколько пар нажатие/отпускание за кадр. */
@@ -21,6 +21,7 @@ export function completionTicket() {
   return (s: TrainingGameState, id: string, grade: Grade, train: (id: string, grade: Grade) => SetResult | null): SetResult | null => {
     if (!s.done || claimed) return null;
     claimed = true;
+    if (!hasTrainingInput(s)) return null;
     return train(id, grade);
   };
 }

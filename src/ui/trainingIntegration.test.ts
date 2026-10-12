@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { mulberry32 } from '../core/rng';
 import { freshSave } from '../core/save';
 import { EXERCISES, ITEMS, buyGym, buyItem, canDo, exerciseById, trainSet } from '../core/training';
-import { createTrainingGame, stepTrainingGame } from '../core/trainingGames';
+import { GAME_TIME, createTrainingGame, gameGrade, stepTrainingGame } from '../core/trainingGames';
 import { completionTicket, consumeInput } from './trainingSession';
 import { placeIsTired, sceneFreshness, STATIONS, TABLE_IDS } from './trainingPlaces';
 
@@ -54,6 +54,7 @@ describe('интеграция визуальной тренировки с не
     const train = vi.fn((id, grade) => { const r = trainSet(save, id, grade); if (r) Object.assign(save, r.patch); return r; });
     const ticket = completionTicket();
     expect(ticket(s, 'dips', 'ok', train)).toBeNull(); expect(train).not.toHaveBeenCalled();
+    consumeInput(s, ['press', 'release'], rng);
     stepTrainingGame(s, { presses: 0, releases: 0 }, 10, rng);
     const r = ticket(s, 'dips', 'ok', train)!;
     expect(r.gains.map((g) => g.xp)).toEqual([10, 5]);
@@ -61,5 +62,33 @@ describe('интеграция визуальной тренировки с не
     expect(save.fatigue).toEqual({ triceps: 1, shoulder: 1 });
     completionTicket()(s, 'dips', 'ok', train);
     expect(train).toHaveBeenCalledTimes(2); expect(save.fatigue).toEqual({ triceps: 2, shoulder: 2 });
+  });
+
+  it.each(['pull', 'spin', 'squeeze', 'burst'] as const)('%s: пустой подход не меняет опыт и усталость', (kind) => {
+    const rng = mulberry32(1), s = createTrainingGame(kind, rng);
+    const save = { ...freshSave(), gym: true, fatigue: { triceps: 2 } };
+    const before = structuredClone(save);
+    const train = vi.fn((id, grade) => { const r = trainSet(save, id, grade); if (r) Object.assign(save, r.patch); return r; });
+    for (let i = 0; i <= GAME_TIME * 60; i++) stepTrainingGame(s, { presses: 0, releases: 0 }, 1 / 60, rng);
+    expect(s.done).toBe(true);
+    const ticket = completionTicket();
+    expect(ticket(s, 'dips', gameGrade(s), train)).toBeNull();
+    // Нажатие после окончания не превращает пустой подход в выполненный.
+    consumeInput(s, ['press'], rng);
+    expect(completionTicket()(s, 'dips', gameGrade(s), train)).toBeNull();
+    expect(train).not.toHaveBeenCalled();
+    expect(save).toEqual(before);
+  });
+
+  it('промах новичка даёт слабую награду, даже когда качество равно нулю', () => {
+    const rng = mulberry32(1), s = createTrainingGame('spin', rng);
+    const save = { ...freshSave(), gym: true };
+    const train = vi.fn((id, grade) => { const r = trainSet(save, id, grade); if (r) Object.assign(save, r.patch); return r; });
+    expect(consumeInput(s, ['press', 'release'], rng)).toEqual([{ type: 'miss' }]);
+    stepTrainingGame(s, { presses: 0, releases: 0 }, GAME_TIME, rng);
+    expect(gameGrade(s)).toBe('weak');
+    const result = completionTicket()(s, 'dips', gameGrade(s), train);
+    expect(result?.gains[0].xp).toBeGreaterThan(0);
+    expect(save.fatigue).toEqual({ triceps: 1, shoulder: 1 });
   });
 });

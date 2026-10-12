@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from
 import { clamp, mulberry32 } from '../core/rng';
 import { GRADES, setGains, type ExerciseDef, type GameKind, type Grade, type SetResult } from '../core/training';
 import {
-  GAME_TIME, GAME_TUNING, createTrainingGame, gameGrade, gameQuality, stepTrainingGame,
+  GAME_TIME, GAME_TUNING, createTrainingGame, gameGrade, gameQuality, hasTrainingInput, stepTrainingGame,
   type GameEvent, type TrainingGameState,
 } from '../core/trainingGames';
 import { upgradeById } from '../core/upgrades';
@@ -56,7 +56,7 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
   loadingRef.current = loading;
   useEffect(() => { let active = true; preloadTrainingFrames(ex).catch(() => {}).finally(() => { if (active) setLoading(false); }); return () => { active = false; }; }, [ex.id]);
   const [, setFrame] = useState(0);
-  const [result, setResult] = useState<{ grade: Grade; quality: number; set: SetResult | null } | null>(null);
+  const [result, setResult] = useState<{ attempted: boolean; grade: Grade; quality: number; set: SetResult | null } | null>(null);
   const [flash, setFlash] = useState<{ type: GameEvent['type']; text: string; key: number; fx: string | null } | null>(null);
   const game = useRef<TrainingGameState | null>(null);
   const input = useRef<InputEdge[]>([]);
@@ -183,8 +183,9 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
       }
       if (s.done) {
         const grade = gameGrade(s);
-        setResult({ grade, quality: gameQuality(s), set: reward.current(s, ex.id, grade, train) });
-        sfx.ui.buy();
+        const awarded = reward.current(s, ex.id, grade, train);
+        setResult({ attempted: hasTrainingInput(s), grade, quality: gameQuality(s), set: awarded });
+        if (awarded) sfx.ui.buy();
         held.current.clear(); input.current = []; phaseRef.current = 'result'; setPhase('result');
         return;
       }
@@ -214,6 +215,7 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
           <div className="tgame-intro">
             <p>{RULES[ex.game].text}</p>
             <p className="tgame-hint">Клик мышью или <kbd>ПРОБЕЛ</kbd>. Подход длится {GAME_TIME} секунд.</p>
+            <p className="tgame-hint">Ошибки тоже дают опыт. Подход без нажатий не засчитывается.</p>
             <p className="tgame-hint">{forecast.map((g) => `${upgradeById(g.stat).name}: +${g.xp} опыта`).join(' · ')}</p>
             <button className="btn big" data-sfx="none" disabled={loading} onClick={start}>{loading ? 'Подготовка сцены…' : 'Начать'}<ClubIcon name="arrow" /></button>
           </div>
@@ -239,11 +241,13 @@ export function TrainingGame({ ex, onClose }: { ex: ExerciseDef; onClose: () => 
 
         {phase === 'result' && result && (
           <div className="tgame-result" aria-live="polite">
-            <div className={`tgame-big tgm-stamp g-${result.grade} ${stampArt(result.grade) ? 'stamped' : ''}`} style={stampArt(result.grade) ? { backgroundImage: `url("${stampArt(result.grade)}")` } : undefined}>{GRADES[result.grade].name}</div>
+            {result.attempted ? <div className={`tgame-big tgm-stamp g-${result.grade} ${stampArt(result.grade) ? 'stamped' : ''}`} style={stampArt(result.grade) ? { backgroundImage: `url("${stampArt(result.grade)}")` } : undefined}>{GRADES[result.grade].name}</div> : <h3>Подход не выполнен</h3>}
             {levelUp && stampArt('level') && <span className="tgm-levelup"><img className="tgame-level" src={stampArt('level')!} alt="Новый уровень" /></span>}
-            <p>Качество {pct(result.quality)} · опыт ×{GRADES[result.grade].mult}</p>
-            <ul>{gains.map((g, row) => <li key={g.stat} className="tgm-gain" style={{ '--i': arrival[row] } as CSSProperties}><b>{upgradeById(g.stat).name}</b> +{g.xp} опыта{g.levelsGained > 0 && <em className="tgm-levelup"> — уровень {result.set!.patch.levels![g.stat]}!</em>}</li>)}</ul>
-            <XpOrbs gains={gains} />
+            {!result.attempted ? <p>За подход не было ни одного нажатия. Опыт и перетрен не изменились. Попробуй ещё раз — ошибки не лишают опыта.</p> : result.set ? <p>Качество {pct(result.quality)} · опыт ×{GRADES[result.grade].mult}</p> : <p>Качество {pct(result.quality)}. Опыт за этот подход не начислен.</p>}
+            {gains.length > 0 && <>
+              <ul>{gains.map((g, row) => <li key={g.stat} className="tgm-gain" style={{ '--i': arrival[row] } as CSSProperties}><b>{upgradeById(g.stat).name}</b> +{g.xp} опыта{g.levelsGained > 0 && <em className="tgm-levelup"> — уровень {result.set!.patch.levels![g.stat]}!</em>}</li>)}</ul>
+              <XpOrbs gains={gains} />
+            </>}
             <div className="tgame-result-actions"><button className="btn" onClick={start}>Ещё подход</button><button className="btn" onClick={close}>Другой снаряд</button><button className="btn" onClick={() => { close(); useGame.getState().setTab('fights'); }}>В бой</button></div>
           </div>
         )}

@@ -43,6 +43,22 @@ export const TUNING = {
 export type MatchPhase = 'ready' | 'fight' | 'won' | 'lost';
 export type EndReason = 'pin' | 'foul' | 'time';
 
+/** Наблюдения за боем: не влияют на силу, нужны для подсказок и разбора. */
+export interface MatchMetrics {
+  lowStaminaSeconds: number;
+  counteredSeconds: number;
+  counterSeconds: number;
+  weakPressSeconds: number;
+  strongPressSeconds: number;
+  switchingSeconds: number;
+  recoveredStamina: number;
+}
+
+export const emptyMatchMetrics = (): MatchMetrics => ({
+  lowStaminaSeconds: 0, counteredSeconds: 0, counterSeconds: 0,
+  weakPressSeconds: 0, strongPressSeconds: 0, switchingSeconds: 0, recoveredStamina: 0,
+});
+
 export interface MatchConfig {
   stats: PlayerStats;
   opp: OpponentDef;
@@ -77,6 +93,7 @@ export interface MatchState {
   switchLeft: number;
   startUsed: boolean;
   clicks: number;
+  metrics: MatchMetrics;
   opp: OppState;
 }
 
@@ -132,6 +149,7 @@ export function createMatch(cfg: MatchConfig, rng: Rng): MatchState {
     switchLeft: 0,
     startUsed: false,
     clicks: 0,
+    metrics: emptyMatchMetrics(),
     opp: {
       // босс не начинает с пресса: со старта он под штрафом
       tech: weightedPick(opp.boss ? { ...opp.weights, press: 0 } : opp.weights, rng),
@@ -296,9 +314,24 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
 
   s.momentum *= Math.exp(-dt / TUNING.momentumTau);
   // пока кликаешь — не восстанавливается, иначе прокачанное восстановление перекрывало расход
-  if (s.sinceClick > TUNING.idleAfter) s.stamina = Math.min(1, s.stamina + TUNING.regenIdle * cfg.stats.regen * dt);
+  if (s.sinceClick > TUNING.idleAfter) {
+    const before = s.stamina;
+    s.stamina = Math.min(1, s.stamina + TUNING.regenIdle * cfg.stats.regen * dt);
+    s.metrics.recoveredStamina += s.stamina - before;
+  }
 
   stepOpponent(s, cfg, dt, rng, ev);
+
+  // Условия те же, при которых ниже считается сила; ожидание старта сюда не попадает.
+  if (s.stamina < 0.2) s.metrics.lowStaminaSeconds += dt;
+  const advantage = matchup(s.tech, s.opp.tech);
+  if (advantage < 0) s.metrics.counteredSeconds += dt;
+  if (advantage > 0 && s.switchLeft <= 0) s.metrics.counterSeconds += dt;
+  if (s.switchLeft > 0) s.metrics.switchingSeconds += dt;
+  if (s.tech === 'press') {
+    if (s.position < cfg.stats.pressGate) s.metrics.weakPressSeconds += dt;
+    else if (s.switchLeft <= 0) s.metrics.strongPressSeconds += dt;
+  }
 
   const net = playerForce(s, cfg) - oppForce(s, cfg);
   const lever = 1 + TUNING.leverage * s.position * Math.sign(net);
@@ -311,8 +344,9 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
   return ev;
 }
 
-/** Награда в монетах. Проигрыш приносит четверть — тупиков в прогрессе нет. */
-export function rewardFor(opp: OpponentDef, won: boolean, time: number): number {
+/** Обычное поражение приносит четверть награды; фол до борьбы не даёт монет. */
+export function rewardFor(opp: OpponentDef, won: boolean, time: number, reason: EndReason = 'pin'): number {
+  if (reason === 'foul') return 0;
   if (!won) return Math.round(opp.reward * 0.25);
   const speedBonus = time < 15 ? 0.25 : time < 25 ? 0.1 : 0;
   return Math.round(opp.reward * (1 + speedBonus));

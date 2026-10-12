@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { rewardFor, type EndReason } from '../core/match';
+import { rewardFor, type EndReason, type MatchMetrics } from '../core/match';
 import { OPPONENTS, ROSTERS, opponentById, type OpponentDef } from '../core/opponents';
 import { enterTournament, finishTournamentBout, isLeagueOpponentOpen, tournamentOpponent, type LeagueId, type TournamentOutcome } from '../core/leagues';
 import { SAVE_VERSION, freshSave, migrateSave, type SaveData } from '../core/save';
@@ -16,6 +16,7 @@ interface MatchResult {
   time: number;
   reward: number;
   firstWin: boolean;
+  metrics: MatchMetrics | null;
   tournament: Pick<TournamentOutcome, 'status' | 'leagueId' | 'bonus'> | null;
 }
 
@@ -30,7 +31,7 @@ interface GameStore extends SaveData {
   startMatch: (oppId: string) => boolean;
   startTournament: (leagueId: LeagueId) => boolean;
   abandonTournament: () => void;
-  finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number }) => void;
+  finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; metrics?: MatchMetrics }) => void;
   buyItem: (id: ItemId) => boolean;
   buyGym: () => boolean;
   train: (exerciseId: string, grade: Grade) => SetResult | null;
@@ -81,23 +82,23 @@ export const useGame = create<GameStore>()(
 
         abandonTournament: () => set({ tournament: null }),
 
-        finishMatch: ({ oppId, result, reason, time }) => {
+        finishMatch: ({ oppId, result, reason, time, metrics }) => {
           const current = get();
           if (current.screen !== 'match' || current.oppId !== oppId || current.result) return;
           const won = result === 'won';
           const opp = opponentById(oppId, current.version);
           const tournament = current.version === 2 ? finishTournamentBout(current, oppId, won) : null;
-          const reward = rewardFor(opp, won, time) + (tournament?.bonus ?? 0);
+          const reward = rewardFor(opp, won, time, reason) + (tournament?.bonus ?? 0);
           const prevWins = get().wins[oppId] ?? 0;
           set((s) => ({
             coins: s.coins + reward,
             wins: won ? { ...s.wins, [oppId]: prevWins + 1 } : s.wins,
             losses: won ? s.losses : s.losses + 1,
-            // бой — отдых для мышц: перетрен сбрасывается
-            fatigue: {},
+            // Фальстарт не заменяет бой и не снимает накопленный перетрен.
+            fatigue: reason === 'foul' ? s.fatigue : {},
             cups: tournament?.cups ?? s.cups,
             tournament: tournament ? tournament.tournament : s.tournament,
-            result: { oppId, won, reason, time, reward, firstWin: won && prevWins === 0,
+            result: { oppId, won, reason, time, reward, firstWin: won && prevWins === 0, metrics: metrics ? { ...metrics } : null,
               tournament: tournament ? { status: tournament.status, leagueId: tournament.leagueId, bonus: tournament.bonus } : null },
           }));
         },

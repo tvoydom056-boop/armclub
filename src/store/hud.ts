@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { MatchPhase } from '../core/match';
+import { emptyMatchMetrics, type MatchMetrics, type MatchPhase } from '../core/match';
 import type { Technique } from '../core/techniques';
 
 /** Снимок матча для React-интерфейса. Обновляется сценой ~12 раз в секунду. */
@@ -21,6 +21,8 @@ interface HudState {
   surging: boolean;
   resting: boolean;
   time: number;
+  pressGate: number;
+  metrics: MatchMetrics;
   oppName: string;
   oppNick: string;
 }
@@ -42,6 +44,8 @@ export const useHud = create<HudState>(() => ({
   surging: false,
   resting: false,
   time: 0,
+  pressGate: 0.15,
+  metrics: emptyMatchMetrics(),
   oppName: '',
   oppNick: '',
 }));

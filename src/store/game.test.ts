@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { freshSave, migrateSave } from '../core/save';
 import { LEAGUES } from '../core/leagues';
-import { rewardFor } from '../core/match';
+import { emptyMatchMetrics, rewardFor } from '../core/match';
 import { opponentById } from '../core/opponents';
 
 vi.hoisted(() => {
@@ -26,6 +26,41 @@ beforeEach(() => {
 });
 
 describe('интеграция карьеры с боями и сохранением', () => {
+  it('фол не даёт монеты и не снимает перетрен, в том числе при повторном событии', () => {
+    useGame.setState({ coins: 20, fatigue: { triceps: 3, shoulder: 2 } });
+    useGame.getState().startMatch('boris');
+    const result = { oppId: 'boris', result: 'lost', reason: 'foul', time: 0 } as const;
+    useGame.getState().finishMatch(result);
+    useGame.getState().finishMatch(result);
+    expect(useGame.getState().coins).toBe(20);
+    expect(useGame.getState().result?.reward).toBe(0);
+    expect(useGame.getState().fatigue).toEqual({ triceps: 3, shoulder: 2 });
+    expect(useGame.getState().losses).toBe(1);
+  });
+
+  it.each(['pin', 'time'] as const)('обычное поражение (%s) сохраняет награду и снимает перетрен', (reason) => {
+    useGame.setState({ fatigue: { triceps: 3 } });
+    useGame.getState().startMatch('boris');
+    useGame.getState().finishMatch({ oppId: 'boris', result: 'lost', reason, time: 75 });
+    expect(useGame.getState().coins).toBe(rewardFor(opponentById('boris', 2), false, 75));
+    expect(useGame.getState().coins).toBeGreaterThan(0);
+    expect(useGame.getState().fatigue).toEqual({});
+  });
+
+  it('разбор хранит снимок метрик только до нового боя', () => {
+    const metrics = { ...emptyMatchMetrics(), lowStaminaSeconds: 4 };
+    useGame.getState().startMatch('boris');
+    useGame.getState().finishMatch({ oppId: 'boris', result: 'won', reason: 'pin', time: 10, metrics });
+    metrics.lowStaminaSeconds = 99;
+    expect(useGame.getState().result?.metrics?.lowStaminaSeconds).toBe(4);
+    const persisted = JSON.parse(localStorage.getItem('armwrestling-club-save')!);
+    expect(persisted.state.result).toBeUndefined();
+    useGame.getState().startMatch('boris');
+    expect(useGame.getState().result).toBeNull();
+    finish('boris');
+    expect(useGame.getState().result?.metrics).toBeNull();
+  });
+
   it('нельзя начать закрытый бой даже в обход кнопки', () => {
     expect(useGame.getState().startMatch('dench')).toBe(false);
     expect(useGame.getState().startMatch('leva')).toBe(false);

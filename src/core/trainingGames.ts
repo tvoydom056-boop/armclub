@@ -37,6 +37,8 @@ interface BaseState {
   /** Секунд с начала подхода. */
   time: number;
   done: boolean;
+  /** Участие считаем отдельно от качества: промахи новичка тоже являются попыткой. */
+  presses: number;
 }
 
 export interface PullState extends BaseState {
@@ -94,7 +96,7 @@ function spinBeats(): number[] {
 }
 
 export function createTrainingGame(kind: GameKind, rng: Rng): TrainingGameState {
-  const base = { time: 0, done: false };
+  const base = { time: 0, done: false, presses: 0 };
   switch (kind) {
     case 'pull': return { ...base, kind, load: 0, stunLeft: 0, inZone: 0, fails: 0 };
     case 'spin': return { ...base, kind, beats: spinBeats(), next: 0, hits: 0, misses: 0, extra: 0 };
@@ -208,6 +210,7 @@ function finishSignal(s: BurstState, rng: Rng) {
 export function stepTrainingGame(s: TrainingGameState, input: GameInput, dt: number, rng: Rng): GameEvent[] {
   const ev: GameEvent[] = [];
   if (s.done) return ev;
+  s.presses += Math.max(0, input.presses);
   dt = Math.min(dt, GAME_TIME - s.time);
   s.time += dt;
   switch (s.kind) {
@@ -241,3 +244,6 @@ export function gameGrade(s: TrainingGameState): Grade {
   const q = gameQuality(s);
   return q >= GAME_TUNING.grade.great ? 'great' : q >= GAME_TUNING.grade.ok ? 'ok' : 'weak';
 }
+
+/** Ожидание конца таймера без единого нажатия не является подходом. */
+export const hasTrainingInput = (s: TrainingGameState): boolean => s.presses > 0;
