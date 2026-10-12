@@ -213,6 +213,7 @@
 .club-hub .place-btn { display: flex; align-items: center; gap: .4em; padding: .35em .8em; color: #bfa58e; background: transparent; border: .12em solid transparent; border-radius: .35em; font-size: .9em; }
 .club-hub .place-btn .club-icon { width: 1em; height: 1em; }
 .club-hub .place-btn:hover { color: #fff0d6; }
+.club-hub .place-name { display: flex; align-items: center; padding: 0 .8em; color: #fff0d6; font-size: .9em; white-space: nowrap; }
 .club-hub .place-btn.on { background: #a8373e; color: #fff0d6; border-color: #d86a58; }
 .club-hub .link-btn { padding: 0; border: none; background: none; color: #a8373e; font: inherit; text-decoration: underline; }
 /* подход: оверлей мини-игры поверх раздела тренировки */
@@ -269,7 +270,12 @@
 .club-hub .tgame-frames img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; opacity: 0; }
 .club-hub .tgame-frames img.on { opacity: 1; }
 /* поверх кадра механика — компактная панель слева: рука на кадрах входит снизу справа */
-.club-hub .tgame-field.has-frame > [class^='tg-'] { position: absolute; left: .8em; top: .8em; bottom: .8em; width: 34%; justify-content: center; font-size: .7em; padding: .8em; background: #efe2c4d9; border: .15em solid #ab7e54; border-radius: .4em; }
+.club-hub .tgame-field.has-frame > [class^='tg-'] { position: absolute; left: .8em; bottom: .8em; width: 22%; justify-content: center; font-size: .7em; padding: .6em; gap: .5em; background: #efe2c4d9; border: .15em solid #ab7e54; border-radius: .4em; }
+.club-hub .tgame-field.has-frame .tg-vbar { height: 8em; width: 3em; }
+.club-hub .tgame-field.has-frame .tg-sign { font-size: 3.2em; }
+.club-hub .tgame-field.has-frame .tg-wheel { width: 6em; height: 6em; }
+.club-hub .tgame-field.has-frame .tg-wheel i { height: 2.3em; }
+.club-hub .tgame-field.has-frame .tg-ring { top: 3.9em; width: 6.6em; height: 6.6em; }
 .club-hub .tgame-flash.with-fx { display: grid; place-items: center; min-width: 4em; min-height: 4em; padding: .5em; background: center / contain no-repeat; }
 .club-hub .tgame-big.stamped { display: grid; place-items: center; width: 4.2em; aspect-ratio: 768 / 512; font-size: 2.4em; background: center / contain no-repeat; color: #3b2723; }
 .club-hub .tgame-level { height: 5em; }

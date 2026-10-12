@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { TUNING, createMatch, playerForce, rewardFor, stepMatch, type MatchConfig, type MatchState } from './match';
 import { OPPONENTS, ROSTERS, V2_POWER, opponentById } from './opponents';
 import { mulberry32 } from './rng';
-import { COUNTER, matchup, TECHNIQUES, type Technique } from './techniques';
+import { COUNTER, matchup, TECHNIQUES } from './techniques';
 import { UPGRADES, deriveStats, emptyLevels, upgradeCost, type Levels } from './upgrades';
+import { playMatch, type Bot } from './botPlayer';
 
 const DT = 1 / 60;
 
@@ -193,50 +194,7 @@ describe('версия 2', () => {
 
 /* ---------- Баланс: боты играют тысячи матчей ---------- */
 
-type Bot = 'hook-only' | 'reader' | 'spam-random';
-
-interface SimResult {
-  won: boolean;
-  time: number;
-}
-
-function simulate(oppId: string, levels: Levels, bot: Bot, seed: number, cps = 6.5): SimResult {
-  const cfg = cfgFor(oppId, levels);
-  const rng = mulberry32(seed);
-  const s = createMatch(cfg, rng);
-  let acc = 0;
-  let sawChangeAt = -1;
-  let lastSeen: Technique | null = null;
-  let wanted: Technique = 'hook';
-  let clock = 0;
-  const reaction = 0.3;
-
-  for (let i = 0; i < 60 * 120 && s.phase !== 'won' && s.phase !== 'lost'; i++) {
-    clock += DT;
-    let clicks = 0;
-    let tech: Technique | undefined;
-    if (s.phase === 'fight') {
-      acc += cps * DT;
-      clicks = Math.floor(acc);
-      acc -= clicks;
-      if (bot === 'reader') {
-        const target = s.opp.next ?? s.opp.tech;
-        if (target !== lastSeen) {
-          lastSeen = target;
-          sawChangeAt = clock;
-        }
-        if (sawChangeAt >= 0 && clock - sawChangeAt >= reaction) {
-          wanted = COUNTER[target];
-          // пресс до того, как ты впереди, не нужен — остаёмся на крюке
-          if (wanted === 'press' && s.position < cfg.stats.pressGate) wanted = 'hook';
-        }
-        tech = wanted;
-      }
-    }
-    stepMatch(s, cfg, { clicks, tech }, DT, rng);
-  }
-  return { won: s.phase === 'won', time: s.time };
-}
+const simulate = (oppId: string, levels: Levels, bot: Bot, seed: number) => playMatch(cfgFor(oppId, levels), bot, seed);
 
 function winRate(oppId: string, levels: Levels, bot: Bot, n = 120) {
   let wins = 0;

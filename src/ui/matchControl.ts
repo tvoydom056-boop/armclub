@@ -6,7 +6,7 @@ import { useGame } from '../store/game';
 /** Запускает бой с выбранным соперником с текущей прокачкой. */
 export function beginMatch(oppId: string): void {
   const { levels, version, startMatch } = useGame.getState();
-  startMatch(oppId);
+  if (!startMatch(oppId)) return;
   sfx.ui.start();
   bus.emit('match:start', { oppId, stats: deriveStats(levels), version });
 }

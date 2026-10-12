@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { PNG } from 'pngjs';
 import { describe, expect, it } from 'vitest';
-import { SHEETS, SINGLES, artWarnings, exerciseIds, keyMagenta, knownPaths, sliceGrid } from './importTrainingArt.mjs';
+import { BACKGROUNDS, SHEETS, SINGLES, artWarnings, exerciseIds, keyMagenta, knownPaths, sliceGrid } from './importTrainingArt.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
@@ -66,4 +66,27 @@ describe('приём арта тренировок', () => {
       expect(existsSync(resolve(ROOT, 'public/art/training', f)), f).toBe(true);
     }
   });
+
+  it('контракт охватывает каждый самостоятельный игровой ресурс, исключая дубликат уровня и исходники', () => {
+    const { files } = JSON.parse(readFileSync(resolve(ROOT, 'src/game/trainingArt.json'), 'utf8'));
+    expect(files).toHaveLength(77);
+    expect(files.sort()).toEqual(knownPaths().sort());
+    expect(files.some((f) => f.includes('source') || f.includes('preview') || f === 'levelup_badge.png')).toBe(false);
+    for (const f of files) {
+      const png = PNG.sync.read(readFileSync(resolve(ROOT, 'public/art/training', f)));
+      let transparent = 0;
+      for (let i = 3; i < png.data.length; i += 4) if (png.data[i] === 0) transparent++;
+      expect(transparent > 0, f).toBe(!BACKGROUNDS.includes(f));
+    }
+  }, 30000);
+
+  it('все 17 собственных пар имеют общий холст и разные позы', () => {
+    expect(exerciseIds()).toHaveLength(17);
+    for (const id of exerciseIds()) {
+      const pair = ['rest', 'peak'].map((phase) => PNG.sync.read(readFileSync(resolve(ROOT, 'public/art/training/games', `${id}_${phase}.png`))));
+      expect(pair[0].width, id).toBe(1536); expect(pair[0].height, id).toBe(1024);
+      expect([pair[1].width, pair[1].height], id).toEqual([1536, 1024]);
+      expect(pair[0].data.equals(pair[1].data), id).toBe(false);
+    }
+  }, 30000);
 });

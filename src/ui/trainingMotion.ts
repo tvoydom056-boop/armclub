@@ -1,0 +1,191 @@
+import { clamp } from '../core/rng';
+import type { ExerciseDef } from '../core/training';
+import { GAME_TUNING, type GameEvent, type TrainingGameState } from '../core/trainingGames';
+
+/**
+ * Движение руки на экране подхода (docs/training-games.md §3–4). Без React:
+ * по состоянию мини-игры и последним событиям считает, как стоят кадры «покой» и «пик».
+ */
+
+/** Поза только подвижного слоя. Опоры рендерятся отдельно без трансформации. */
+export interface Pose {
+  peak: number;
+  x: number;
+  y: number;
+  rotate: number;
+  scale: number;
+}
+
+type Offset = Partial<Omit<Pose, 'peak'>>;
+
+/** Как упражнение двигает кадр. Чего нет — кадр не двигается. */
+interface Profile {
+  life?: number;
+  /** Сдвиг на полном усилии; между покоем и усилием — пропорционально. */
+  effort?: Offset;
+  /** Толчок на попадание; alternate — каждый второй толчок в обратную сторону. */
+  kick?: Offset & { alternate?: boolean };
+  /** Куда падает кадр при срыве, вдобавок к тряске. */
+  fail?: Offset;
+  /** С какого усилия рука дрожит от натуги. */
+  strain?: number;
+  /** Бег: кадры сменяются раз в столько секунд, после «ГО!» втрое чаще. */
+  stride?: number;
+  /** Ожидание сигнала: кадр подпрыгивает на столько px дважды в секунду. */
+  bounce?: number;
+}
+
+export const PROFILES: Readonly<Record<string, Profile>> = {
+  pushups: { fail: { y: 3 } },
+  run: { stride: 0.3 },
+  jump_rope: { kick: { y: -30 }, life: .16 },
+  gripper: { strain: 0.85 },
+  gripper_pro: { strain: 0.5 },
+  strap_dumbbell: { fail: { rotate: 3 } },
+  medball: { life: .25, fail: { y: 20 } },
+  straight_bar: { fail: { y: -30 } },
+  tricep_rope: { fail: { y: -30 } },
+  dips: { fail: { y: 3 } },
+  cone: { strain: .6, fail: { rotate: 3 } },
+  strap_block: { strain: 0.6, fail: { rotate: 3 } },
+  triple: { fail: { rotate: 4 } },
+  fat_grip: { strain: 0.85 },
+  roller: { kick: { y: -6 } },
+  eccentric: { kick: { rotate: 8 }, life: .2 },
+  multispin: { kick: { rotate: 12, alternate: true }, life: .18 },
+};
+
+const DEFAULT_FAIL: Offset = { y: 20 };
+
+/** Сколько секунд живёт отклик на событие. */
+const LIFE = { kick: 0.15, miss: 0.15, shake: 0.3, falseStart: 0.25, go: 0.2, fall: 0.4 };
+const SHAKE_PX = 6;
+const FALSE_START_PX = 4;
+const MISS_PX = 8;
+const STRAIN_PX = 2;
+
+/** Когда случились последние события подхода; время — `s.time` мини-игры. */
+export interface MotionTrack {
+  hits: number;
+  lastHit: number;
+  lastMiss: number;
+  lastFail: number;
+  lastFalseStart: number;
+  lastGo: number;
+  score: number;
+  plates: number;
+  ended: boolean;
+}
+
+export const newMotionTrack = (): MotionTrack => ({
+  hits: 0, lastHit: -Infinity, lastMiss: -Infinity, lastFail: -Infinity, lastFalseStart: -Infinity, lastGo: -Infinity,
+  score: 0, plates: 0, ended: false,
+});
+
+/** Запоминает события кадра. Вход не меняет. */
+export function trackEvents(track: MotionTrack, events: readonly GameEvent[], time: number): MotionTrack {
+  const t = { ...track };
+  for (const e of events) {
+    if (e.type === 'hit' || e.type === 'rep') { t.hits++; t.lastHit = time; if (e.type === 'rep') t.score = e.score; else t.plates = Math.min(120, t.plates + 8); }
+    else if (e.type === 'miss') { t.lastMiss = time; t.plates = Math.max(0, t.plates - 8); }
+    else if (e.type === 'fail') t.lastFail = time;
+    else if (e.type === 'falseStart') t.lastFalseStart = time;
+    else if (e.type === 'go') t.lastGo = time;
+    else if (e.type === 'end') t.ended = true;
+  }
+  return t;
+}
+
+/** 1 в момент события, к концу `life` спадает до 0. */
+const fade = (since: number, life: number) => (since >= 0 && since < life ? 1 - since / life : 0);
+
+/** Дрожь от перетрена: свежесть 1 → 0 px, 0.75 → 1, 0.55 → 2, 0.4 → 3. */
+export const fatigueTremor = (fresh: number): number => Math.round((1 - fresh) * 5);
+
+/** Усилие 0…1, которое держит игрок; толчки от попаданий считаются отдельно. */
+function effortOf(s: TrainingGameState): number {
+  switch (s.kind) {
+    case 'pull': return s.stunLeft > 0 ? 0 : clamp(s.load / GAME_TUNING.pull.zone[1], 0, 1);
+    case 'squeeze': return s.holding ? s.power : 0;
+    case 'spin':
+    case 'burst': return 0;
+  }
+}
+
+/** Детерминированная дрожь: одна и та же в один момент времени, тестам не нужен генератор. */
+const jitter = (amp: number, time: number) => ({ x: amp * Math.sin(time * 53), y: amp * Math.sin(time * 71 + 1) });
+
+/**
+ * Поза кадра руки в момент `s.time`.
+ * fresh — меньшая свежесть основного и побочного статов на старте подхода;
+ * reduced — игрок просит меньше движения: без дрожи и тряски.
+ */
+export function motionAt(ex: ExerciseDef, s: TrainingGameState, track: MotionTrack, fresh: number, reduced = false): Pose {
+  const p = PROFILES[ex.id] ?? {};
+  const t = s.time;
+  const effort = effortOf(s);
+  const activeBurst = s.kind !== 'burst' || s.phase === 'go';
+  const kick = activeBurst ? fade(t - track.lastHit, p.life ?? LIFE.kick) : 0;
+  const pose: Pose = { peak: Math.max(effort, kick), x: 0, y: 0, rotate: 0, scale: 1 };
+  const add = (o: Offset | undefined, k: number) => {
+    if (!o || k === 0) return;
+    pose.x += (o.x ?? 0) * k;
+    pose.y += (o.y ?? 0) * k;
+    pose.rotate += (o.rotate ?? 0) * k;
+    pose.scale += (o.scale ?? 0) * k;
+  };
+
+  add(p.effort, effort);
+  if (p.kick) add(p.kick, p.kick.alternate && track.hits % 2 === 0 ? -kick : kick);
+  if (p.stride) {
+    const going = s.kind === 'burst' && s.phase === 'go' && s.taps > 0;
+    pose.peak = Math.max(kick, Math.floor(t / (going ? p.stride / 3 : p.stride)) % 2);
+  }
+  if (p.bounce && s.kind === 'burst' && s.phase === 'wait') pose.y -= p.bounce * Math.abs(Math.sin(2 * Math.PI * t));
+  // срыв тяги держится всю паузу, остальные — коротко
+  const fall = fade(t - track.lastFail, s.kind === 'pull' ? GAME_TUNING.pull.stun : LIFE.fall);
+  add(p.fail ?? DEFAULT_FAIL, fall);
+  pose.y += MISS_PX * fade(t - track.lastMiss, LIFE.miss);
+  if (ex.id === 'medball' && activeBurst && t - track.lastHit < .25) pose.peak = 1;
+  // «ГО!» только сигнализирует готовность. Успешная поза требует ввода.
+  if (s.kind === 'burst' && ex.id !== 'run' && kick === 0) pose.peak = 0;
+  const falseStart = fade(t - track.lastFalseStart, LIFE.falseStart);
+  if (ex.id === 'run') pose.rotate += 6 * falseStart;
+  if (ex.id === 'medball') pose.y += 20 * falseStart;
+  if (track.ended || s.done) return { peak: 0, x: 0, y: 0, rotate: 0, scale: 1 };
+  if (reduced) return pose;
+
+  const strain = p.strain !== undefined && effort >= p.strain ? STRAIN_PX : 0;
+  const shake = SHAKE_PX * fade(t - track.lastFail, LIFE.shake) + FALSE_START_PX * fade(t - track.lastFalseStart, LIFE.falseStart);
+  const j = jitter(fatigueTremor(fresh) + strain + shake, t);
+  pose.x += j.x;
+  pose.y += j.y;
+  return pose;
+}
+
+/** Выбор одного из двух кадров: без просвечивающих двойных рук. */
+export function blendFrames(peak: number): { rest: number; peak: number } {
+  return peak < .5 ? { rest: 1, peak: 0 } : { rest: 0, peak: 1 };
+}
+
+/** Прочие слои сцены: фон/трос/один летящий мяч. Значения не участвуют в ядре. */
+export function sceneMotion(ex: ExerciseDef, s: TrainingGameState, track: MotionTrack, reduced = false) {
+  const effort = effortOf(s);
+  const age = s.time - track.lastHit;
+  const flight = ex.id === 'medball' && s.kind === 'burst' && s.phase === 'go' && age >= 0 && age < .25;
+  const flightProgress = flight ? (age < .15 ? age / .15 : 1 - (age - .15) / .1) : 0;
+  const running = s.kind === 'burst' && s.phase === 'go' && s.taps > 0;
+  return {
+    backgroundY: reduced ? 0 : ex.id === 'dips' ? 40 * effort : 0,
+    backgroundScale: reduced || ex.id !== 'pushups' ? 1 : 1.06 - .06 * effort,
+    roadSpeed: ex.id === 'run' && !reduced ? 80 * (1 + (running && s.kind === 'burst' ? 2 * Math.min(s.taps / GAME_TUNING.burst.taps, 1) : 0)) : 0,
+    dog: ex.id === 'run' && s.kind === 'burst' && s.phase === 'go',
+    plates: s.kind === 'spin' ? track.plates : 120 * effort,
+    flight, flightProgress,
+    cableWave: reduced ? 0 : (s.kind === 'pull' && s.stunLeft > 0 ? 8 : 1) * Math.sin(s.time * 40),
+  };
+}
+
+/** CSS transform кадра; поворот и масштаб — вокруг локтя (низ по центру, `transform-origin: 50% 100%`). */
+export const poseTransform = (p: Pose): string =>
+  `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) rotate(${p.rotate.toFixed(2)}deg) scale(${p.scale.toFixed(3)})`;

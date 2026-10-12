@@ -9,6 +9,7 @@ import { PNG } from 'pngjs';
  * Затем по тому, что лежит в public/art/training/, пересобирается src/game/trainingArt.json —
  * интерфейс берёт спрайт только из этого списка, остальное рисует заглушками.
  * Запуск: node tools/importTrainingArt.mjs [папка с картинками]   (по умолчанию — папка из промта)
+ * Только список, без обработки PNG: node tools/importTrainingArt.mjs --manifest-only
  */
 const ROOT = resolve(import.meta.dirname, '..');
 const OUT = resolve(ROOT, 'public/art/training');
@@ -21,9 +22,16 @@ export const SHEETS = {
   'items_sheet_2.png': { grid: [3, 2], out: ['medball', 'cone', 'gripper_pro', 'eccentric', 'triple', 'multispin'].map((id) => `items/${id}.png`) },
   'fx_sheet.png': { grid: [3, 2], out: ['sweat', 'dust', 'motion', 'impact', 'steam', 'sparks'].map((n) => `fx/${n}.png`) },
   'stamps.png': { grid: [2, 2], out: ['weak', 'ok', 'great', 'level'].map((n) => `stamps/${n}.png`) },
+  'map_buildings.png': { grid: [2, 2], out: ['home', 'shop', 'gym', 'bar'].map((n) => `map/${n}.png`) },
+  'map_marks.png': { grid: [3, 2], out: ['chain', 'shutter', 'player', 'star', 'steam', 'sign'].map((n) => `map/${n}.png`) },
 };
 /** Одиночные спрайты на пурпурном фоне. */
-export const SINGLES = { 'gym_card.png': 'items/gym_card.png' };
+export const SINGLES = {
+  'gym_card.png': 'items/gym_card.png',
+  ...Object.fromEntries(['shopkeeper', 'shopkeeper_happy', 'shopkeeper_doubt', 'dog', 'weight_stack'].map((n) => [`${n}.png`, `${n}.png`])),
+};
+/** Непрозрачные сцены копируются без удаления цвета. */
+export const BACKGROUNDS = ['map_base.png', 'room_home.png', 'room_gym.png', 'room_shop.png', 'run_street.png'];
 
 /** id упражнений из src/core/training.ts (TS из Node не импортируется — читаем текстом). */
 export function exerciseIds() {
@@ -37,7 +45,7 @@ export function exerciseIds() {
 /** Все пути, которые знает интерфейс (src/game/trainingArt.ts). */
 export function knownPaths() {
   const frames = exerciseIds().flatMap((id) => [`games/${id}_rest.png`, `games/${id}_peak.png`]);
-  return [...Object.values(SHEETS).flatMap((s) => s.out), ...Object.values(SINGLES), ...frames];
+  return [...Object.values(SHEETS).flatMap((s) => s.out), ...Object.values(SINGLES), ...BACKGROUNDS, ...frames];
 }
 
 /** Насколько пиксель «пурпурный»: 255 у #FF00FF, около 0 у обычных цветов рисунка. */
@@ -120,7 +128,10 @@ export function importArt(src) {
       const w = artWarnings(png);
       report.push(`${w.length ? '⚠' : '✓'} ${name} → ${rel}${w.length ? ` — ${w.join('; ')}` : ''}`);
     };
-    if (SHEETS[name]) {
+    if (BACKGROUNDS.includes(name)) {
+      writePng(name, readPng(file));
+      report.push(`✓ ${name} → ${name} (фон без обработки)`);
+    } else if (SHEETS[name]) {
       const { grid: [cols, rows], out } = SHEETS[name];
       const sheet = keyMagenta(readPng(file));
       if (sheet.width % cols || sheet.height % rows) report.push(`⚠ ${name}: ${sheet.width}×${sheet.height} не делится на сетку ${cols}×${rows}`);
@@ -157,7 +168,8 @@ export function buildManifest() {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const src = resolve(process.argv[2] ?? DEFAULT_SRC);
-  if (existsSync(src)) for (const line of importArt(src)) console.log(line);
+  if (process.argv.includes('--manifest-only')) { /* Готовые PNG сохраняются побайтно. */ }
+  else if (existsSync(src)) for (const line of importArt(src)) console.log(line);
   else console.log(`Папки ${src} нет — только пересобираю список готовых спрайтов.`);
   const files = buildManifest();
   console.log(`src/game/trainingArt.json: ${files.length} из ${knownPaths().length} спрайтов.`);

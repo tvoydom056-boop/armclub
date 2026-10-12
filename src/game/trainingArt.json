@@ -1,5 +1,6 @@
 {
   "files": [
+    "dog.png",
     "fx/dust.png",
     "fx/impact.png",
     "fx/motion.png",
@@ -53,9 +54,28 @@
     "items/strap.png",
     "items/tricep_rope.png",
     "items/triple.png",
+    "map/bar.png",
+    "map/chain.png",
+    "map/gym.png",
+    "map/home.png",
+    "map/player.png",
+    "map/shop.png",
+    "map/shutter.png",
+    "map/sign.png",
+    "map/star.png",
+    "map/steam.png",
+    "map_base.png",
+    "room_gym.png",
+    "room_home.png",
+    "room_shop.png",
+    "run_street.png",
+    "shopkeeper.png",
+    "shopkeeper_doubt.png",
+    "shopkeeper_happy.png",
     "stamps/great.png",
     "stamps/level.png",
     "stamps/ok.png",
-    "stamps/weak.png"
+    "stamps/weak.png",
+    "weight_stack.png"
   ]
 }

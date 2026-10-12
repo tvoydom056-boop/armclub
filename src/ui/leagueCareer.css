@@ -1,0 +1,44 @@
+/* Карьера использует ту же палитру и обводку, что карточки бойцов. */
+.club-hub .league-career { height: 100%; display: flex; flex-direction: column; gap: .85em; min-height: 0; }
+.club-hub .league-career > .section-heading { flex: 0 0 3.6em; padding-bottom: 0; }
+.club-hub .league-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8em; flex: none; }
+.club-hub .league-step { display: flex; align-items: center; gap: .85em; text-align: left; padding: .85em 1em; background: #302228; color: #efd8b3; border: .15em solid #735047; border-radius: .4em; }
+.club-hub .league-step.selected { border-color: #edb44b; background: #57332b; box-shadow: inset 0 -.2em #edb44b; }
+.club-hub .league-step.closed { color: #a89185; background: #21191e; }
+.club-hub .league-step.complete .league-number { color: #a9c884; }
+.club-hub .league-step b { display: block; font: 1.12em var(--display); }
+.club-hub .league-step small { display: block; margin-top: .4em; font-size: .74em; font-weight: 500; }
+.club-hub .league-number { font: 1.5em var(--display); color: #edb44b; width: 1.5em; flex: none; }
+.club-hub .league-number .club-icon { width: 1.2em; height: 1.2em; }
+.club-hub .league-content { display: grid; grid-template-columns: minmax(0, 1fr) 23em; gap: 1.4em; flex: 1; min-height: 0; }
+.club-hub .league-qualifying { display: flex; flex-direction: column; min-height: 0; }
+.club-hub .league-caption { display: flex; justify-content: space-between; align-items: center; gap: 1em; }
+.club-hub .league-caption h3 { font: 1.7em var(--display); margin-top: .25em; }
+.club-hub .league-caption > span { font-size: .8em; white-space: nowrap; color: #cfb69d; }
+.club-hub .league-description { font-size: .83em; color: #c4a992; line-height: 1.4; margin: .6em 0 .9em; }
+.club-hub .opps.league-opps { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 1.2em; }
+.club-hub .league-opps .opp-pic { flex-basis: 11em; }
+.club-hub .league-opps .fighter-head { width: 9em; bottom: -.8em; }
+.club-hub .league-opps .opp-info { padding-top: 1em; }
+.club-hub .league-opps .opp-info h4 { font-size: 1.65em; }
+.club-hub .league-opps .opp-info p { font-size: .83em; }
+.club-hub .league-tournament { display: flex; flex-direction: column; min-height: 0; padding: 1.1em; color: #382726; border-top: .4em solid #8a6453; }
+.club-hub .league-tournament.eligible { border-top-color: #c48932; }
+.club-hub .league-tournament .eyebrow { color: #97553c; }
+.club-hub .league-tournament h3 { font: 1.8em var(--display); margin: .4em 0; }
+.club-hub .league-tournament > p { font-size: .85em; font-weight: 500; line-height: 1.45; color: #785b46; }
+.club-hub .tournament-bracket { list-style: none; padding: 0; margin: .8em 0; display: flex; flex-direction: column; gap: .55em; }
+.club-hub .tournament-bracket li { display: flex; align-items: center; gap: .8em; padding: .65em; border: .1em solid #c4ac89; background: #e5d4b3; border-radius: .35em; }
+.club-hub .tournament-bracket li.done { border-color: #749051; }
+.club-hub .bracket-marker { width: 2em; height: 2em; display: grid; place-items: center; background: #9b5341; color: #fff0d6; border-radius: 50%; font-family: var(--display); flex: none; }
+.club-hub .done .bracket-marker { background: #59733f; }
+.club-hub .tournament-bracket small { display: block; color: #80634d; font-size: .7em; font-weight: 500; }
+.club-hub .tournament-bracket b { display: block; margin-top: .2em; font-size: 1em; }
+.club-hub .tournament-prize { font: 1.25em var(--display); border-top: .1em solid #c8b591; padding-top: .75em; }
+.club-hub .tournament-prize small { display: block; margin-top: .4em; font: .63em/1.4 var(--font); color: #80634d; }
+.club-hub .tournament-actions { margin-top: auto; padding-top: .9em; display: flex; flex-direction: column; gap: .7em; }
+.club-hub .tournament-hint { font-size: .78em; line-height: 1.4; color: #785b46; font-weight: 500; }
+.club-hub .tournament-actions .btn { font-size: 1em; }
+.club-hub .cup-earned { display: flex; align-items: center; gap: .5em; color: #54713c; font-family: var(--display); }
+.club-hub .career-rule { flex: none; font-size: .75em; color: #c0a18c; padding-top: .3em; }
+.tournament-badge { position: absolute; top: 5.5em; left: 50%; transform: translateX(-50%); padding: .45em .9em; background: #302228ed; color: #f5d493; border: .15em solid #bb8750; border-radius: .4em; font: .9em var(--display); white-space: nowrap; }

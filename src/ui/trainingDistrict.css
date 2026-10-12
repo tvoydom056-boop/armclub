@@ -1,0 +1,70 @@
+.club-hub .training-district { grid-column: 2 / -1; min-width: 0; min-height: 0; max-height: 100%; overflow-y: auto; }
+.club-hub .district-map { max-width: 44em; margin-inline: auto; }
+.club-hub .training .training-center { overflow-y: auto; }
+.club-hub .training-scene { position: relative; width: 100%; aspect-ratio: 3 / 2; flex: none; overflow: hidden; border: 2px solid #c18e59; border-radius: .5em; background: #5b392c; }
+.club-hub .scene-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+.club-hub .district-building { position: absolute; width: 31%; height: 35%; transform: translate(-50%, -50%); background: transparent; border: 0; padding: 0; color: #fff0d6; }
+.club-hub .district-building > img:first-child { width: 100%; height: 100%; object-fit: contain; transition: translate .15s; }
+.club-hub .district-building:hover > img:first-child { translate: 0 -6px; }
+.club-hub .building-label { position: absolute; left: 50%; bottom: 0; translate: -50% 30%; white-space: nowrap; background: #29191bef; border: 1px solid #edb44b; border-radius: .3em; padding: .4em .6em; font-size: .82em; }
+.club-hub .map-mark { position: absolute; width: 30%; height: 40%; object-fit: contain; pointer-events: none; left: 35%; top: 48%; }
+.club-hub .mark-star, .club-hub .mark-steam { top: -24%; left: 66%; }
+.club-hub .mark-sign { top: 42%; left: 70%; }
+.club-hub .district-player { position: absolute; width: 7%; height: 9%; object-fit: contain; transform: translate(-50%, -50%); transition: left .45s linear, top .45s linear; pointer-events: none; }
+.club-hub .district-note { margin: .7em 0; line-height: 1.5; }
+.club-hub .room-station { position: absolute; translate: -50% -50%; min-width: 44px; min-height: 44px; max-width: 27%; display: flex; flex-direction: column; align-items: center; justify-content: end; padding: 4px; background: #211619a8; border: 2px solid #edb44b88; border-radius: .5em; color: #fff0d6; font-size: .74em; box-shadow: 0 2px 5px #0008; }
+.club-hub .room-station span { padding: .3em; }
+.club-hub .room-station span { overflow-wrap: anywhere; }
+.club-hub .room-station[aria-label='Эспандер «Капитан»'] { max-width: 17%; }
+.club-hub .room-station:hover, .club-hub .room-station.selected { background: #573627e8; border-color: #ffcf5a; }
+.club-hub .room-station.locked { border-style: dashed; }
+.club-hub .station-item { width: 3.5em; height: 3.5em; object-fit: contain; filter: drop-shadow(0 3px 1px #0009); }
+.club-hub .room-hook { position: absolute; translate: -50% -50%; min-width: 44px; min-height: 44px; width: 6%; height: 12%; background: transparent; border: 0; padding: 0; }
+.club-hub .room-hook img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 1px #0009); }
+.club-hub .table-shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5em; margin-top: .7em; }
+.club-hub .table-shelf button { min-width: 0; min-height: 44px; border: 2px solid #966341; border-radius: .3em; background: #f0dfbd; color: #352320; padding: .5em; font-size: .72em; }
+.club-hub .table-shelf button.selected { border-color: #ffcf5a; }
+.club-hub .table-shelf img { width: 100%; height: 4em; object-fit: contain; }
+.club-hub .table-shelf b, .club-hub .table-shelf small { display: block; }
+.club-hub .training-art-fallback { display: grid; place-items: center; color: inherit; }
+.club-hub .shop-scene { margin: 0 auto .6em; width: min(100%, 28.5em); }
+.club-hub .shopkeeper { position: absolute; left: 36%; top: 10%; width: 34%; aspect-ratio: 2 / 3; }
+.club-hub .shopkeeper > img, .club-hub .shopkeeper-blink { position: absolute; inset: 0; width: 100%; height: 100%; }
+.club-hub .shopkeeper-blink { opacity: 0; animation: shopkeeper-blink 4.3s step-end infinite; }
+@keyframes shopkeeper-blink { 0%, 94%, 98%, 100% { opacity: 0; } 95%, 97% { opacity: 1; } }
+.club-hub .freshness-art { display: inline-flex; height: 1.6em; vertical-align: middle; }
+.club-hub .freshness-art img { width: 1.6em; height: 1.6em; object-fit: contain; }
+.club-hub .freshness-art.tired { animation: fresh-tremor .25s linear infinite alternate; }
+@keyframes fresh-tremor { from { translate: -1px 0; } to { translate: 1px 0; } }
+.club-hub .shop-speech { position: absolute; bottom: 8%; left: 4%; right: 4%; background: #29191bef; color: #fff0d6; padding: .5em; border-radius: .3em; text-align: center; }
+.club-hub .training button:focus-visible, .club-hub .tgame [tabindex]:focus-visible { outline: 3px solid #2fa8ff; outline-offset: 3px; }
+.club-hub .training .place-btn, .club-hub .training .btn, .club-hub .training .cat { min-height: 44px; }
+@media (prefers-reduced-motion: reduce) { .club-hub .district-player, .club-hub .district-building > img:first-child { transition: none; } .club-hub .freshness-art.tired, .club-hub .shopkeeper-blink { animation: none; } }
+@media (max-width: 650px) {
+  body:has(.hub-shop) { overflow: auto; }
+  #root:has(.hub-shop) { height: auto; min-height: 100%; place-items: start center; }
+  .stage:has(.hub-shop) { aspect-ratio: auto; min-height: 100dvh; overflow: visible; }
+  .club-hub.hub { font-size: 12px; height: auto; min-height: 100dvh; overflow: auto; }
+  .club-hub .hub-bar { flex-wrap: wrap; height: auto; padding: 1em; }
+  .club-hub .hub-body { overflow: visible; padding: 1em; }
+  .club-hub .training .shop { display: flex; flex-direction: column; gap: 1em; }
+  .club-hub .training .shop-cats { flex-direction: row; }
+  .club-hub .training .training-center, .club-hub .training-district { max-height: none; overflow: visible; }
+  .club-hub .training .cat { min-height: 44px; padding: .5em; }
+  .club-hub .training .cat-icon { display: none; }
+  .club-hub .training .shop-detail { width: 100%; min-width: 0; }
+  .club-hub .training .detail-art { flex: none; height: 9em; min-height: 9em; }
+  .club-hub .training { height: auto; }
+  .club-hub.hub .hub-body { flex: none; }
+  .club-hub .room-station[aria-label='Эспандер'] { width: 44px; max-width: 44px; left: 30% !important; }
+  .club-hub .room-station[aria-label='Эспандер «Капитан»'] { width: 58px; max-width: 58px; left: 48% !important; }
+  .club-hub .training .shop-grid.dense { grid-template-columns: repeat(3, minmax(0, 1fr)); max-height: none; overflow: visible; }
+  .club-hub .room-station { font-size: 10px; }
+  .club-hub .room-station[aria-label='Эспандер'] { max-width: 17%; }
+  .club-hub .room-station[aria-label='Эспандер «Капитан»'] { max-width: 17%; }
+  .club-hub .room-station span { padding: 0; overflow-wrap: normal; white-space: nowrap; }
+  .club-hub .room-station:has(.station-item) span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .club-hub .station-item { width: 22px; height: 22px; }
+  .club-hub .table-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .club-hub .building-label { font-size: 10px; white-space: normal; min-width: 70px; }
+}

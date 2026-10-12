@@ -1,8 +1,10 @@
 import type { CSSProperties } from 'react';
 import { BEATS, TECHNIQUES, TECH_INFO } from '../core/techniques';
 import { TUNING } from '../core/match';
+import { leagueById } from '../core/leagues';
 import { bus } from '../game/bus';
 import { useHud } from '../store/hud';
+import { useGame } from '../store/game';
 import { SoundToggle } from './SoundToggle';
 import { leaveMatch } from './matchControl';
 
@@ -20,6 +22,8 @@ function Bar({ value, color, label }: { value: number; color: string; label: str
 
 export function MatchHud() {
   const h = useHud();
+  const tournament = useGame((s) => s.tournament);
+  const league = tournament && leagueById(tournament.leagueId);
   const marker = pct((1 - h.position) / 2);
   const winning = h.position > 0;
   const fillStyle: CSSProperties = winning
@@ -28,6 +32,7 @@ export function MatchHud() {
 
   return (
     <div className="hud">
+      {tournament && league && <div className="tournament-badge">{league.cup} · {tournament.completed === league.opponents.length - 1 ? 'Финал' : 'Полуфинал'}</div>}
       <div className="hud-top">
         <div className="hud-side">
           <div className="hud-name">ТЫ</div>
@@ -125,7 +130,7 @@ export function MatchHud() {
         <div className="hud-actions">
           <SoundToggle />
           <button className="btn small ghost" onClick={() => leaveMatch()}>
-            Сдаться
+            {tournament ? 'Выйти из турнира' : 'Сдаться'}
           </button>
         </div>
       </div>
