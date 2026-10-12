@@ -1,10 +1,13 @@
 import { emptyXp, ITEMS, type ItemId, type TrainingState } from './training';
 import { emptyLevels } from './upgrades';
+import { DEFAULT_STYLE, isStyleId, type StyleId } from './styles';
 import { LEAGUES, isLeagueOpen, isQualified, leagueById, type LeagueProgress } from './leagues';
 
 export interface SaveData extends TrainingState, LeagueProgress {
   wins: Record<string, number>;
   losses: number;
+  /** Выбранный боевой принцип. */
+  style: StyleId;
 }
 
 /** 3 — лиги, кубки и завершённые этапы текущего турнира. */
@@ -19,6 +22,7 @@ export const freshSave = (): SaveData => ({
   fatigue: {},
   wins: {},
   losses: 0,
+  style: DEFAULT_STYLE,
   cups: [],
   tournament: null,
 });
@@ -56,6 +60,7 @@ export function migrateSave(persisted: unknown): SaveData {
     fatigue: p.fatigue ?? fresh.fatigue,
     wins,
     losses: p.losses ?? fresh.losses,
+    style: isStyleId(p.style) ? p.style : fresh.style,
     cups,
     tournament,
   };

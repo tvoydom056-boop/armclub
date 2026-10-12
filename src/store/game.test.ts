@@ -152,3 +152,14 @@ describe('интеграция карьеры с боями и сохранен�
     expect(isUnlocked('unknown', {})).toBe(false);
   });
 });
+
+describe('боевой принцип', () => {
+  it('меняется бесплатно в хабе и не меняется во время боя', () => {
+    useGame.getState().setStyle('burst');
+    expect(useGame.getState().style).toBe('burst');
+    useGame.getState().startMatch('boris');
+    useGame.getState().setStyle('economy');
+    expect(useGame.getState().style).toBe('burst');
+    expect(useGame.getState().coins).toBe(0);
+  });
+});

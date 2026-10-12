@@ -183,8 +183,9 @@ export function playerForce(s: MatchState, cfg: MatchConfig): number {
   const t = s.tech;
   const m = matchup(t, s.opp.tech);
   let mult = 1;
-  if (m > 0) mult += TUNING.matchupBonus;
+  if (m > 0) mult += TUNING.matchupBonus * stats.counterMult;
   else if (m < 0) mult -= stats.disadvantage[t];
+  if (s.time < stats.openingTime) mult *= stats.openingBoost;
   if (t === 'press') mult *= s.position >= stats.pressGate ? TUNING.pressBoost : TUNING.pressPenalty;
   if (s.switchLeft > 0) mult *= TUNING.switchPenalty;
   const grip = stats.grip * (0.6 + 0.4 * Math.min(1, s.stamina / 0.35));
@@ -319,7 +320,7 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
 
   if (input.tech && input.tech !== s.tech) {
     s.tech = input.tech;
-    s.switchLeft = TUNING.switchTime;
+    s.switchLeft = TUNING.switchTime * cfg.stats.switchMult;
     ev.push({ type: 'playerSwitch', tech: s.tech });
   }
   s.switchLeft = Math.max(0, s.switchLeft - dt);

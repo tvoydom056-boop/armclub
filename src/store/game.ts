@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { StyleId } from '../core/styles';
 import { rewardFor, type EndReason, type MatchMetrics } from '../core/match';
 import { OPPONENTS, ROSTERS, opponentById, type OpponentDef } from '../core/opponents';
 import { enterTournament, finishTournamentBout, isLeagueOpponentOpen, tournamentOpponent, type LeagueId, type TournamentOutcome } from '../core/leagues';
@@ -28,6 +29,7 @@ interface GameStore extends SaveData {
   oppId: string | null;
   result: MatchResult | null;
   setVersion: (version: 1 | 2) => void;
+  setStyle: (style: StyleId) => void;
   startMatch: (oppId: string) => boolean;
   startTournament: (leagueId: LeagueId) => boolean;
   abandonTournament: () => void;
@@ -58,6 +60,7 @@ export const useGame = create<GameStore>()(
         result: null,
 
         setVersion: (version) => set({ version, tournament: null }),
+        setStyle: (style) => { if (get().screen === 'hub') set({ style }); },
 
         startMatch: (oppId) => {
           const s = get();
@@ -122,7 +125,7 @@ export const useGame = create<GameStore>()(
       version: SAVE_VERSION,
       partialize: (s): SaveData => {
         const t: TrainingState = { coins: s.coins, levels: s.levels, xp: s.xp, owned: s.owned, gym: s.gym, fatigue: s.fatigue };
-        return { ...t, wins: s.wins, losses: s.losses, cups: s.cups, tournament: s.tournament };
+        return { ...t, wins: s.wins, losses: s.losses, style: s.style, cups: s.cups, tournament: s.tournament };
       },
       // Вся миграция в merge (migrateSave), здесь только пропускаем старые версии дальше.
       migrate: (persisted) => persisted as SaveData,

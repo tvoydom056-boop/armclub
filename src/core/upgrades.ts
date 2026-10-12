@@ -85,6 +85,13 @@ export interface PlayerStats {
   grip: number;
   regen: number;
   explosive: number;
+  /** Множитель длительности штрафа смены техники. */
+  switchMult: number;
+  /** Множитель бонуса за контртехнику. */
+  counterMult: number;
+  /** Множитель силы в первые `openingTime` секунд боя. */
+  openingBoost: number;
+  openingTime: number;
 }
 
 export function deriveStats(l: Levels): PlayerStats {
@@ -101,5 +108,9 @@ export function deriveStats(l: Levels): PlayerStats {
     grip: 0.2 + 0.1 * l.grip,
     regen: 1 + 0.1 * l.stamina,
     explosive: 1 + 0.25 * l.explosive,
+    switchMult: 1,
+    counterMult: 1,
+    openingBoost: 1,
+    openingTime: 0,
   };
 }

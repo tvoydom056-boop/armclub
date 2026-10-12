@@ -7,6 +7,7 @@ import { useHud } from '../store/hud';
 import { useSettings } from '../store/settings';
 import { ClubIcon } from './ClubIcon';
 import { OpponentCard } from './OpponentCard';
+import { StylePicker } from './StylePicker';
 import { beginMatch } from './matchControl';
 import './leagueCareer.css';
 import './matchLearning.css';
@@ -47,6 +48,7 @@ export function LeagueCareer() {
         </ol>
         <label><input type="checkbox" checked={coachEnabled} onChange={(e) => setCoachEnabled(e.target.checked)} /> Подсказки во время боя с Борей</label>
       </details>
+      <StylePicker />
       <nav className="league-path" aria-label="Лиги">
         {LEAGUES.map((item, index) => {
           const available = isLeagueOpen(item.id, cups);
