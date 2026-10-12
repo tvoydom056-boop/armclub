@@ -11,7 +11,7 @@ const BUILDINGS = [
   { id: 'home', name: 'Гараж', x: .25, y: .70 }, { id: 'shop', name: 'Арм-лавка', x: .75, y: .70 },
   { id: 'gym', name: 'Качалка «Железо»', x: .72, y: .32 }, { id: 'bar', name: 'Бар «Яма»', x: .28, y: .32 },
 ] as const;
-type Destination = 'home' | 'gym' | 'shop';
+type Destination = 'home' | 'gym' | 'shop' | 'bar';
 
 export function TrainingDistrict({ onEnter, affordable }: { onEnter: (id: Destination) => void; affordable: boolean }) {
   const { owned, gym, fatigue } = useGame();
@@ -31,11 +31,10 @@ export function TrainingDistrict({ onEnter, affordable }: { onEnter: (id: Destin
   };
   const enter = (id: typeof BUILDINGS[number]['id']) => {
     if (moving.current) return;
-    if (id === 'bar') { setNotice('Спарринг в баре «Яма» появится позже. Текущие бои доступны в разделе «Бои».'); return; }
     if (id === 'gym' && !gym) { setNotice(`Нужна клубная карта за ${GYM_MEMBERSHIP} монет. Купить её можно в арм-лавке.`); return; }
     moving.current = id;
     setWalking(id);
-    const dest = id === 'home' ? { x: .32, y: .83 } : id === 'shop' ? { x: .76, y: .86 } : { x: .76, y: .46 };
+    const dest = id === 'home' ? { x: .32, y: .83 } : id === 'shop' ? { x: .76, y: .86 } : id === 'bar' ? { x: .3, y: .46 } : { x: .76, y: .46 };
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     setPosition({ x: .53, y: .69 });
     timer.current = setTimeout(() => {
@@ -48,9 +47,8 @@ export function TrainingDistrict({ onEnter, affordable }: { onEnter: (id: Destin
       <TrainingArtImage className="scene-bg" src={sceneArt('map_base')} label="Район" />
       {BUILDINGS.map((b) => <button key={b.id} className="district-building" aria-label={b.name} aria-disabled={!!walking} style={{ left: `${b.x * 100}%`, top: `${b.y * 100}%` }} onClick={() => enter(b.id)}>
         <TrainingArtImage src={mapArt(b.id)} label={b.name} />
-        <span className="building-label">{b.name}{b.id === 'gym' && !gym ? ' · закрыто' : b.id === 'bar' ? ' · позже' : ''}</span>
+        <span className="building-label">{b.name}{b.id === 'gym' && !gym ? ' · закрыто' : b.id === 'bar' ? ' · спарринг' : ''}</span>
         {b.id === 'gym' && !gym && <MapMark id="chain" />}
-        {b.id === 'bar' && <><MapMark id="shutter" /><MapMark id="sign" /></>}
         {b.id === 'shop' && affordable && <MapMark id="star" />}
         {(b.id === 'home' || b.id === 'gym') && placeIsTired(b.id, owned, gym, fatigue) && <MapMark id="steam" />}
       </button>)}

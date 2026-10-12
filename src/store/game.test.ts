@@ -163,3 +163,65 @@ describe('боевой принцип', () => {
     expect(useGame.getState().coins).toBe(0);
   });
 });
+
+describe('спарринг', () => {
+  const end = (over: Partial<{ result: 'won' | 'lost'; reason: 'pin' | 'foul' | 'time'; position: number }> = {}) =>
+    useGame.getState().finishSparring({ result: 'won', reason: 'pin', time: 6, position: 1, ...over });
+
+  it('без десяти монет бой не начинается', () => {
+    useGame.setState({ coins: 9 });
+    expect(useGame.getState().startSparring('hook')).toBe(false);
+    expect(useGame.getState().screen).toBe('hub');
+  });
+
+  it('платит партнёру и даёт опыт обоим статам техники, повторное событие не начисляет вторично', () => {
+    useGame.setState({ coins: 25 });
+    expect(useGame.getState().startSparring('toproll')).toBe(true);
+    end();
+    end();
+    const s = useGame.getState();
+    expect(s.coins).toBe(15);
+    expect(s.sparringResult?.grade).toBe('great');
+    expect(s.sparringResult?.gains.map((g) => g.stat)).toEqual(['fingers', 'pronation']);
+    expect(s.fatigue).toEqual({ fingers: 1, pronation: 1 });
+    expect(s.wins).toEqual({});
+    expect(s.losses).toBe(0);
+  });
+
+  it('проигрыш пином платный и даёт слабый опыт, но не поражение в карьере', () => {
+    useGame.setState({ coins: 10 });
+    useGame.getState().startSparring('press');
+    end({ result: 'lost', position: -1 });
+    const s = useGame.getState();
+    expect(s.coins).toBe(0);
+    expect(s.sparringResult?.grade).toBe('weak');
+    expect(s.losses).toBe(0);
+  });
+
+  it('фол и выход не стоят монет и не дают опыта', () => {
+    useGame.setState({ coins: 30 });
+    useGame.getState().startSparring('hook');
+    end({ result: 'lost', reason: 'foul', position: 0 });
+    expect(useGame.getState().coins).toBe(30);
+    expect(useGame.getState().sparringResult?.gains).toEqual([]);
+    expect(useGame.getState().xp).toEqual(freshSave().xp);
+
+    useGame.getState().toHub('shop');
+    useGame.getState().startSparring('hook');
+    useGame.getState().toHub('shop');
+    expect(useGame.getState().coins).toBe(30);
+    expect(useGame.getState().sparring).toBeNull();
+    expect(useGame.getState().sparringResult).toBeNull();
+  });
+
+  it('запрещён в турнире и во время боя, а обычный бой сбрасывает спарринг', () => {
+    useGame.setState({ coins: 50, tournament: { leagueId: 'basement', completed: 0 } });
+    expect(useGame.getState().startSparring('hook')).toBe(false);
+    useGame.setState({ tournament: null });
+    expect(useGame.getState().startSparring('hook')).toBe(true);
+    expect(useGame.getState().startSparring('press')).toBe(false);
+    useGame.getState().toHub();
+    useGame.getState().startMatch('boris');
+    expect(useGame.getState().sparring).toBeNull();
+  });
+});

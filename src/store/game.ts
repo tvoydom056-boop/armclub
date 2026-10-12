@@ -6,6 +6,8 @@ import { OPPONENTS, ROSTERS, opponentById, type OpponentDef } from '../core/oppo
 import { enterTournament, finishTournamentBout, isLeagueOpponentOpen, tournamentOpponent, type LeagueId, type TournamentOutcome } from '../core/leagues';
 import { SAVE_VERSION, freshSave, migrateSave, type SaveData } from '../core/save';
 import { buyGym, buyItem, trainSet, type Grade, type ItemId, type SetResult, type TrainingPatch, type TrainingState } from '../core/training';
+import { SPARRING_COST, SPARRING_PARTNER_ID, sparringGrade, sparringSet } from '../core/sparring';
+import type { Technique } from '../core/techniques';
 
 type Screen = 'hub' | 'match';
 type Tab = 'fights' | 'shop';
@@ -21,6 +23,17 @@ interface MatchResult {
   tournament: Pick<TournamentOutcome, 'status' | 'leagueId' | 'bonus'> | null;
 }
 
+/** Итог спарринга: фол и неудавшийся платёж дают пустой список опыта и нулевую цену. */
+export interface SparringResult {
+  tech: Technique;
+  won: boolean;
+  reason: EndReason;
+  time: number;
+  grade: Grade;
+  cost: number;
+  gains: SetResult['gains'];
+}
+
 interface GameStore extends SaveData {
   screen: Screen;
   tab: Tab;
@@ -28,9 +41,14 @@ interface GameStore extends SaveData {
   version: 1 | 2;
   oppId: string | null;
   result: MatchResult | null;
+  /** Техника, за которую идёт спарринг; null — обычный бой или хаб. Не сохраняется. */
+  sparring: Technique | null;
+  sparringResult: SparringResult | null;
   setVersion: (version: 1 | 2) => void;
   setStyle: (style: StyleId) => void;
   startMatch: (oppId: string) => boolean;
+  startSparring: (tech: Technique) => boolean;
+  finishSparring: (r: { result: 'won' | 'lost'; reason: EndReason; time: number; position: number }) => void;
   startTournament: (leagueId: LeagueId) => boolean;
   abandonTournament: () => void;
   finishMatch: (r: { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; metrics?: MatchMetrics }) => void;
@@ -58,6 +76,8 @@ export const useGame = create<GameStore>()(
         version: 2,
         oppId: null,
         result: null,
+        sparring: null,
+        sparringResult: null,
 
         setVersion: (version) => set({ version, tournament: null }),
         setStyle: (style) => { if (get().screen === 'hub') set({ style }); },
@@ -70,8 +90,27 @@ export const useGame = create<GameStore>()(
             ? s.tournament ? tournamentOpponent(s.tournament) === oppId : isLeagueOpponentOpen(oppId, s.wins, s.cups)
             : isUnlocked(oppId, s.wins);
           if (!allowed) return false;
-          set({ screen: 'match', oppId, result: null });
+          set({ screen: 'match', oppId, result: null, sparring: null, sparringResult: null });
           return true;
+        },
+
+        startSparring: (tech) => {
+          const s = get();
+          if (s.screen !== 'hub' || s.tournament || s.coins < SPARRING_COST) return false;
+          set({ screen: 'match', oppId: SPARRING_PARTNER_ID, result: null, sparring: tech, sparringResult: null });
+          return true;
+        },
+
+        finishSparring: ({ result, reason, time, position }) => {
+          const s = get();
+          if (s.screen !== 'match' || !s.sparring || s.sparringResult) return;
+          const won = result === 'won';
+          const grade = sparringGrade(won, reason, position);
+          const base = { tech: s.sparring, won, reason, time, grade };
+          // фол и выход опыта не дают, партнёру тогда не платим
+          const paid = reason === 'foul' ? null : sparringSet(s, s.sparring, grade);
+          if (paid) set({ ...paid.patch, sparringResult: { ...base, cost: paid.cost, gains: paid.gains } });
+          else set({ sparringResult: { ...base, cost: 0, gains: [] } });
         },
 
         startTournament: (leagueId) => {
@@ -116,8 +155,8 @@ export const useGame = create<GameStore>()(
         },
 
         setTab: (tab) => { if (tab !== 'shop' || !get().tournament) set({ tab }); },
-        toHub: (tab) => set((s) => ({ screen: 'hub', oppId: null, result: null, tab: tab ?? s.tab, tournament: null })),
-        resetSave: () => set({ ...freshSave(), screen: 'hub', tab: 'fights', oppId: null, result: null }),
+        toHub: (tab) => set((s) => ({ screen: 'hub', oppId: null, result: null, sparring: null, sparringResult: null, tab: tab ?? s.tab, tournament: null })),
+        resetSave: () => set({ ...freshSave(), screen: 'hub', tab: 'fights', oppId: null, result: null, sparring: null, sparringResult: null }),
       };
     },
     {

@@ -1,4 +1,5 @@
 import type { EndReason, MatchMetrics } from '../core/match';
+import type { OpponentDef } from '../core/opponents';
 import type { Technique } from '../core/techniques';
 import type { PlayerStats } from '../core/upgrades';
 import type { HeadKey } from './art';
@@ -18,8 +19,9 @@ interface BusEvents {
   'rig:set': CharacterArt;
   'rig:points': ArtPoints;
   'game:ready': { ok: true };
-  'match:start': { oppId: string; stats: PlayerStats; version: 1 | 2 };
-  'match:end': { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; clicks: number; metrics?: MatchMetrics };
+  /** `opp` и `maxTime` задают спарринг: свой партнёр и короткий бой. */
+  'match:start': { oppId: string; stats: PlayerStats; version: 1 | 2; opp?: OpponentDef; maxTime?: number };
+  'match:end': { oppId: string; result: 'won' | 'lost'; reason: EndReason; time: number; clicks: number; position: number; metrics?: MatchMetrics };
   'match:abort': { oppId: string | null };
   'input:tech': Technique;
   'input:click': { n: number };

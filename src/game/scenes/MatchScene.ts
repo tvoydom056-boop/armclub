@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {
   TUNING,
   createMatch,
+  matchLimit,
   oppForce,
   stepMatch,
   type MatchConfig,
@@ -128,7 +129,7 @@ export class MatchScene extends Phaser.Scene {
     });
 
     this.unsubs.push(
-      bus.on('match:start', ({ oppId, stats, version }) => this.startMatch({ opp: opponentById(oppId, version), stats })),
+      bus.on('match:start', ({ oppId, stats, version, opp, maxTime }) => this.startMatch({ opp: opp ?? opponentById(oppId, version), stats, maxTime })),
       bus.on('match:abort', () => this.abortMatch()),
       bus.on('input:tech', (t) => {
         this.pendingTech = t;
@@ -168,7 +169,7 @@ export class MatchScene extends Phaser.Scene {
     this.hudTimer = 0;
     this.beatTimer = 0;
     this.useArt(cfg.opp.id);
-    useHud.setState({ active: true, oppName: cfg.opp.name, oppNick: cfg.opp.nick });
+    useHud.setState({ active: true, oppName: cfg.opp.name, oppNick: cfg.opp.nick, maxTime: matchLimit(cfg) });
     this.syncHud();
     this.banner('ПРИГОТОВИЛИСЬ…', '#ffe14a', 60, 900, 540);
     // пробел глушим только на время боя: Phaser ловит его на всём окне, и в меню он не нажимал кнопки
@@ -253,6 +254,7 @@ export class MatchScene extends Phaser.Scene {
           reason: this.endInfo.reason,
           time: this.state.time,
           clicks: this.state.clicks,
+          position: this.state.position,
           metrics: { ...this.state.metrics },
         });
         this.endInfo = null;

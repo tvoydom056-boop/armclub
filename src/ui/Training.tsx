@@ -12,6 +12,7 @@ import { TrainingGame } from './TrainingGame';
 import { fxArt, itemArt, sceneArt } from '../game/trainingArt';
 import { TrainingDistrict, TrainingRoom } from './TrainingDistrict';
 import { TrainingArtImage } from './TrainingArtImage';
+import { SparringBar } from './SparringBar';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
 const pct = (v: number) => `${Math.round(v * 100)}%`;
@@ -38,7 +39,7 @@ export const canBuySomething = (coins: number, owned: readonly ItemId[], gym: bo
 
 export function Training() {
   const [section, setSection] = useState<Section>('gym');
-  const [place, setPlace] = useState<PlaceId | 'map'>('map');
+  const [place, setPlace] = useState<PlaceId | 'bar' | 'map'>('map');
   const [playing, setPlaying] = useState<ExerciseDef | null>(null);
   const coins = useGame((s) => s.coins);
   const owned = useGame((s) => s.owned);
@@ -58,6 +59,7 @@ export function Training() {
         </nav>
         {section === 'gym' && (place === 'map'
           ? <TrainingDistrict affordable={canBuySomething(coins, owned, gym)} onEnter={(id) => id === 'shop' ? setSection('shop') : setPlace(id)} />
+          : place === 'bar' ? <SparringBar onMap={() => setPlace('map')} />
           : <Gym key={place} place={place} onMap={() => setPlace('map')} toShop={() => setSection('shop')} onStart={setPlaying} />)}
         {section === 'shop' && <Shop onMap={() => { setSection('gym'); setPlace('map'); }} />}
         {section === 'stats' && <Stats toGym={() => setSection('gym')} />}

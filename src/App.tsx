@@ -9,6 +9,7 @@ import { useSettings } from './store/settings';
 import { Hub } from './ui/Hub';
 import { MatchHud } from './ui/MatchHud';
 import { ResultModal } from './ui/ResultModal';
+import { SparringModal } from './ui/SparringModal';
 
 /** Редактор рига персонажа: только в dev, по адресу ?rig=<id>. */
 const rigId = import.meta.env.DEV ? new URLSearchParams(location.search).get('rig') : null;
@@ -20,12 +21,16 @@ const RigSheet = import.meta.env.DEV ? lazy(() => import('./ui/RigSheet')) : nul
 export default function App() {
   const screen = useGame((s) => s.screen);
   const result = useGame((s) => s.result);
+  const sparringResult = useGame((s) => s.sparringResult);
   const phaserRoot = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const offReady = bus.on('game:ready', () => useHud.setState({ ready: true }));
     const offEnd = bus.on('match:end', (r) => {
-      if (useGame.getState().screen === 'match') useGame.getState().finishMatch(r);
+      const game = useGame.getState();
+      if (game.screen !== 'match') return;
+      if (game.sparring) game.finishSparring(r);
+      else game.finishMatch(r);
     });
     if (phaserRoot.current) createGame(phaserRoot.current);
     const offAudio = initAudio();
@@ -53,6 +58,7 @@ export default function App() {
       {screen === 'match' && !rigId && !sheetId && <MatchHud />}
       {screen === 'hub' && <Hub />}
       {screen === 'match' && result && <ResultModal />}
+      {screen === 'match' && sparringResult && <SparringModal />}
       {rigId && RigEditor && <Suspense fallback={null}><RigEditor id={rigId} root={phaserRoot} /></Suspense>}
       {sheetId && RigSheet && <Suspense fallback={null}><RigSheet id={sheetId} /></Suspense>}
     </div>

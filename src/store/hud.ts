@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { emptyMatchMetrics, type MatchMetrics, type MatchPhase } from '../core/match';
+import { TUNING, emptyMatchMetrics, type MatchMetrics, type MatchPhase } from '../core/match';
 import type { Technique } from '../core/techniques';
 
 /** Снимок матча для React-интерфейса. Обновляется сценой ~12 раз в секунду. */
@@ -22,6 +22,8 @@ interface HudState {
   breatherWarn: boolean;
   resting: boolean;
   time: number;
+  /** Лимит боя: 75 с в матче, 10 с в спарринге. */
+  maxTime: number;
   pressGate: number;
   metrics: MatchMetrics;
   oppName: string;
@@ -46,6 +48,7 @@ export const useHud = create<HudState>(() => ({
   breatherWarn: false,
   resting: false,
   time: 0,
+  maxTime: TUNING.maxTime,
   pressGate: 0.15,
   metrics: emptyMatchMetrics(),
   oppName: '',

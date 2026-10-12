@@ -11,6 +11,8 @@ export interface BotResult {
   won: boolean;
   /** Секунд боя после «ГО!». */
   time: number;
+  /** Позиция руки в конце боя, −1 … +1. */
+  position: number;
 }
 
 /** Бот играет матч целиком: cps кликов в секунду. Нужен для таблиц баланса. */
@@ -48,5 +50,5 @@ export function playMatch(cfg: MatchConfig, bot: Bot, seed: number, cps = 6.5): 
     }
     stepMatch(s, cfg, { clicks, tech }, DT, rng);
   }
-  return { won: s.phase === 'won', time: s.time };
+  return { won: s.phase === 'won', time: s.time, position: s.position };
 }

@@ -27,8 +27,9 @@ export function MatchHud() {
   const h = useHud();
   const tournament = useGame((s) => s.tournament);
   const oppId = useGame((s) => s.oppId);
+  const sparring = useGame((s) => s.sparring);
   const coachEnabled = useSettings((s) => s.coachEnabled);
-  const secondsLeft = Math.max(0, Math.ceil(TUNING.maxTime - h.time));
+  const secondsLeft = Math.max(0, Math.ceil(h.maxTime - h.time));
   const pressReady = h.position >= h.pressGate;
   const league = tournament && leagueById(tournament.leagueId);
   const marker = pct((1 - h.position) / 2);
@@ -39,6 +40,7 @@ export function MatchHud() {
 
   return (
     <div className="hud">
+      {sparring && <div className="tournament-badge">Спарринг · {h.maxTime} с</div>}
       {tournament && league && <div className="tournament-badge">{league.cup} · {tournament.completed === league.opponents.length - 1 ? 'Финал' : 'Полуфинал'}</div>}
       <div className="hud-top">
         <div className="hud-side">
@@ -105,7 +107,7 @@ export function MatchHud() {
 
       <div className="hud-bottom">
         <div className="hint">
-          {coachEnabled && oppId === 'boris' && (h.phase === 'ready' || h.phase === 'fight') ? <MatchCoach /> : <>
+          {coachEnabled && !sparring && oppId === 'boris' && (h.phase === 'ready' || h.phase === 'fight') ? <MatchCoach /> : <>
           {h.phase === 'ready' ? (
             <>Не жми, пока не скажут <b>«ГО!»</b></>
           ) : (
@@ -146,7 +148,7 @@ export function MatchHud() {
         <div className="hud-actions">
           <SoundToggle />
           <button className="btn small ghost" onClick={() => leaveMatch()}>
-            {tournament ? 'Выйти из турнира' : 'Сдаться'}
+            {tournament ? 'Выйти из турнира' : sparring ? 'Выйти' : 'Сдаться'}
           </button>
         </div>
       </div>

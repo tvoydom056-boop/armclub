@@ -65,7 +65,11 @@ export const emptyMatchMetrics = (): MatchMetrics => ({
 export interface MatchConfig {
   stats: PlayerStats;
   opp: OpponentDef;
+  /** Лимит боя в секундах вместо `TUNING.maxTime` (спарринг). */
+  maxTime?: number;
 }
+
+export const matchLimit = (cfg: MatchConfig): number => cfg.maxTime ?? TUNING.maxTime;
 
 interface OppState {
   tech: Technique;
@@ -392,7 +396,7 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
 
   if (s.position >= 1) finish(s, 'won', 'pin', ev);
   else if (s.position <= -1) finish(s, 'lost', 'pin', ev);
-  else if (s.time >= TUNING.maxTime) finish(s, s.position >= 0 ? 'won' : 'lost', 'time', ev);
+  else if (s.time >= matchLimit(cfg)) finish(s, s.position >= 0 ? 'won' : 'lost', 'time', ev);
 
   return ev;
 }
