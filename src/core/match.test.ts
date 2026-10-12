@@ -266,6 +266,12 @@ describe('фирменная пауза соперника (pattern)', () => {
     return { cfg, rng, s };
   }
 
+  const holdFor = (cfg: MatchConfig) => {
+    const p = cfg.opp.pattern;
+    if (p?.kind !== 'hold') throw new Error('нужен pattern «hold»');
+    return p.holdFor;
+  };
+
   /** Идём вперёд, пока не встретим событие; возвращаем время боя в этот момент. */
   function runUntil(s: MatchState, cfg: MatchConfig, rng: () => number, type: MatchEvent['type'], limit = 30) {
     while (s.time < limit && s.phase === 'fight') {
@@ -277,11 +283,11 @@ describe('фирменная пауза соперника (pattern)', () => {
 
   it('Боря после долгого крюка предупреждает, затем выдыхается', () => {
     const { cfg, rng, s } = isolated('boris', 11);
-    const holdFor = cfg.opp.pattern!.holdFor;
+    const hold = holdFor(cfg);
     const warnAt = runUntil(s, cfg, rng, 'breatherWarn');
     expect(warnAt).not.toBeNull();
-    expect(warnAt!).toBeGreaterThan(holdFor - 0.5);
-    expect(warnAt!).toBeLessThan(holdFor + 0.5);
+    expect(warnAt!).toBeGreaterThan(hold - 0.5);
+    expect(warnAt!).toBeLessThan(hold + 0.5);
     expect(s.opp.breatherWarnLeft).toBeGreaterThan(0);
 
     const restAt = runUntil(s, cfg, rng, 'oppRest');
@@ -300,18 +306,51 @@ describe('фирменная пауза соперника (pattern)', () => {
 
   it('смена техники сбрасывает счётчик: пауза не наступает', () => {
     const { cfg, rng, s } = isolated('boris', 13);
-    const holdFor = cfg.opp.pattern!.holdFor;
-    for (let t = 0; t < holdFor - 2; t += DT) stepMatch(s, cfg, { clicks: 0 }, DT, rng);
+    const hold = holdFor(cfg);
+    for (let t = 0; t < hold - 2; t += DT) stepMatch(s, cfg, { clicks: 0 }, DT, rng);
     s.opp.tech = 'toproll';
     stepMatch(s, cfg, { clicks: 0 }, DT, rng);
     expect(s.opp.holdTime).toBe(0);
     s.opp.tech = 'hook';
-    expect(runUntil(s, cfg, rng, 'breatherWarn', holdFor - 2 + holdFor - 1)).toBeNull();
+    expect(runUntil(s, cfg, rng, 'breatherWarn', hold - 2 + hold - 1)).toBeNull();
   });
 
   it('у бойца без pattern паузы по расписанию нет', () => {
     const { cfg, rng, s } = isolated('leva', 14);
     s.opp.tech = 'press';
     expect(runUntil(s, cfg, rng, 'breatherWarn', 20)).toBeNull();
+  });
+
+  it('Дэнч выдыхается после серии из двух рывков, а не после одного', () => {
+    const cfg = cfgFor('dench');
+    const rng = mulberry32(21);
+    const s = createMatch(cfg, rng);
+    toFight(s, cfg, rng);
+    const seq: string[] = [];
+    while (s.time < 40 && s.phase === 'fight' && !seq.includes('oppRest')) {
+      s.position = 0;
+      s.opp.stamina = 1;
+      for (const e of stepMatch(s, cfg, { clicks: 0 }, DT, rng)) {
+        if (['surgeWarn', 'surge', 'breatherWarn', 'oppRest'].includes(e.type)) seq.push(e.type);
+      }
+    }
+    expect(seq).toEqual(['surgeWarn', 'surge', 'surgeWarn', 'surge', 'breatherWarn', 'oppRest']);
+    expect(s.opp.surgesDone).toBe(0);
+  });
+
+  it('после паузы Дэнча серия рывков начинается заново', () => {
+    const cfg = cfgFor('dench');
+    const rng = mulberry32(22);
+    const s = createMatch(cfg, rng);
+    toFight(s, cfg, rng);
+    const seq: string[] = [];
+    while (s.time < 70 && s.phase === 'fight' && seq.filter((t) => t === 'oppRest').length < 2) {
+      s.position = 0;
+      s.opp.stamina = 1;
+      for (const e of stepMatch(s, cfg, { clicks: 0 }, DT, rng)) {
+        if (['surge', 'oppRest'].includes(e.type)) seq.push(e.type);
+      }
+    }
+    expect(seq).toEqual(['surge', 'surge', 'oppRest', 'surge', 'surge', 'oppRest']);
   });
 });

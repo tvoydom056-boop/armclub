@@ -77,6 +77,8 @@ interface OppState {
   surgeLeft: number;
   /** Сколько секунд подряд держит технику из `pattern`. */
   holdTime: number;
+  /** Сколько рывков закончил с прошлой паузы. */
+  surgesDone: number;
   /** Секунд до паузы по `pattern`: пока идёт, это видно по лицу и плашке. */
   breatherWarnLeft: number;
 }
@@ -167,6 +169,7 @@ export function createMatch(cfg: MatchConfig, rng: Rng): MatchState {
       surgeWarnLeft: 0,
       surgeLeft: 0,
       holdTime: 0,
+      surgesDone: 0,
       breatherWarnLeft: 0,
     },
   };
@@ -228,6 +231,7 @@ function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev:
       o.surgeLeft = 0;
       o.surgeWarnLeft = 0;
       o.holdTime = 0;
+      o.surgesDone = 0;
       o.breatherWarnLeft = 0;
       ev.push({ type: 'oppRest' });
     }
@@ -257,6 +261,7 @@ function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev:
 
   if (o.surgeLeft > 0) {
     o.surgeLeft -= dt;
+    if (o.surgeLeft <= 0) o.surgesDone += 1;
   } else if (o.surgeWarnLeft > 0) {
     o.surgeWarnLeft -= dt;
     if (o.surgeWarnLeft <= 0) {
@@ -281,11 +286,21 @@ function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev:
       o.surgeLeft = 0;
       o.surgeWarnLeft = 0;
       o.holdTime = 0;
+      o.surgesDone = 0;
       ev.push({ type: 'oppRest' });
+    }
+    return;
+  }
+  if (o.restLeft > 0 || o.surgeLeft > 0 || o.surgeWarnLeft > 0) return;
+
+  if (pattern.kind === 'surges') {
+    if (o.surgesDone >= pattern.count) {
+      o.breatherWarnLeft = pattern.warn;
+      ev.push({ type: 'breatherWarn' });
     }
   } else if (o.tech !== pattern.holdTech) {
     o.holdTime = 0;
-  } else if (o.restLeft <= 0 && o.surgeLeft <= 0 && o.surgeWarnLeft <= 0) {
+  } else {
     o.holdTime += dt;
     if (o.holdTime >= pattern.holdFor) {
       o.breatherWarnLeft = pattern.warn;

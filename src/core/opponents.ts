@@ -18,16 +18,19 @@ export interface OpponentLook {
   accent: number;
 }
 
-/** Фирменный приём: долго держит технику — и выдыхается. Перед паузой есть предупреждение. */
-export interface OpponentPattern {
-  holdTech: Technique;
-  /** Сколько секунд подряд держит технику до паузы. */
-  holdFor: number;
+/**
+ * Фирменный приём: боец выдыхается — окно слабости с предупреждением. Что его запускает:
+ * `hold` — долгое удержание одной техники, `surges` — серия рывков подряд.
+ */
+export type OpponentPattern = {
   /** За сколько секунд до паузы это видно (лицо, звук, плашка). */
   warn: number;
   /** Длительность паузы, в которой он давит вполсилы. */
   rest: readonly [number, number];
-}
+} & (
+  | { kind: 'hold'; holdTech: Technique; /** Секунд подряд до паузы. */ holdFor: number }
+  | { kind: 'surges'; /** Сколько рывков подряд, прежде чем он выдохнется. */ count: number }
+);
 
 export interface OpponentDef {
   id: string;
@@ -69,7 +72,7 @@ export const OPPONENTS: readonly OpponentDef[] = [
     telegraph: 1.0,
     decision: [6, 9],
     surgeEvery: [10, 15],
-    pattern: { holdTech: 'hook', holdFor: 10, warn: 0.7, rest: [1.0, 1.4] },
+    pattern: { kind: 'hold', holdTech: 'hook', holdFor: 10, warn: 0.7, rest: [1.0, 1.4] },
     drain: 1,
     reward: 25,
     voice: 78,
@@ -193,7 +196,8 @@ const DENCH: OpponentDef = {
   reactiveness: 0.3,
   telegraph: 0.9,
   decision: [4.5, 6.5],
-  surgeEvery: [8, 12],
+  surgeEvery: [3.5, 5],
+  pattern: { kind: 'surges', count: 2, warn: 0.7, rest: [1.6, 2.2] },
   drain: 1,
   reward: 50,
   voice: 105,
