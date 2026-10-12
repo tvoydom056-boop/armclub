@@ -75,6 +75,12 @@ export const sfx = {
     noise({ dur: 0.7, type: 'lowpass', f: 2200, to: 180, vol: 0.34 });
   },
 
+  /** Тяжёлый выдох: сигнал, что сейчас будет пауза. */
+  breatherWarn(): void {
+    noise({ dur: 0.5, f: 700, to: 300, q: 0.8, vol: 0.12 });
+    tone({ f: 330, to: 220, dur: 0.4, type: 'triangle', vol: 0.12 });
+  },
+
   oppRest(): void {
     noise({ dur: 0.65, f: 1500, to: 400, q: 0.9, vol: 0.14 });
     tone({ f: 880, dur: 0.35, type: 'triangle', vol: 0.13, at: 0.12 });

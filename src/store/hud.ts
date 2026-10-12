@@ -19,6 +19,7 @@ interface HudState {
   warnings: number;
   surgeWarn: boolean;
   surging: boolean;
+  breatherWarn: boolean;
   resting: boolean;
   time: number;
   pressGate: number;
@@ -42,6 +43,7 @@ export const useHud = create<HudState>(() => ({
   warnings: 0,
   surgeWarn: false,
   surging: false,
+  breatherWarn: false,
   resting: false,
   time: 0,
   pressGate: 0.15,

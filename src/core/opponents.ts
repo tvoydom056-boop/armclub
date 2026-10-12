@@ -18,6 +18,17 @@ export interface OpponentLook {
   accent: number;
 }
 
+/** Фирменный приём: долго держит технику — и выдыхается. Перед паузой есть предупреждение. */
+export interface OpponentPattern {
+  holdTech: Technique;
+  /** Сколько секунд подряд держит технику до паузы. */
+  holdFor: number;
+  /** За сколько секунд до паузы это видно (лицо, звук, плашка). */
+  warn: number;
+  /** Длительность паузы, в которой он давит вполсилы. */
+  rest: readonly [number, number];
+}
+
 export interface OpponentDef {
   id: string;
   name: string;
@@ -36,6 +47,8 @@ export interface OpponentDef {
   decision: readonly [number, number];
   /** Интервал рывков в секундах; null — без рывков. */
   surgeEvery: readonly [number, number] | null;
+  /** Фирменный приём; без него у бойца нет предсказуемого окна слабости. */
+  pattern?: OpponentPattern;
   /** Множитель расхода выносливости. */
   drain: number;
   reward: number;
@@ -56,6 +69,7 @@ export const OPPONENTS: readonly OpponentDef[] = [
     telegraph: 1.0,
     decision: [6, 9],
     surgeEvery: [10, 15],
+    pattern: { holdTech: 'hook', holdFor: 10, warn: 0.7, rest: [1.0, 1.4] },
     drain: 1,
     reward: 25,
     voice: 78,

@@ -94,6 +94,7 @@ export function MatchHud() {
           </div>
         )}
         {h.surgeWarn && <div className="status bad blink">ОН ГОТОВИТ РЫВОК!</div>}
+        {h.breatherWarn && <div className="status good blink">ОН ВЫДЫХАЕТСЯ — ГОТОВЬСЯ!</div>}
         {h.resting && <div className="status good">ОН ВЫДОХСЯ — ДАВИ!</div>}
         {h.warnings > 0 && (
           <div className="status bad">

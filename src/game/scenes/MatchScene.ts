@@ -316,6 +316,10 @@ export class MatchScene extends Phaser.Scene {
         this.burst(c, 14, 0xff5a5a);
         sfx.surge();
         break;
+      case 'breatherWarn':
+        this.floatText('ОН ВЫДЫХАЕТСЯ…', 640, 60, '#8fdcff', 48);
+        sfx.breatherWarn();
+        break;
       case 'oppRest':
         this.floatText('ОН ВЫДОХСЯ!', 640, 320, '#8fdcff', 52);
         sfx.oppRest();
@@ -387,7 +391,7 @@ export class MatchScene extends Phaser.Scene {
       telegraphing: s.opp.next !== null,
       surgeWarn: s.opp.surgeWarnLeft > 0,
       surging,
-      resting: s.opp.restLeft > 0,
+      resting: s.opp.restLeft > 0 || s.opp.breatherWarnLeft > 0,
       stamina: s.opp.stamina,
     };
     const ft = faceTarget(faceCtx);
@@ -645,6 +649,7 @@ export class MatchScene extends Phaser.Scene {
       warnings: s.warnings,
       surgeWarn: s.opp.surgeWarnLeft > 0,
       surging: s.opp.surgeLeft > 0,
+      breatherWarn: s.opp.breatherWarnLeft > 0,
       resting: s.opp.restLeft > 0,
       time: s.time,
       pressGate: this.cfg!.stats.pressGate,

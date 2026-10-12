@@ -75,6 +75,10 @@ interface OppState {
   surgeCooldown: number;
   surgeWarnLeft: number;
   surgeLeft: number;
+  /** Сколько секунд подряд держит технику из `pattern`. */
+  holdTime: number;
+  /** Секунд до паузы по `pattern`: пока идёт, это видно по лицу и плашке. */
+  breatherWarnLeft: number;
 }
 
 export interface MatchState {
@@ -108,6 +112,7 @@ export type MatchEvent =
   | { type: 'surgeWarn' }
   | { type: 'surge' }
   | { type: 'oppRest' }
+  | { type: 'breatherWarn' }
   | { type: 'end'; result: 'won' | 'lost'; reason: EndReason };
 
 interface MatchInput {
@@ -161,6 +166,8 @@ export function createMatch(cfg: MatchConfig, rng: Rng): MatchState {
       surgeCooldown: opp.surgeEvery ? randRange(rng, opp.surgeEvery) + 2 : Infinity,
       surgeWarnLeft: 0,
       surgeLeft: 0,
+      holdTime: 0,
+      breatherWarnLeft: 0,
     },
   };
 }
@@ -220,6 +227,8 @@ function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev:
       o.restLeft = randRange(rng, TUNING.oppRest);
       o.surgeLeft = 0;
       o.surgeWarnLeft = 0;
+      o.holdTime = 0;
+      o.breatherWarnLeft = 0;
       ev.push({ type: 'oppRest' });
     }
   }
@@ -254,12 +263,33 @@ function stepOpponent(s: MatchState, cfg: MatchConfig, dt: number, rng: Rng, ev:
       o.surgeLeft = TUNING.surgeDuration;
       ev.push({ type: 'surge' });
     }
-  } else if (def.surgeEvery && o.restLeft <= 0) {
+  } else if (def.surgeEvery && o.restLeft <= 0 && o.breatherWarnLeft <= 0) {
     o.surgeCooldown -= dt;
     if (o.surgeCooldown <= 0) {
       o.surgeWarnLeft = TUNING.surgeTelegraph;
       o.surgeCooldown = randRange(rng, def.surgeEvery);
       ev.push({ type: 'surgeWarn' });
+    }
+  }
+
+  const pattern = def.pattern;
+  if (!pattern) return;
+  if (o.breatherWarnLeft > 0) {
+    o.breatherWarnLeft -= dt;
+    if (o.breatherWarnLeft <= 0) {
+      o.restLeft = randRange(rng, pattern.rest);
+      o.surgeLeft = 0;
+      o.surgeWarnLeft = 0;
+      o.holdTime = 0;
+      ev.push({ type: 'oppRest' });
+    }
+  } else if (o.tech !== pattern.holdTech) {
+    o.holdTime = 0;
+  } else if (o.restLeft <= 0 && o.surgeLeft <= 0 && o.surgeWarnLeft <= 0) {
+    o.holdTime += dt;
+    if (o.holdTime >= pattern.holdFor) {
+      o.breatherWarnLeft = pattern.warn;
+      ev.push({ type: 'breatherWarn' });
     }
   }
 }
