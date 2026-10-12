@@ -46,6 +46,24 @@ describe('наблюдения за матчем', () => {
     expect(matchAdvice('time', null).map((a) => a.id)).toEqual(['time']);
   });
 
+  it('считает паузу соперника и говорит, использовал ли её игрок', () => {
+    const rng = mulberry32(1), s = createMatch(cfg, rng);
+    s.phase = 'fight'; s.opp.decisionLeft = 10; s.opp.surgeCooldown = Infinity;
+    s.opp.restLeft = 5; s.opp.stamina = 1;
+    stepMatch(s, cfg, { clicks: 1 }, .1, rng);
+    expect(s.metrics.oppRestSeconds).toBeCloseTo(.1);
+    expect(s.metrics.oppRestPressedSeconds).toBeCloseTo(.1);
+    stepMatch(s, cfg, { clicks: 0 }, 1, rng);
+    expect(s.metrics.oppRestSeconds).toBeCloseTo(1.1);
+    expect(s.metrics.oppRestPressedSeconds).toBeCloseTo(.1);
+
+    const missed = { ...emptyMatchMetrics(), oppRestSeconds: 3, oppRestPressedSeconds: .5 };
+    expect(matchAdvice('pin', missed).map((a) => a.id)).toEqual(['rest']);
+    const used = { ...emptyMatchMetrics(), oppRestSeconds: 2, oppRestPressedSeconds: 1.8 };
+    expect(matchAdvice('pin', used).map((a) => a.id)).toEqual(['good-rest']);
+    expect(matchAdvice('pin', { ...emptyMatchMetrics(), oppRestSeconds: .5 })).toEqual([]);
+  });
+
   it('показывает не больше двух наблюдений и отдаёт приоритет длительным проблемам', () => {
     const metrics = { ...emptyMatchMetrics(), lowStaminaSeconds: 5, weakPressSeconds: 3, counteredSeconds: .5, switchingSeconds: 2 };
     expect(matchAdvice('pin', metrics).map((a) => a.id)).toEqual(['stamina', 'press']);

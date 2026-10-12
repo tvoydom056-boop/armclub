@@ -52,11 +52,14 @@ export interface MatchMetrics {
   strongPressSeconds: number;
   switchingSeconds: number;
   recoveredStamina: number;
+  /** Сколько секунд соперник был в паузе и сколько из них ты давил. */
+  oppRestSeconds: number;
+  oppRestPressedSeconds: number;
 }
 
 export const emptyMatchMetrics = (): MatchMetrics => ({
   lowStaminaSeconds: 0, counteredSeconds: 0, counterSeconds: 0,
-  weakPressSeconds: 0, strongPressSeconds: 0, switchingSeconds: 0, recoveredStamina: 0,
+  weakPressSeconds: 0, strongPressSeconds: 0, switchingSeconds: 0, recoveredStamina: 0, oppRestSeconds: 0, oppRestPressedSeconds: 0,
 });
 
 export interface MatchConfig {
@@ -373,6 +376,10 @@ export function stepMatch(s: MatchState, cfg: MatchConfig, input: MatchInput, dt
   if (advantage < 0) s.metrics.counteredSeconds += dt;
   if (advantage > 0 && s.switchLeft <= 0) s.metrics.counterSeconds += dt;
   if (s.switchLeft > 0) s.metrics.switchingSeconds += dt;
+  if (s.opp.restLeft > 0) {
+    s.metrics.oppRestSeconds += dt;
+    if (s.sinceClick <= TUNING.idleAfter) s.metrics.oppRestPressedSeconds += dt;
+  }
   if (s.tech === 'press') {
     if (s.position < cfg.stats.pressGate) s.metrics.weakPressSeconds += dt;
     else if (s.switchLeft <= 0) s.metrics.strongPressSeconds += dt;
