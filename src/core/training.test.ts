@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  EXERCISES, GYM_MEMBERSHIP, ITEMS, applyXp, buyGym, buyItem, canDo, emptyXp, exerciseById, freshness, itemById, setGains, trainSet, xpToNext,
+  EXERCISES, GYM_MEMBERSHIP, ITEMS, applyXp, bestExercise, buyGym, buyItem, canDo, cheapestUnlock, emptyXp, exerciseById, freshness, itemById, setGains, trainSet, xpToNext,
   type ExerciseDef, type TrainingState,
 } from './training';
 import { UPGRADES, emptyLevels, upgradeById } from './upgrades';
@@ -146,5 +146,41 @@ describe('лавка и подходы', () => {
     expect(trainSet(state(), 'strap_dumbbell', 'ok')).toBeNull();
     expect(trainSet(state({ owned: ['cone'] }), 'cone', 'ok')).toBeNull();
     expect(trainSet(state(), 'nope', 'ok')).toBeNull();
+  });
+});
+
+describe('переход от стата к упражнению', () => {
+  it('без снарядов лучшее упражнение трицепса — свободное, а бицепсу ничего не доступно', () => {
+    expect(bestExercise('triceps', [], false, {})?.ex.id).toBe('pushups');
+    expect(bestExercise('biceps', [], false, {})).toBeNull();
+  });
+
+  it('берёт упражнение с наибольшим опытом именно этому стату', () => {
+    // канат и блок-рукоять в зале, отжимания дома: зал и снаряд лучше
+    const best = bestExercise('triceps', ['tricep_rope'], true, {})!;
+    expect(best.ex.id).toBe('tricep_rope');
+    expect(best.xp).toBe(setGains(ex('tricep_rope'), 'ok', {})[0].xp);
+  });
+
+  it('побочный стат тоже находит упражнение, но с половиной опыта', () => {
+    const best = bestExercise('wrist', ['strap'], false, {})!;
+    expect(best.ex.secondary).toBe('wrist');
+    expect(best.xp).toBe(Math.max(1, Math.round(setGains(best.ex, 'ok', {})[0].xp * 0.5)));
+  });
+
+  it('для закрытого стата называет самый дешёвый путь', () => {
+    const route = cheapestUnlock('biceps', [], false)!;
+    expect(route.item).toBe('strap');
+    expect(route.cost).toBe(itemById('strap').price);
+    expect(route.needsGym).toBe(false);
+    // плечо без карты: брусья в зале стоят только карту
+    const shoulder = cheapestUnlock('shoulder', [], false)!;
+    expect(shoulder.needsGym).toBe(true);
+    expect(shoulder.cost).toBe(GYM_MEMBERSHIP);
+    expect(cheapestUnlock('shoulder', [], true)!.cost).toBe(0);
+  });
+
+  it('у каждого стата есть хоть какой-то путь', () => {
+    for (const u of UPGRADES) expect(cheapestUnlock(u.id, [], false), u.id).not.toBeNull();
   });
 });

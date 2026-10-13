@@ -68,3 +68,6 @@
   .club-hub .table-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .club-hub .building-label { font-size: 10px; white-space: normal; min-width: 70px; }
 }
+
+/* В карточке стата больше текста и кнопок: арт уступает им место, иначе кнопка уходит под обрез. */
+.club-hub .stats-detail .detail-art { min-height: 4.5em; }

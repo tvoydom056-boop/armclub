@@ -186,3 +186,29 @@ export function trainSet(s: TrainingState, exerciseId: string, grade: Grade): Se
   });
   return { patch: { levels, xp, fatigue }, gains };
 }
+
+/** Лучшее доступное упражнение для стата: больше всего опыта именно ему с учётом свежести. */
+export function bestExercise(stat: UpgradeId, owned: readonly ItemId[], gym: boolean, fatigue: Fatigue): { ex: ExerciseDef; xp: number } | null {
+  let best: { ex: ExerciseDef; xp: number } | null = null;
+  for (const ex of EXERCISES) {
+    if (!canDo(ex, owned, gym)) continue;
+    const xp = setGains(ex, 'ok', fatigue).find((g) => g.stat === stat)?.xp;
+    if (xp === undefined) continue;
+    // при равенстве опыта основное упражнение стата лучше побочного
+    if (!best || xp > best.xp || (xp === best.xp && ex.primary === stat && best.ex.primary !== stat)) best = { ex, xp };
+  }
+  return best;
+}
+
+/** Самый дешёвый способ открыть упражнение для стата: что докупить и сколько это стоит. */
+export function cheapestUnlock(stat: UpgradeId, owned: readonly ItemId[], gym: boolean): { ex: ExerciseDef; item: ItemId | null; needsGym: boolean; cost: number } | null {
+  let best: { ex: ExerciseDef; item: ItemId | null; needsGym: boolean; cost: number } | null = null;
+  for (const ex of EXERCISES) {
+    if (ex.primary !== stat && ex.secondary !== stat) continue;
+    const item = ex.item && !owned.includes(ex.item) ? ex.item : null;
+    const needsGym = ex.place === 'gym' && !gym;
+    const cost = (item ? itemById(item).price : 0) + (needsGym ? GYM_MEMBERSHIP : 0);
+    if (!best || cost < best.cost) best = { ex, item, needsGym, cost };
+  }
+  return best;
+}

@@ -15,7 +15,7 @@ type Destination = 'home' | 'gym' | 'shop' | 'bar';
 
 export function TrainingDistrict({ onEnter, affordable }: { onEnter: (id: Destination) => void; affordable: boolean }) {
   const { owned, gym, fatigue } = useGame();
-  const [notice, setNotice] = useState('Выбери место на карте. Гараж открыт всегда.');
+  const [notice, setNotice] = useState('Выбери место на карте. Гараж открыт всегда, а в баре «Яма» за 10 монет можно прокачать крюк и топролл спаррингом.');
   const [walking, setWalking] = useState<Destination | null>(null);
   const moving = useRef<Destination | null>(null);
   const [position, setPosition] = useState({ x: .53, y: .64 });

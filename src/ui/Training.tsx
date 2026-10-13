@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import {
-  EXERCISES, GYM_MEMBERSHIP, ITEMS, PLACES, canDo, freshness, itemById, setGains, xpToNext,
+  EXERCISES, GYM_MEMBERSHIP, ITEMS, PLACES, bestExercise, canDo, cheapestUnlock, freshness, itemById, setGains, xpToNext,
   type ExerciseDef, type GameKind, type ItemId, type PlaceId,
 } from '../core/training';
 import { UPGRADES, upgradeById, type UpgradeId } from '../core/upgrades';
@@ -13,6 +13,7 @@ import { fxArt, itemArt, sceneArt } from '../game/trainingArt';
 import { TrainingDistrict, TrainingRoom } from './TrainingDistrict';
 import { TrainingArtImage } from './TrainingArtImage';
 import { SparringBar } from './SparringBar';
+import { SPARRING_COST, SPARRING_STATS } from '../core/sparring';
 
 const fmt = (n: number) => n.toLocaleString('ru-RU');
 const pct = (v: number) => `${Math.round(v * 100)}%`;
@@ -62,7 +63,7 @@ export function Training() {
           : place === 'bar' ? <SparringBar onMap={() => setPlace('map')} />
           : <Gym key={place} place={place} onMap={() => setPlace('map')} toShop={() => setSection('shop')} onStart={setPlaying} />)}
         {section === 'shop' && <Shop onMap={() => { setSection('gym'); setPlace('map'); }} />}
-        {section === 'stats' && <Stats toGym={() => setSection('gym')} />}
+        {section === 'stats' && <Stats onTrain={setPlaying} toShop={() => setSection('shop')} toBar={() => { setSection('gym'); setPlace('bar'); }} />}
       </div>
       {playing && <TrainingGame ex={playing} onClose={() => setPlaying(null)} />}
     </div>
@@ -186,14 +187,21 @@ function GoodsCard({ id, selected, owned, can, pop, onPick }: { id: Goods; selec
   );
 }
 
-function Stats({ toGym }: { toGym: () => void }) {
+function Stats({ onTrain, toShop, toBar }: { onTrain: (ex: ExerciseDef) => void; toShop: () => void; toBar: () => void }) {
   const levels = useGame((s) => s.levels);
   const xp = useGame((s) => s.xp);
+  const owned = useGame((s) => s.owned);
+  const gym = useGame((s) => s.gym);
+  const fatigue = useGame((s) => s.fatigue);
+  const coins = useGame((s) => s.coins);
   const [selId, setSelId] = useState<UpgradeId>('biceps');
   const sel = upgradeById(selId);
   const level = levels[selId];
   const maxed = level >= sel.maxLevel;
   const ways = EXERCISES.filter((e) => e.primary === selId || e.secondary === selId);
+  const best = bestExercise(selId, owned, gym, fatigue);
+  const unlock = best ? null : cheapestUnlock(selId, owned, gym);
+  const sparTech = (Object.keys(SPARRING_STATS) as (keyof typeof SPARRING_STATS)[]).find((t) => SPARRING_STATS[t].includes(selId));
   return (
     <>
       <section className="training-center" aria-label="Статы">
@@ -214,13 +222,15 @@ function Stats({ toGym }: { toGym: () => void }) {
           })}
         </div>
       </section>
-      <aside className="shop-detail card" aria-label="Выбранный стат" aria-live="polite">
+      <aside className="shop-detail stats-detail card" aria-label="Выбранный стат" aria-live="polite">
         <div className="detail-heading"><span className="eyebrow">КАК КАЧАТЬ</span><span className="detail-category"><ClubIcon name="stats" /></span></div>
         <h3>{sel.name}</h3><p className="detail-desc">{sel.desc}</p>
         <div className="detail-art"><span className="art-rays" /><UpgradeArt id={selId} /><b className="lvl">УРОВЕНЬ {level} / {sel.maxLevel}</b></div>
         <div className="detail-effect"><div><span>Сейчас</span><b>{sel.effect(level)}</b></div>{!maxed && <div className="next-effect"><span>На следующем уровне</span><b>{sel.effect(level + 1)}</b></div>}</div>
-        <p className="purchase-note">Упражнения: {ways.map((e) => `${e.name}${e.primary === selId ? '' : ' (½)'}`).join(', ')}.</p>
-        <button className="btn big" onClick={toGym}>В зал<ClubIcon name="arrow" /></button>
+        <p className="purchase-note">Упражнения: {ways.map((e) => `${e.name}${e.primary === selId ? '' : ' (½)'}`).join(', ')}.{sparTech && <> Без снарядов: <button className="link-btn" onClick={toBar} title={`Опыт получают оба стата: ${SPARRING_STATS[sparTech].map(statName).join(' и ')}`}>спарринг в баре за {SPARRING_COST} монет{coins < SPARRING_COST ? ` (пока не хватает ${SPARRING_COST - coins})` : ''}</button>.</>}</p>
+        {best
+          ? <button className="btn big" onClick={() => onTrain(best.ex)}>Тренировать: {best.ex.name}<span className="buy-price">+{best.xp} опыта</span></button>
+          : <button className="btn big" onClick={toShop}>{unlock && <>Открыть: {[unlock.item && itemById(unlock.item).name, unlock.needsGym && 'клубная карта'].filter(Boolean).join(' + ')}</>}<ClubIcon name="arrow" /></button>}
       </aside>
     </>
   );
