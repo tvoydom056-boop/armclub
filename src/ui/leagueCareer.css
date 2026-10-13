@@ -1,5 +1,6 @@
 /* Карьера использует ту же палитру и обводку, что карточки бойцов. */
-.club-hub .league-career { height: 100%; display: flex; flex-direction: column; gap: .85em; min-height: 0; }
+.club-hub .league-career { height: 100%; display: flex; flex-direction: column; gap: .85em; min-height: 0; overflow-y: auto; padding-right: .4em; scrollbar-color: #865546 transparent; }
+.club-hub .league-career > * { flex-shrink: 0; }
 .club-hub .league-career > .section-heading { flex: 0 0 3.6em; padding-bottom: 0; }
 .club-hub .league-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8em; flex: none; }
 .club-hub .league-step { display: flex; align-items: center; gap: .85em; text-align: left; padding: .85em 1em; background: #302228; color: #efd8b3; border: .15em solid #735047; border-radius: .4em; }
@@ -10,19 +11,20 @@
 .club-hub .league-step small { display: block; margin-top: .4em; font-size: .74em; font-weight: 500; }
 .club-hub .league-number { font: 1.5em var(--display); color: #edb44b; width: 1.5em; flex: none; }
 .club-hub .league-number .club-icon { width: 1.2em; height: 1.2em; }
-.club-hub .league-content { display: grid; grid-template-columns: minmax(0, 1fr) 23em; gap: 1.4em; flex: 1; min-height: 0; }
+.club-hub .league-content { display: grid; grid-template-columns: minmax(0, 1fr) 23em; gap: 1.4em; flex: 1 0 auto; min-height: 0; }
 .club-hub .league-qualifying { display: flex; flex-direction: column; min-height: 0; }
 .club-hub .league-caption { display: flex; justify-content: space-between; align-items: center; gap: 1em; }
 .club-hub .league-caption h3 { font: 1.7em var(--display); margin-top: .25em; }
 .club-hub .league-caption > span { font-size: .8em; white-space: nowrap; color: #cfb69d; }
 .club-hub .league-description { font-size: .83em; color: #c4a992; line-height: 1.4; margin: .6em 0 .9em; }
-.club-hub .opps.league-opps { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 1.2em; }
+.club-hub .opps.league-opps { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; gap: 1.2em; flex: 1 0 auto; }
+.club-hub .league-opps .opp { min-height: max-content; height: auto; }
 .club-hub .league-opps .opp-pic { flex-basis: 11em; }
 .club-hub .league-opps .fighter-head { width: 9em; bottom: -.8em; }
-.club-hub .league-opps .opp-info { padding-top: 1em; }
+.club-hub .league-opps .opp-info { padding-top: 1em; flex: 1 0 auto; }
 .club-hub .league-opps .opp-info h4 { font-size: 1.65em; }
 .club-hub .league-opps .opp-info p { font-size: .83em; }
-.club-hub .league-tournament { display: flex; flex-direction: column; min-height: 0; padding: 1.1em; color: #382726; border-top: .4em solid #8a6453; }
+.club-hub .league-tournament { display: flex; flex-direction: column; min-height: max-content; padding: 1.1em; color: #382726; border-top: .4em solid #8a6453; }
 .club-hub .league-tournament.eligible { border-top-color: #c48932; }
 .club-hub .league-tournament .eyebrow { color: #97553c; }
 .club-hub .league-tournament h3 { font: 1.8em var(--display); margin: .4em 0; }
